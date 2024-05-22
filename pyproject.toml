@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "kinocms-remastered"
+version = "0.1.0"
+description = ""
+authors = ["ant100pshnik <mypochtav@gmail.com>"]
+license = "MIT"
+readme = "README.rst"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.0.6"
+psycopg2 = "^2.9.9"
+django-environ = "^0.11.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
