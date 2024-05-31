@@ -1,0 +1,10 @@
+@media (max-width: 576px) {
+  .input-group-prepend {
+    display: none;
+  }
+
+  .input-group > .custom-select:not(:first-child), .input-group > .form-control:not(:first-child) {
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+  }
+}

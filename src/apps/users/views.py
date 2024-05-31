@@ -33,4 +33,4 @@ class AdminLogoutView(View):
     @staticmethod
     def post(request):
         logout(request)
-        return redirect("authentication:login")
+        return redirect("adminlte_authentication_login")

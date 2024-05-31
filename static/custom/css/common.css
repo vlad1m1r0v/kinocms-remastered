@@ -1,0 +1,8 @@
+textarea {
+  resize: none;
+}
+
+th, td {
+  vertical-align: middle !important;
+  white-space: nowrap;
+}

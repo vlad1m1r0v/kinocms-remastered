@@ -2,146 +2,148 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>
-        {% block title %}
-        {% endblock %}
-    </title>
-
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
-    <!-- Tempus dominus Bootstrap 4 -->
-    <link rel="stylesheet"
-          href="{% static 'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
-    <!-- iCheck -->
-    <link rel="stylesheet" href="{% static 'plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
-    <!-- JQVMap -->
-    <link rel="stylesheet" href="{% static 'plugins/jqvmap/jqvmap.min.css' %}">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{% static 'adminlte/css/adminlte.min.css' %}">
-    <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
-    <!-- Daterange picker -->
-    <link rel="stylesheet" href="{% static 'plugins/daterangepicker/daterangepicker.css' %}">
-    <!-- summernote -->
-    <link rel="stylesheet" href="{% static 'plugins/summernote/summernote-bs4.min.css' %}">
-    <!-- Toaster -->
-    <link rel="stylesheet" href="{% static 'plugins/toastr/toastr.min.css' %}">
-    {% block head %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>
+    {% block title %}
     {% endblock %}
+  </title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Tempus dominus Bootstrap 4 -->
+  <link rel="stylesheet"
+        href="{% static 'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="{% static 'plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+  <!-- JQVMap -->
+  <link rel="stylesheet" href="{% static 'plugins/jqvmap/jqvmap.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'adminlte/css/adminlte.min.css' %}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="{% static 'plugins/daterangepicker/daterangepicker.css' %}">
+  <!-- summernote -->
+  <link rel="stylesheet" href="{% static 'plugins/summernote/summernote-bs4.min.css' %}">
+  <!-- Toaster -->
+  <link rel="stylesheet" href="{% static 'plugins/toastr/toastr.min.css' %}">
+  <!--Common styles-->
+  <link rel="stylesheet" href="{% static 'custom/css/common.css' %}">
+  {% block head %}
+  {% endblock %}
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
-    <!-- Preloader -->
-    <div class="preloader flex-column justify-content-center align-items-center">
-        <img class="animation__shake" src="{% static 'adminlte/img/AdminLTELogo.png' %}" alt="AdminLTELogo" height="60"
-             width="60">
-    </div>
+  <!-- Preloader -->
+  <div class="preloader flex-column justify-content-center align-items-center">
+    <img class="animation__shake" src="{% static 'adminlte/img/AdminLTELogo.png' %}" alt="AdminLTELogo" height="60"
+         width="60">
+  </div>
 
-    <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-        <!-- Left navbar links -->
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-            </li>
-        </ul>
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+    </ul>
 
-        <!-- Right navbar links -->
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item d-none d-sm-block">
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item d-none d-sm-block">
         <span href="#" class="nav-link">
           <i class="nav-icon fas fa-user mr-1"></i>
             {{ user.email }}
         </span>
-            </li>
-            <li class="nav-item">
-                <form action="{% url 'adminlte_authentication_logout' %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-outline-primary btn-block">Logout</button>
-                </form>
-            </li>
-        </ul>
-    </nav>
-    <!-- /.navbar -->
+      </li>
+      <li class="nav-item">
+        <form action="{% url 'adminlte_authentication_logout' %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-outline-primary btn-block">Logout</button>
+        </form>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.navbar -->
 
-    <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary">
-        <!-- Brand Logo -->
-        <div class="brand-link pl-4">
-            <i class="nav-icon fas fa-lg fa-film"></i>
-            <span class="brand-text font-weight-light pl-2">Kino CMS</span>
-        </div>
-
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <!-- Sidebar user panel (optional) -->
-            <!-- SidebarSearch Form -->
-            <div class="form-inline mt-2">
-                <div class="input-group" data-widget="sidebar-search">
-                    <input class="form-control form-control-sidebar" type="search" placeholder="Search"
-                           aria-label="Search">
-                    <div class="input-group-append">
-                        <button class="btn btn-sidebar">
-                            <i class="fas fa-search fa-fw"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sidebar Menu -->
-            <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                    data-accordion="false">
-                    <!-- Add icons to the links using the .nav-icon class
-                         with font-awesome or any other icon font library -->
-                    <li class="nav-item">
-                        <a href="{% url 'adminlte_banners' %}" class="nav-link">
-                            <i class="nav-icon fas fa-layer-group"></i>
-                            <p>
-                                Banners
-                            </p>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <!-- /.sidebar-menu -->
-        </div>
-        <!-- /.sidebar -->
-    </aside>
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper p-2">
-        <!-- Content Header (Page header) -->
-        <!-- /.content-header -->
-
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-            </div>
-        </section>
-        <!-- /.content -->
-        {% block content %}
-        {% endblock %}
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary">
+    <!-- Brand Logo -->
+    <div class="brand-link pl-4">
+      <i class="nav-icon fas fa-lg fa-film"></i>
+      <span class="brand-text font-weight-light pl-2">Kino CMS</span>
     </div>
-    <!-- /.content-wrapper -->
-    <footer class="main-footer">
-        <span>Copyright &copy; 2024 <a href="https://spacelab.ua/ru/">Spacelab</a></span>
-        <div class="float-right d-none d-sm-inline-block">
-            Version 1.0
-        </div>
-    </footer>
 
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-    </aside>
-    <!-- /.control-sidebar -->
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <!-- SidebarSearch Form -->
+      <div class="form-inline mt-2">
+        <div class="input-group" data-widget="sidebar-search">
+          <input class="form-control form-control-sidebar" type="search" placeholder="Search"
+                 aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-sidebar">
+              <i class="fas fa-search fa-fw"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+            data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item">
+            <a href="{% url 'adminlte_banners' %}" class="nav-link">
+              <i class="nav-icon fas fa-layer-group"></i>
+              <p>
+                Banners
+              </p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper p-2">
+    <!-- Content Header (Page header) -->
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+      </div>
+    </section>
+    <!-- /.content -->
+    {% block content %}
+    {% endblock %}
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <span>Copyright &copy; 2024 <a href="https://spacelab.ua/ru/">Spacelab</a></span>
+    <div class="float-right d-none d-sm-inline-block">
+      Version 1.0
+    </div>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
 
@@ -151,33 +153,33 @@
 <script src="{% static 'plugins/jquery-ui/jquery-ui.min.js' %}"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
-    $.widget.bridge('uibutton', $.ui.button)
+  $.widget.bridge('uibutton', $.ui.button)
 </script>
 <!--Toast-->
 <script src="{% static 'plugins/toastr/toastr.min.js' %}"></script>
 <!--Highlight active nav item-->
 <script>
-    $(document).ready(function () {
-        const current = window.location.pathname.split('/')[2];
-        $('.nav-item a').each(function () {
-            const path = $(this).attr('href').split('/')[2];
-            if (current === path) {
-                $(this).addClass('active');
-            }
-        });
+  $(document).ready(function () {
+    const current = window.location.pathname.split('/')[2];
+    $('.nav-item a').each(function () {
+      const path = $(this).attr('href').split('/')[2];
+      if (current === path) {
+        $(this).addClass('active');
+      }
     });
+  });
 </script>
 <!--Toast-->
 <script>
-    {% if messages %}
-        toastr.options = {
-            "positionClass": "toast-bottom-left",
-            "closeButton": true
-        }
-        {% for message in messages %}
-            toastr["{{ message.tags }}".toLowerCase()]("{{message}}")
-        {% endfor %}
-    {% endif %}
+  toastr.options = {
+    "positionClass": "toast-bottom-left",
+    "closeButton": true
+  }
+  {% if messages %}
+    {% for message in messages %}
+      toastr["{{ message.tags }}".toLowerCase()]("{{message}}")
+    {% endfor %}
+  {% endif %}
 </script>
 {% block script %}
 {% endblock %}

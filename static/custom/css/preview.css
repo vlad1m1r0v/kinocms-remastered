@@ -1,0 +1,25 @@
+.preview-image, .preview-formset {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin-bottom: 7px;
+  border-radius: 5px;
+}
+
+.preview-formset img {
+  width: 100%;
+}
+
+.preview-image img {
+  height: 100%;
+}
+
+.preview-formset {
+  height: 4rem;
+}
+
+.preview-image {
+  width: 100%;
+  aspect-ratio: 9/16;
+}

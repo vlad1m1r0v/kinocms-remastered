@@ -1,4 +1,365 @@
 {% extends "adminlte/panel/base.html" %}
+{% load static %}
 {% block title %}
-    Banners
+  Banners
+{% endblock %}
+{% block head %}
+  <style>
+    span.radio:not(:first-child) {
+      margin-left: 1rem;
+    }
+  </style>
+  <link rel="stylesheet" href="{% static 'custom/css/delete-corner-button.css' %}">
+  <link rel="stylesheet" href="{% static 'custom/css/horizontal-formset.css' %}">
+  <link rel="stylesheet" href="{% static 'custom/css/preview.css' %}">
+  <link rel="stylesheet" href="{% static 'custom/css/skeleton.css' %}">
+{% endblock %}
+{% block content %}
+  <!--Top banner settings-->
+  <div class="card">
+    <div class="card-header p-2">
+      Top banner
+    </div>
+    <div class="card-body p-2">
+      <form action="{% url 'adminlte_banners_top_banners_settings' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% with top_banner_settings_form as settings %}
+          <div class="form-group d-flex flex-row align-items-center mb-0">
+            <div class="d-sm-block d-none">
+              Size: 1000 × 190
+            </div>
+            <div class="ml-auto">
+              {{ settings.banner_rotation }}
+              <label for="id_banner_rotation" class="font-weight-normal ml-1">Rotation</label>
+            </div>
+            <div class="custom-control custom-switch ml-2">
+              {{ settings.are_banners_active }}
+              <label class="custom-control-label form-check-label"
+                     for="id_top_banner_settings-are_banners_active">
+                Enabled / Disabled
+              </label>
+            </div>
+          </div>
+        {% endwith %}
+        {% with top_banner_formset as formset %}
+          <div class="scrolling-wrapper">
+            <div class="mt-3">
+              {{ formset.management_form }}
+              {% for form in formset %}
+                <div class="card border">
+                  {{ form.id }}
+                  <div class="card-body p-2">
+                    {% if not form.image.value %}
+                      <div class="skeleton rounded mb-2 preview-formset"></div>
+                    {% else %}
+                      <div class="preview-formset">
+                        <img src="/media/{{ form.image.value }}" alt="preview"/>
+                      </div>
+                    {% endif %}
+                    <div class="input-group mb-2">
+                      <div class="custom-file">
+                        <label class="custom-file-label"
+                               for="{{ form.image.auto_id }}">
+                          Choose image
+                        </label>
+                        {{ form.image }}
+                      </div>
+                    </div>
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">URL</span>
+                      </div>
+                      {{ form.url }}
+                    </div>
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Description</span>
+                      </div>
+                      {{ form.description }}
+                    </div>
+                    <div style="display: none">
+                      {{ form.DELETE }}
+                    </div>
+                    <button type="button"
+                            class=" btn btn-sm btn-primary btn-danger delete-corner-button delete-top-banner-button">
+                      <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endwith %}
+        <div class="d-flex justify-content-end">
+          <button type="submit"
+                  class="btn btn-primary btn-success mr-2">
+            <i class="fa fa-bookmark" aria-hidden="true"></i>
+            Save
+          </button>
+          <button type="button"
+                  class="btn btn-primary btn-info"
+                  id="add-top-banner-button">
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            Add form
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!--Background settings-->
+  <div class="card">
+    <div class="card-header p-2">
+      Background image
+    </div>
+    <div class="p-2">
+      <form action="{% url 'adminlte_banners_background_settings' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% with banner_settings_form as settings %}
+          <div class="form-group d-flex flex-row align-items-center mb-0">
+            <div class="d-sm-block d-none">
+              Size: 2000 × 3000
+            </div>
+            <div class="ml-auto">
+              {% for radio in settings.is_background_image %}
+                <span class="radio">{{ radio.tag }}</span>
+                <span>{{ radio.choice_label }}</span>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="card-body p-0 mt-2">
+            {% if not settings.background_image.value %}
+              <div class="skeleton rounded mb-2 preview-image"></div>
+            {% else %}
+              <div class="preview-image">
+                <img src="/media/{{ settings.background_image.value }}" alt="preview"/>
+              </div>
+            {% endif %}
+            <div class="input-group mb-2">
+              <div class="custom-file">
+                <label class="custom-file-label"
+                       for="{{ settings.background_image.auto_id }}">
+                  Choose image
+                </label>
+                {{ settings.background_image }}
+              </div>
+              <button type="submit"
+                      class="btn btn-primary btn-success ml-2">
+                <i class="fa fa-bookmark" aria-hidden="true"></i>
+                Save
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary btn-danger ml-2"
+                id="delete-background-button">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+                Delete
+              </button>
+            </div>
+          </div>
+        {% endwith %}
+      </form>
+    </div>
+  </div>
+  <!--Advertisement banner settings-->
+  <div class="card">
+    <div class="card-header p-2">
+      Top banner
+    </div>
+    <div class="card-body p-2">
+      <form
+        action="{% url 'adminlte_banners_advertisement_banners_settings' %}" method="post"
+        enctype="multipart/form-data">
+        {% csrf_token %}
+        {% with advertisement_banner_formset as formset %}
+          <div class="scrolling-wrapper">
+            <div class="mt-3">
+              {{ formset.management_form }}
+              {% for form in formset %}
+                <div class="card border">
+                  {{ form.id }}
+                  <div class="card-body p-2">
+                    {% if not form.image.value %}
+                      <div class="skeleton rounded mb-2 preview-formset"></div>
+                    {% else %}
+                      <div class="preview-formset">
+                        <img src="/media/{{ form.image.value }}" alt="preview"/>
+                      </div>
+                    {% endif %}
+                    <div class="input-group mb-2">
+                      <div class="custom-file">
+                        <label class="custom-file-label"
+                               for="{{ form.image.auto_id }}">
+                          Choose image
+                        </label>
+                        {{ form.image }}
+                      </div>
+                    </div>
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">URL</span>
+                      </div>
+                      {{ form.url }}
+                    </div>
+                    <div style="display: none">
+                      {{ form.DELETE }}
+                    </div>
+                    <button type="button"
+                            class=" btn btn-sm btn-primary btn-danger delete-corner-button delete-top-banner-button">
+                      <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endwith %}
+        <div class="d-flex justify-content-end">
+          <button type="submit"
+                  class="btn btn-primary btn-success mr-2">
+            <i class="fa fa-bookmark" aria-hidden="true"></i>
+            Save
+          </button>
+          <button type="button"
+                  class="btn btn-primary btn-info"
+                  id="add-advertisement-banner-button">
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            Add form
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+{% block script %}
+  <script>
+    const $wrappers = $('.scrolling-wrapper');
+    const $emptyTopBannerForm = $wrappers.eq(0).find('.mt-3 .card:last-child').clone(true);
+    const $emptyAdvertisementBannerForm = $wrappers.eq(1).find('.mt-3 .card:last-child').clone(true);
+
+    $wrappers.each(function () {
+      let isDown = false;
+      let startX;
+      let startY;
+      let scrollLeft;
+      let scrollTop;
+
+      $(this).on('mousedown', function (e) {
+        isDown = true;
+        startX = e.pageX;
+        startY = e.pageY;
+        scrollLeft = $(this).scrollLeft();
+        scrollTop = $(this).scrollTop();
+        $(this).css('cursor', 'grabbing');
+      });
+
+      $(this).on('mouseleave mouseup', function () {
+        isDown = false;
+        $(this).css('cursor', 'grab');
+      })
+
+      const $wrapper = this;
+
+      $(document).on('mousemove', function (e) {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - $wrapper.offsetLeft;
+        const y = e.pageY - $wrapper.offsetTop;
+        const walkX = x - startX;
+        const walkY = y - startY;
+        $wrapper.scrollLeft = scrollLeft - walkX;
+        $wrapper.scrollTop = scrollTop - walkY;
+      });
+    })
+
+    $(document).on('click', '.delete-top-banner-button', function () {
+      const $card = $(this).closest('.card');
+      $card.find('input[type="checkbox"]').prop('checked', true);
+      $card.hide();
+    });
+
+    $(document).on('click', '#add-top-banner-button', function () {
+
+      const $totalForms = $('#id_top_banners-TOTAL_FORMS');
+
+      const count = parseInt($totalForms.val());
+
+      const $bannerFormMarkup = $emptyTopBannerForm.prop('outerHTML');
+      const regex = /top_banners-(\d+)-/g;
+      const $compiledBannerForm = $bannerFormMarkup.replace(regex, `top_banners-${count}-`);
+
+      $wrappers.eq(0).find('.mt-3').append($compiledBannerForm);
+
+      $totalForms.attr('value', count + 1);
+
+      $wrappers.first().animate({
+        scrollLeft: $wrappers.eq(0).prop('scrollWidth')
+      }, 500);
+    });
+
+    $(document).on('click', '.delete-advertisement-banner-button', function () {
+      const $card = $(this).closest('.card');
+      $card.find('input[type="checkbox"]').prop('checked', true);
+      $card.hide();
+    });
+
+    $(document).on('click', '#add-advertisement-banner-button', function () {
+      const $totalForms = $('#id_advertisement_banners-TOTAL_FORMS');
+      const count = parseInt($totalForms.val());
+
+      const $bannerFormMarkup = $emptyAdvertisementBannerForm.prop('outerHTML');
+      const regex = /advertisement_banners-(\d+)-/g;
+      const $compiledBannerForm = $bannerFormMarkup.replace(regex, `advertisement_banners-${count}-`);
+
+      $wrappers.eq(1).find('.mt-3').append($compiledBannerForm);
+
+      $totalForms.attr('value', count + 1);
+
+      $wrappers.eq(1).animate({
+        scrollLeft: $wrappers.eq(1).prop('scrollWidth')
+      }, 500);
+    });
+
+    $(document).on('change', 'input:file', function (e) {
+      $(this).prev().html($(this).val().split('\\').pop());
+
+      const image = e.target.files[0];
+      const src = URL.createObjectURL(image);
+
+      const $cardBody = $(this).closest('.card-body');
+
+      const $preview = $cardBody.find('.preview-formset, .preview-image');
+
+      const className = $($preview).hasClass("preview-formset") ? "preview-formset" : "preview-image";
+
+      $preview.remove();
+
+      const $previewContainer = $(`<div class=${className}>`);
+      $cardBody.prepend($previewContainer);
+
+      const $image = $(`<img src=${src} alt="preview">`);
+      $previewContainer.append($image);
+    });
+
+    $("#delete-background-button").click(function () {
+      const $button = $(this);
+      $.ajax({
+        url: "{% url 'adminlte_banners_background_settings_banner_delete' %}",
+        method: "DELETE",
+        success: function (data) {
+          if (data.status === 409) {
+            toastr.error("Background doesn\'t exist");
+          }
+          if (data.status === 202) {
+            toastr.success("Background was deleted successfully");
+            const $cardBody = $button.closest('.card-body');
+            const $preview = $cardBody.find('.preview-image');
+            $preview.remove();
+            const $skeleton = $('<div></div>');
+            $skeleton.addClass('skeleton rounded preview-image');
+            $cardBody.prepend($skeleton);
+          }
+        }
+      });
+    })
+  </script>
 {% endblock %}

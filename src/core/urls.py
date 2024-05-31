@@ -1,12 +1,22 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from apps.users.views import AdminLoginView, AdminLogoutView
-from apps.banners.views import BannersView
+from apps.banners.views import AdminBannersView, AdminBackgroundSettingsView, AdminTopBannersView, \
+    AdminAdvertisementBannersView, AdminDeleteBackgroundView
 
 adminlte = [
     path("authentication/login/", AdminLoginView.as_view(), name="adminlte_authentication_login"),
     path("authentication/logout/", AdminLogoutView.as_view(), name="adminlte_authentication_logout"),
-    path("banners/", BannersView.as_view(), name="adminlte_banners")
+    path("banners/", AdminBannersView.as_view(), name="adminlte_banners"),
+    path("banners/background-settings/", AdminBackgroundSettingsView.as_view(),
+         name="adminlte_banners_background_settings"),
+    path("banners/background-settings/background/delete", AdminDeleteBackgroundView.as_view(),
+         name="adminlte_banners_background_settings_banner_delete"),
+    path("banners/top-banners/", AdminTopBannersView.as_view(), name="adminlte_banners_top_banners_settings"),
+    path("banners/advertisement-banners/", AdminAdvertisementBannersView.as_view(),
+         name="adminlte_banners_advertisement_banners_settings"),
 ]
 
 site = [
@@ -14,7 +24,7 @@ site = [
 ]
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("adminlte/", include(adminlte)),
-    path("/", include(site))
-]
+                  path("admin/", admin.site.urls),
+                  path("adminlte/", include(adminlte)),
+                  path("/", include(site))
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
