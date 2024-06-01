@@ -49,11 +49,11 @@
                 <div class="card border">
                   {{ form.id }}
                   <div class="card-body p-2">
-                    {% if not form.image.value %}
+                    {% if not form.instance.image %}
                       <div class="skeleton rounded mb-2 preview-formset"></div>
                     {% else %}
                       <div class="preview-formset">
-                        <img src="/media/{{ form.image.value }}" alt="preview"/>
+                        <img src="{{ form.instance.image.url }}" alt="preview"/>
                       </div>
                     {% endif %}
                     <div class="input-group mb-2">
@@ -127,11 +127,11 @@
             </div>
           </div>
           <div class="card-body p-0 mt-2">
-            {% if not settings.background_image.value %}
+            {% if not settings.instance.background_image %}
               <div class="skeleton rounded mb-2 preview-image"></div>
             {% else %}
               <div class="preview-image">
-                <img src="/media/{{ settings.background_image.value }}" alt="preview"/>
+                <img src="{{ settings.instance.background_image.url }}" alt="preview"/>
               </div>
             {% endif %}
             <div class="input-group mb-2">
@@ -178,11 +178,11 @@
                 <div class="card border">
                   {{ form.id }}
                   <div class="card-body p-2">
-                    {% if not form.image.value %}
+                    {% if not form.instance.image %}
                       <div class="skeleton rounded mb-2 preview-formset"></div>
                     {% else %}
                       <div class="preview-formset">
-                        <img src="/media/{{ form.image.value }}" alt="preview"/>
+                        <img src="{{ form.instance.image.url }}" alt="preview"/>
                       </div>
                     {% endif %}
                     <div class="input-group mb-2">
