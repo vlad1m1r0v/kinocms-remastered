@@ -1,0 +1,137 @@
+{% extends "adminlte/panel/base.html" %}
+{% load static %}
+{% block title %}
+  Films
+{% endblock %}
+{% block head %}
+  <style>
+    .btn-group {
+      display: flex;
+    }
+
+    .list-group-item {
+      padding: 0.5rem 0;
+    }
+
+    .list-group-item:first-child {
+      padding: 0;
+    }
+  </style>
+  <link rel="stylesheet" href="{% static 'custom/css/preview.css' %}">
+  <link rel="stylesheet" href={% static 'custom/css/grid.css' %}>
+{% endblock head %}
+{% block content %}
+  <!--Now in cinemas-->
+  <div class="card">
+    <div class="card-header p-2">
+      Now in cinemas
+    </div>
+    <div class="card-body grid-container p-2">
+      {% for film in current_films %}
+        <div class="card p-2">
+          <div class="preview-image">
+            <img src="{{ film.image.url }}"
+                 alt="preview">
+          </div>
+          <div class="card-body text-center p-0">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><p class="mb-1">{{ film.name_en }}</p></li>
+              <li class="list-group-item pt-2 pb-0">
+                <div class="btn-group">
+                  <a type="button"
+                     class="btn btn-primary w-100">
+                    <i class="fa fa-pen" aria-hidden="true"></i>
+                    Update
+                  </a>
+                  <a type="button"
+                     href="{% url 'adminlte_films_delete_film' film_id=film.id %}"
+                     class="btn btn-danger w-100 delete-film-button"
+                     data-toggle="modal"
+                     data-target="#confirmationModal">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                    Delete
+                  </a>
+                </div>
+            </ul>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  <!--Upcoming films-->
+  <div class="card">
+    <div class="card-header p-2">
+      Upcoming films
+    </div>
+    <div class="card-body grid-container p-2">
+      {% for film in upcoming_films %}
+        <div class="card p-2">
+          <div class="preview-image">
+            <img src="{{ film.image.url }}"
+                 alt="preview">
+          </div>
+          <div class="card-body text-center p-0">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><p class="mb-1">{{ film.name_en }}</p></li>
+              <li class="list-group-item pt-2 pb-0">
+                <div class="btn-group">
+                  <a type="button"
+                     class="btn btn-primary w-100"
+                     href="{% url 'adminlte_films_update_film' film_id=film.id %}">
+                    <i class="fa fa-pen" aria-hidden="true"></i>
+                    Update
+                  </a>
+                  <a type="button"
+                     href="{% url 'adminlte_films_delete_film' film_id=film.id %}"
+                     class="btn btn-danger w-100 delete-film-button"
+                     data-toggle="modal"
+                     data-target="#confirmationModal">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                    Delete
+                  </a>
+                </div>
+            </ul>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="d-flex justify-content-end">
+    <a class="btn btn-primary btn-success" href="{% url 'adminlte_films_create_film' %}">
+      <i class="fa fa-plus-circle" aria-hidden="true"></i>
+      Add film
+    </a>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmationModalLabel">Confirmation window</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete film?
+        </div>
+        <form method="post" id="delete-film-form">
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Confirm</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block script %}
+  <script>
+    $(document).on('click', '.delete-film-button', function () {
+        $('#delete-film-form').attr('action', $(this).attr('href'))
+      }
+    );
+  </script>
+{% endblock script %}

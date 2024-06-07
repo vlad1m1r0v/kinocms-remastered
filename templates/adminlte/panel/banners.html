@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="{% static 'custom/css/horizontal-formset.css' %}">
   <link rel="stylesheet" href="{% static 'custom/css/preview.css' %}">
   <link rel="stylesheet" href="{% static 'custom/css/skeleton.css' %}">
+  <link rel="stylesheet" href="{% static 'custom/css/select2.css' %}">
 {% endblock %}
 {% block content %}
   <!--Top banner settings-->
@@ -30,7 +31,7 @@
             </div>
             <div class="ml-auto">
               {{ settings.banner_rotation }}
-              <label for="id_banner_rotation" class="font-weight-normal ml-1">Rotation</label>
+              <label for="id_banner_rotation" class="font-weight-normal ml-1 pt-2">Rotation</label>
             </div>
             <div class="custom-control custom-switch ml-2">
               {{ settings.are_banners_active }}
@@ -232,6 +233,14 @@
 {% endblock %}
 {% block script %}
   <script>
+    $(document).ready(function () {
+      const $rotationSelector = $('#id_top_banner_settings-banner_rotation');
+      $rotationSelector.select2(
+        {
+          width: '70px',
+        }
+      );
+    });
     const $wrappers = $('.scrolling-wrapper');
     const $emptyTopBannerForm = $wrappers.eq(0).find('.mt-3 .card:last-child').clone(true);
     const $emptyAdvertisementBannerForm = $wrappers.eq(1).find('.mt-3 .card:last-child').clone(true);
@@ -339,27 +348,26 @@
       const $image = $(`<img src=${src} alt="preview">`);
       $previewContainer.append($image);
     });
-
-    $("#delete-background-button").click(function () {
-      const $button = $(this);
-      $.ajax({
-        url: "{% url 'adminlte_banners_background_settings_banner_delete' %}",
-        method: "DELETE",
-        success: function (data) {
-          if (data.status === 409) {
-            toastr.error("Background doesn\'t exist");
+      $("#delete-background-button").click(function () {
+        const $button = $(this);
+        $.ajax({
+          url: "{% url 'adminlte_banners_background_settings_banner_delete' %}",
+          method: "DELETE",
+          success: function (data) {
+            if (data.status === 409) {
+              toastr.error("Background doesn\'t exist");
+            }
+            if (data.status === 202) {
+              toastr.success("Background was deleted successfully");
+              const $cardBody = $button.closest('.card-body');
+              const $preview = $cardBody.find('.preview-image');
+              $preview.remove();
+              const $skeleton = $('<div></div>');
+              $skeleton.addClass('skeleton rounded preview-image');
+              $cardBody.prepend($skeleton);
+            }
           }
-          if (data.status === 202) {
-            toastr.success("Background was deleted successfully");
-            const $cardBody = $button.closest('.card-body');
-            const $preview = $cardBody.find('.preview-image');
-            $preview.remove();
-            const $skeleton = $('<div></div>');
-            $skeleton.addClass('skeleton rounded preview-image');
-            $cardBody.prepend($skeleton);
-          }
-        }
-      });
-    })
+        });
+      })
   </script>
 {% endblock %}

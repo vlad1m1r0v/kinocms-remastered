@@ -28,7 +28,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "apps.users.apps.UsersConfig",
-    "apps.banners.apps.BannersConfig"
+    "apps.banners.apps.BannersConfig",
+    "apps.films.apps.FilmsConfig"
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,11 @@
+.grid-container {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+
+.grid-container .card {
+  margin-bottom: 0;
+  aspect-ratio: 3/4;
+
+}

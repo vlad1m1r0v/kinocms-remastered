@@ -39,6 +39,11 @@ class TopBannerSettingsForm(ModelForm):
             'are_banners_active': CheckboxInput(attrs={'class': 'form-control custom-control-input'})
         }
 
+    def save(self, commit=True):
+        banner_settings = BannerSettings.objects.get(pk=1)
+        banner_settings.banner_rotation = self.cleaned_data.get('banner_rotation')
+        banner_settings.are_banners_active = self.cleaned_data.get('are_banners_active')
+        banner_settings.save()
 
 class BannerSettingsForm(ModelForm):
     class Meta:
