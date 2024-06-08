@@ -14,7 +14,7 @@ from core.utilities.guards import admin_only
 
 
 @admin_only
-class FilmsView(TemplateView):
+class AdminFilmsView(TemplateView):
     template_name = "adminlte/panel/films/films.html"
 
     def get_context_data(self, **kwargs):
@@ -39,7 +39,7 @@ class FilmsView(TemplateView):
 
 
 @admin_only
-class CreateFilmView(TemplateView):
+class AdminCreateFilmView(TemplateView):
     template_name = "adminlte/panel/films/film.html"
 
     def get(self, request: HttpRequest, *args, **kwargs):
@@ -67,7 +67,7 @@ class CreateFilmView(TemplateView):
 
 
 @admin_only
-class UpdateFilmView(TemplateView):
+class AdminUpdateFilmView(TemplateView):
     template_name = "adminlte/panel/films/film.html"
 
     def get(self, request: HttpRequest, *args, **kwargs):
@@ -100,7 +100,7 @@ class UpdateFilmView(TemplateView):
 
 @method_decorator(csrf_exempt, name='dispatch')
 @admin_only
-class DeleteFilmImageView(View):
+class AdminDeleteFilmImageView(View):
     @staticmethod
     def delete(request: HttpRequest, *args, **kwargs):
         film_id: int = kwargs.get('film_id')
@@ -109,7 +109,7 @@ class DeleteFilmImageView(View):
 
 
 @admin_only
-class DeleteFilmView(View):
+class AdminDeleteFilmView(View):
     @staticmethod
     def post(request: HttpRequest, *args, **kwargs):
         film_id: int = kwargs.get('film_id')

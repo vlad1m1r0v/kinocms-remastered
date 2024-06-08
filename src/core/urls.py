@@ -3,7 +3,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-from apps.films.views import FilmsView, CreateFilmView, UpdateFilmView, DeleteFilmImageView, DeleteFilmView
+from apps.films.views import AdminFilmsView, AdminCreateFilmView, AdminUpdateFilmView, AdminDeleteFilmImageView, \
+    AdminDeleteFilmView
 from apps.users.views import AdminLoginView, AdminLogoutView
 from apps.banners.views import AdminBannersView, AdminBackgroundSettingsView, AdminTopBannersView, \
     AdminAdvertisementBannersView, AdminDeleteBackgroundView
@@ -19,11 +20,11 @@ adminlte = [
     path("banners/top-banners/", AdminTopBannersView.as_view(), name="adminlte_banners_top_banners_settings"),
     path("banners/advertisement-banners/", AdminAdvertisementBannersView.as_view(),
          name="adminlte_banners_advertisement_banners_settings"),
-    path("films/", FilmsView.as_view(), name="adminlte_films"),
-    path("films/create/", CreateFilmView.as_view(), name="adminlte_films_create_film"),
-    path("films/<int:film_id>/update/", UpdateFilmView.as_view(), name="adminlte_films_update_film"),
-    path("films/<int:film_id>/delete/", DeleteFilmView.as_view(), name="adminlte_films_delete_film"),
-    path("films/<int:film_id>/image", DeleteFilmImageView.as_view(), name="adminlte_films_delete_film_image")
+    path("films/", AdminFilmsView.as_view(), name="adminlte_films"),
+    path("films/create/", AdminCreateFilmView.as_view(), name="adminlte_films_create_film"),
+    path("films/<int:film_id>/update/", AdminUpdateFilmView.as_view(), name="adminlte_films_update_film"),
+    path("films/<int:film_id>/delete/", AdminDeleteFilmView.as_view(), name="adminlte_films_delete_film"),
+    path("films/<int:film_id>/image", AdminDeleteFilmImageView.as_view(), name="adminlte_films_delete_film_image")
 ]
 
 site = [
