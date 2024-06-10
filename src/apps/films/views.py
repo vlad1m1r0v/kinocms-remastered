@@ -1,7 +1,7 @@
 from datetime import date, timedelta
 
 from django.contrib import messages
-from django.db.models import Q, F
+from django.db.models import Q
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
@@ -22,17 +22,14 @@ class AdminFilmsView(TemplateView):
 
         today = date.today()
 
-        current_films = Film.objects.annotate(
-            release_date=F('created_at') + timedelta(days=7),
-            end_date=F('created_at') + timedelta(days=30),
-        ).filter(
-            Q(release_date__lte=today) & Q(end_date__gte=today),
+        current_films = Film.objects.filter(
+            Q(created_at__lte=today-timedelta(7)) & Q(created_at__gte=today-timedelta(30)),
         )
         context['current_films'] = current_films
 
-        upcoming_films = Film.objects.annotate(
-            release_date=F('created_at') + timedelta(days=7),
-        ).filter(release_date__gt=today)
+        upcoming_films = Film.objects.filter(
+            Q(created_at__gt=today-timedelta(7))
+        )
         context['upcoming_films'] = upcoming_films
 
         return context

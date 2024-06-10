@@ -1,0 +1,51 @@
+{% extends "adminlte/panel/base.html" %}
+{% block title %}
+  Cinemas
+{% endblock title %}
+{% block head %}
+  <style>
+  </style>
+{% endblock %}
+{% block content %}
+  <div class="card">
+    <div class="card-header p-2">
+      Cinemas
+    </div>
+    <div class="card-body grid-container p-2">
+      {% for cinema in cinemas %}
+      {% endfor %}
+    </div>
+  </div>
+  <div class="d-flex justify-content-end">
+    <a href="{% url 'adminlte_cinemas_create_cinema' %}" class="btn btn-primary btn-success">
+      <i class="fa fa-plus-circle" aria-hidden="true"></i>
+      Add cinema
+    </a>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmationModalLabel">Confirmation window</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete cinema?
+        </div>
+        <form method="post" id="delete-cinema-form">
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Confirm</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+{% block script %}
+{% endblock script %}

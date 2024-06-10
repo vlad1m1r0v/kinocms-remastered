@@ -1,4 +1,4 @@
-.preview-image, .preview-formset {
+.preview-image, .preview-formset, .preview-logo, .preview-banner {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,4 +23,22 @@
 
 .preview-image img {
   height: 100%;
+}
+
+.preview-logo {
+  aspect-ratio: 1;
+  width: 100%;
+}
+
+.preview-logo img {
+  width: 100%;
+}
+
+.preview-banner {
+  width: 100%;
+  aspect-ratio: 5/2;
+}
+
+.preview-banner img {
+  width: 100%;
 }
