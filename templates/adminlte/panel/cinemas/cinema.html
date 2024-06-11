@@ -84,14 +84,14 @@
             {% endif %}
             <div class="input-group mb-3">
               <div class="custom-file">
-                <label class="custom-file-label" for="{{ form.image.auto_id }}">
+                <label class="custom-file-label">
                   Choose file
                 </label>
                 {{ form.logo }}
               </div>
               <button
                 type="button"
-                class="btn btn-primary btn-danger ml-2{% if not form.instance.image %} disabled {% endif %}"
+                class="btn btn-primary btn-danger ml-2{% if not form.instance.logo %} disabled {% endif %}"
                 id="delete-cinema-logo-button">
                 <i class="fa fa-trash" aria-hidden="true"></i>
                 Delete
@@ -110,7 +110,7 @@
         {% endif %}
         <div class="input-group mb-3">
           <div class="custom-file">
-            <label class="custom-file-label" for="{{ form.upper_banner.auto_id }}">
+            <label class="custom-file-label" for=for="{{ form.upper_banner.auto_id }}">
               Choose file
             </label>
             {{ form.upper_banner }}
@@ -200,7 +200,7 @@
             <i class="fa fa-bookmark" aria-hidden="true"></i>
             Save
           </button>
-          <button class="btn btn-info ml-2" id="reset-form-button">
+          <button type="button" class="btn btn-info ml-2" id="reset-form-button">
             <i class="fa fa fa-minus" aria-hidden="true"></i>
             Reset
           </button>
@@ -266,6 +266,19 @@
       }
     });
 
+    $("input[type='text'], input[type='url'], textarea").each(function () {
+      $(this).attr('data-initial', $(this).val());
+    });
+
+    $("#reset-form-button").click(function (e) {
+      e.preventDefault();
+
+      $("input[type='text'], input[type='url'], textarea").each(function () {
+        const initial = $(this).attr('data-initial');
+        $(this).val(initial);
+      });
+    })
+
     $('#add-cinema-image-button').click(function () {
       const $totalForms = $('#id_cinemaimage_set-TOTAL_FORMS');
       const count = parseInt($totalForms.val());
@@ -311,5 +324,52 @@
       const $image = $(`<img src=${src} alt="preview">`);
       $previewContainer.append($image);
     });
+
+    {% if form.instance.id %}
+      $('#delete-cinema-logo-button').click(function () {
+        const $button = $(this);
+        $.ajax({
+          url: "{% url 'adminlte_cinema_delete_cinema_logo' cinema_id=form.instance.id %}",
+          method: "DELETE",
+          success: function (data) {
+            if (data.status === 202) {
+              toastr.success("Cinema logo was deleted successfully");
+
+              const $preview = $button.parent().prev();
+              $preview.remove();
+              const $previewContainer = $(`<div></div>`);
+              $previewContainer.addClass('preview-logo skeleton')
+              $previewContainer.insertBefore($($button).closest('.input-group'));
+
+              $("#id_logo").prop('required', true);
+              $button.addClass("disabled")
+            }
+          }
+        });
+      })
+
+      $('#delete-cinema-banner-button').click(function () {
+          const $button = $(this);
+          $.ajax({
+            url: "{% url 'adminlte_cinema_delete_cinema_banner' cinema_id=form.instance.id %}",
+            method: "DELETE",
+            success: function (data) {
+              if (data.status === 202) {
+                toastr.success("Cinema banner was deleted successfully");
+
+                const $preview = $button.parent().prev();
+                $preview.remove();
+                const $previewContainer = $(`<div></div>`);
+                $previewContainer.addClass('preview-banner skeleton')
+                $previewContainer.insertBefore($($button).closest('.input-group'));
+
+                $("#id_upper_banner").prop('required', true);
+                $button.addClass("disabled")
+              }
+            }
+          })
+        }
+      )
+    {% endif %}
   </script>
 {% endblock script %}

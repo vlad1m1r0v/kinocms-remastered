@@ -1,10 +1,12 @@
 {% extends "adminlte/panel/base.html" %}
+{% load static %}
 {% block title %}
   Cinemas
 {% endblock title %}
 {% block head %}
-  <style>
-  </style>
+  <link rel="stylesheet" href="{% static 'custom/css/full-width-button-group.css' %}">
+  <link rel="stylesheet" href="{% static 'custom/css/preview.css' %}">
+  <link rel="stylesheet" href={% static 'custom/css/grid.css' %}>
 {% endblock %}
 {% block content %}
   <div class="card">
@@ -13,6 +15,33 @@
     </div>
     <div class="card-body grid-container p-2">
       {% for cinema in cinemas %}
+        <div class="card p-2">
+          <div class="preview-logo">
+            <img src="{{ cinema.logo.url }}"
+                 alt="preview">
+          </div>
+          <div class="card-body text-center p-0">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><p class="mb-1">{{ cinema.name_en }}</p></li>
+              <li class="list-group-item pt-2 pb-0">
+                <div class="btn-group">
+                  <a href="{% url 'adminlte_cinemas_update_cinema' cinema_id=cinema.id %}"
+                     type="button"
+                     class="btn btn-primary w-100">
+                    <i class="fa fa-pen" aria-hidden="true"></i>
+                    Update
+                  </a>
+                  <a type="button"
+                     class="btn btn-danger w-100 delete-film-button"
+                     data-toggle="modal"
+                     data-target="#confirmationModal">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                    Delete
+                  </a>
+                </div>
+            </ul>
+          </div>
+        </div>
       {% endfor %}
     </div>
   </div>
@@ -47,5 +76,6 @@
     </div>
   </div>
 {% endblock content %}
+
 {% block script %}
 {% endblock script %}

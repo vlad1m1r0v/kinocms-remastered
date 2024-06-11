@@ -8,7 +8,8 @@ from apps.films.views import AdminFilmsView, AdminCreateFilmView, AdminUpdateFil
 from apps.users.views import AdminLoginView, AdminLogoutView
 from apps.banners.views import AdminBannersView, AdminBackgroundSettingsView, AdminTopBannersView, \
     AdminAdvertisementBannersView, AdminDeleteBackgroundView
-from apps.cinemas.views import AdminCinemasView,AdminCreateCinemaView
+from apps.cinemas.views import AdminCinemasView, AdminCreateCinemaView, AdminUpdateCinemaView, \
+    AdminDeleteCinemaBannerView, AdminDeleteCinemaLogoView
 
 adminlte = [
     path("authentication/login/", AdminLoginView.as_view(), name="adminlte_authentication_login"),
@@ -27,7 +28,12 @@ adminlte = [
     path("films/<int:film_id>/delete/", AdminDeleteFilmView.as_view(), name="adminlte_films_delete_film"),
     path("films/<int:film_id>/image", AdminDeleteFilmImageView.as_view(), name="adminlte_films_delete_film_image"),
     path("cinemas/", AdminCinemasView.as_view(), name="adminlte_cinemas"),
-    path("cinemas/create/", AdminCreateCinemaView.as_view(), name="adminlte_cinemas_create_cinema")
+    path("cinemas/create/", AdminCreateCinemaView.as_view(), name="adminlte_cinemas_create_cinema"),
+    path("cinemas/<int:cinema_id>/update/", AdminUpdateCinemaView.as_view(), name="adminlte_cinemas_update_cinema"),
+    path("cinemas/<int:cinema_id>/banner/", AdminDeleteCinemaBannerView.as_view(),
+         name="adminlte_cinema_delete_cinema_banner"),
+    path("cinemas/<int:cinema_id>/logo/", AdminDeleteCinemaLogoView.as_view(),
+         name="adminlte_cinema_delete_cinema_logo"),
 ]
 
 site = [

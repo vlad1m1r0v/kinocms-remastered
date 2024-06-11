@@ -312,11 +312,15 @@
           success: function (data) {
             if (data.status === 202) {
               toastr.success("Film image was deleted successfully");
+
               const $preview = $button.parent().prev();
               $preview.remove();
               const $previewContainer = $(`<div></div>`);
               $previewContainer.addClass('preview-image skeleton')
               $previewContainer.insertBefore($($button).closest('.input-group'));
+
+              $("#id_image").prop('required', true);
+              $button.addClass("disabled")
             }
           }
         });
