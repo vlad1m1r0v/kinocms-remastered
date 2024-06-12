@@ -57,6 +57,16 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-ajax-datatable"
+version = "4.5.0"
+description = "Helper class to integrate Django with datatables"
+optional = false
+python-versions = "*"
+files = [
+    {file = "django_ajax_datatable-4.5.0-py2.py3-none-any.whl", hash = "sha256:99233042e6c7d03ed730ea13b4dba1c3e8a66dd1f57022a07b29acb8812ad6f1"},
+]
+
+[[package]]
 name = "django-environ"
 version = "0.11.2"
 description = "A package that allows you to utilize 12factor inspired environment variables to configure your Django application."
@@ -382,4 +392,4 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "28db7c734e2e3070edb5e6312215b3520b8e9f2305371484d5afef11739362b0"
+content-hash = "c3cff8a68c6e813cdd86ae76d15b6ab0939988e80864bcbd7643ce9d20a08564"

@@ -27,6 +27,7 @@ class Hall(SEOModel):
     scheme = models.ImageField(upload_to=get_hall_scheme_path)
     upper_banner = models.ImageField(upload_to=get_hall_upper_banner_path)
     capacity = models.SmallIntegerField(default=200)
+    created_at = models.DateField(auto_now_add=True)
 
 
 class HallImage(models.Model):

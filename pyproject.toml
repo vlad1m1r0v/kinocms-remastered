@@ -13,6 +13,7 @@ django = "^5.0.6"
 psycopg2 = "^2.9.9"
 django-environ = "^0.11.2"
 pillow = "^10.3.0"
+django-ajax-datatable = "^4.5.0"
 
 
 [tool.poetry.group.dev.dependencies]

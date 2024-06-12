@@ -11,6 +11,13 @@
   <link rel="stylesheet" href="{% static 'custom/css/delete-corner-button.css' %}">
   <link rel="stylesheet" href="{% static 'custom/css/horizontal-formset.css' %}">
   <link rel="stylesheet" href="{% static 'custom/css/skeleton.css' %}">
+  <link rel="stylesheet" href="{% static 'custom/css/django-ajax-datatable.css' %}">
+  <link rel="stylesheet" href="{% static 'custom/css/datatable.css' %}">
+  <!--DataTable-->
+  <link href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap4.css" rel="stylesheet">
+  <script defer src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+  <script defer src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap4.js"></script>
+  <script defer src="{% static 'plugins/ajax_datatable/js/utils.js' %}"></script>
 {% endblock %}
 {% block content %}
   <div class="card">
@@ -169,8 +176,11 @@
             Add form
           </button>
         </div>
+        <h5 class="ml-2 mb-1 mt-2">Halls</h5>
+        <!--DataTable-->
+        <table id="datatable_halls" class="table table-striped table-bordered" style="width:100%"></table>
         <!--SEO Block-->
-        <h5 class="ml-2 mb-1">SEO Block</h5>
+        <h5 class="ml-2 mb-1 mt-2">SEO Block</h5>
         <div class="input-group mb-2">
           <div class="input-group-prepend">
             <span class="input-group-text">URL</span>
@@ -210,6 +220,13 @@
   </div>
 {% endblock content %}
 {% block script %}
+  <!--DataTable-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+  <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap4.js"></script>
+  <!--Django AJAX DataTable-->
+  <script type="text/javascript" src="{% static 'plugins/ajax_datatable/js/utils.js' %}"></script>
   <script>
     const $wrappers = $('.scrolling-wrapper');
     const $emptyCinemaImageForm = $wrappers.eq(0).find('.mt-3 .card:last-child').clone(true);
@@ -371,5 +388,46 @@
         }
       )
     {% endif %}
+  </script>
+  <script defer>
+    $(document).ready(function () {
+      AjaxDatatableViewUtils.initialize_table(
+        $('#datatable_halls'),
+        "{% url 'adminlte_halls_datatable' %}",
+        {
+          processing: false,
+          autoWidth: false,
+          full_row_select: true,
+          scrollX: false
+        }, {
+          cinema_id: '{{ form.instance.id }}'
+        },
+      );
+
+      $('#datatable_halls').on('drawCallback', function () {
+        const $dtLength = $('.dt-length');
+        const $dtSearch = $('.dt-search');
+
+        const $dtInfo = $('.dt-info');
+        const $dtPaging = $('.dt-paging');
+
+        $dtLength.wrap('<div class="col-md-auto mr-auto"></div>');
+        $dtSearch.wrap('<div class="col-md-auto ml-auto"></div>');
+        $dtInfo.wrap('<div class="col-md-auto mr-auto"></div>');
+        $dtPaging.wrap('<div class="col-md-auto ml-auto"></div>');
+
+        const firstRow = $('<div class="row justify-content-between"></div>')
+          .append($dtLength.parent())
+          .append($dtSearch.parent());
+
+        const secondRow = $('<div class="row justify-content-between"></div>')
+          .append($dtInfo.parent())
+          .append($dtPaging.parent());
+
+        firstRow.insertBefore('#datatable_halls');
+        secondRow.insertAfter('#datatable_halls');
+
+      });
+    });
   </script>
 {% endblock script %}

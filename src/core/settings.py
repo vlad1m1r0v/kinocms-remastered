@@ -31,7 +31,8 @@ INSTALLED_APPS = [
     "apps.banners.apps.BannersConfig",
     "apps.films.apps.FilmsConfig",
     "apps.cinemas.apps.CinemasConfig",
-    "apps.halls.apps.HallsConfig"
+    "apps.halls.apps.HallsConfig",
+    "ajax_datatable",
 ]
 
 MIDDLEWARE = [
@@ -126,3 +127,5 @@ AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
     "apps.users.authentication.EmailBackend",
 ]
+
+AJAX_DATATABLE_STRIP_HTML_TAGS = False
