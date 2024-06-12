@@ -270,7 +270,7 @@
 
       const $preview = $(this).parent().parent().prev();
 
-      const className = $($preview).hasClass("preview-formset") ? "preview-formset" : "preview-image";
+      const className = $($preview).hasClass("preview-formset") ? "preview-formset" : "preview-poster";
 
       $preview.remove();
 
@@ -316,7 +316,7 @@
               const $preview = $button.parent().prev();
               $preview.remove();
               const $previewContainer = $(`<div></div>`);
-              $previewContainer.addClass('preview-image skeleton')
+              $previewContainer.addClass('preview-poster skeleton')
               $previewContainer.insertBefore($($button).closest('.input-group'));
 
               $("#id_image").prop('required', true);

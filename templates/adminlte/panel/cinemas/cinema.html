@@ -14,9 +14,6 @@
   <link rel="stylesheet" href="{% static 'custom/css/datatable.css' %}">
   <!--DataTable-->
   <link href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap4.css" rel="stylesheet">
-  <script defer src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
-  <script defer src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap4.js"></script>
-  <script defer src="{% static 'plugins/ajax_datatable/js/utils.js' %}"></script>
 {% endblock %}
 {% block content %}
   <div class="card">
@@ -226,11 +223,33 @@
       </form>
     </div>
   </div>
+  <!-- Modal -->
+  <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmationModalLabel">Confirmation window</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete hall?
+        </div>
+        <form method="post" id="delete-hall-form">
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Confirm</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 {% endblock content %}
 {% block script %}
   <!--DataTable-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
   <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap4.js"></script>
   <!--Django AJAX DataTable-->
@@ -439,12 +458,22 @@
       });
 
       $(document).on('click', '.update-hall-button', function () {
+        const id = this.closest('tr').id.substr(4);
         const currentHref = window.location.href;
         const cropped = currentHref
           .substring(0, currentHref.slice(0, currentHref.length - 1)
             .lastIndexOf("/"));
-        window.location.href = `${cropped}/halls/${this.closest('tr').id.substr(4)}/update`
+        window.location.href = `${cropped}/halls/${id}/update`;
       });
+
+      $(document).on('click', '.btn-danger', function () {
+        const id = this.closest('tr').id.substr(4);
+        const currentHref = window.location.href;
+        const cropped = currentHref
+          .substring(0, currentHref.slice(0, currentHref.length - 1)
+            .lastIndexOf("/"));
+        $('#delete-hall-form').attr('action', `${cropped}/halls/${id}/delete`);
+      })
     {% endif %}
   </script>
   <script defer>

@@ -336,9 +336,9 @@
 
       const $cardBody = $(this).closest('.card-body');
 
-      const $preview = $cardBody.find('.preview-formset, .preview-image');
+      const $preview = $cardBody.find('.preview-formset, .preview-poster');
 
-      const className = $($preview).hasClass("preview-formset") ? "preview-formset" : "preview-image";
+      const className = $($preview).hasClass("preview-formset") ? "preview-formset" : "preview-poster";
 
       $preview.remove();
 
@@ -360,11 +360,12 @@
             if (data.status === 202) {
               toastr.success("Background was deleted successfully");
               const $cardBody = $button.closest('.card-body');
-              const $preview = $cardBody.find('.preview-image');
+              const $preview = $cardBody.find('.preview-poster');
               $preview.remove();
               const $skeleton = $('<div></div>');
-              $skeleton.addClass('skeleton rounded preview-image');
+              $skeleton.addClass('skeleton rounded preview-poster');
               $cardBody.prepend($skeleton);
+              $button.addClass("disabled");
             }
           }
         });

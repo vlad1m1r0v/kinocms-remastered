@@ -135,3 +135,14 @@ class AdminDeleteHallSchemeView(View):
         hall_id: int = kwargs.get('hall_id')
         Hall.objects.get(pk=hall_id).scheme.delete()
         return JsonResponse({"status": 202})
+
+
+@admin_only
+class AdminDeleteHallView(View):
+    @staticmethod
+    def post(request: HttpRequest, *args, **kwargs):
+        cinema_id: int = kwargs.get('cinema_id')
+        hall_id: int = kwargs.get('hall_id')
+        Hall.objects.get(pk=hall_id).delete()
+        messages.success(request, "Hall was deleted successfully")
+        return redirect("adminlte_cinemas_update_cinema", cinema_id=cinema_id)

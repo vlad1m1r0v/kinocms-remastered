@@ -11,7 +11,7 @@ from apps.banners.views import AdminBannersView, AdminBackgroundSettingsView, Ad
 from apps.cinemas.views import AdminCinemasView, AdminCreateCinemaView, AdminUpdateCinemaView, \
     AdminDeleteCinemaBannerView, AdminDeleteCinemaLogoView
 from apps.halls.views import AdminHallsDataTableView, AdminCreateHallView, AdminUpdateHallView, \
-    AdminDeleteHallSchemeView, AdminDeleteHallBannerView
+    AdminDeleteHallSchemeView, AdminDeleteHallBannerView, AdminDeleteHallView
 
 adminlte = [
     path("authentication/login/", AdminLoginView.as_view(), name="adminlte_authentication_login"),
@@ -39,6 +39,8 @@ adminlte = [
     path("cinemas/<int:cinema_id>/halls/create", AdminCreateHallView.as_view(), name="adminlte_halls_create_hall"),
     path("cinemas/<int:cinema_id>/halls/<int:hall_id>/update", AdminUpdateHallView.as_view(),
          name="adminlte_halls_update_hall"),
+    path("cinemas/<int:cinema_id>/halls/<int:hall_id>/delete", AdminDeleteHallView.as_view(),
+         name="adminlte_halls_delete_hall"),
     path("halls/", AdminHallsDataTableView.as_view(), name="adminlte_halls_datatable"),
     path("halls/<int:hall_id>/banner/", AdminDeleteHallBannerView.as_view(), name="adminlte_halls_delete_hall_banner"),
     path("halls/<int:hall_id>/scheme/", AdminDeleteHallSchemeView.as_view(), name="adminlte_halls_delete_hall_scheme"),
