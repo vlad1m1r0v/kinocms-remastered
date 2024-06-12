@@ -11,7 +11,6 @@
   <link rel="stylesheet" href="{% static 'custom/css/delete-corner-button.css' %}">
   <link rel="stylesheet" href="{% static 'custom/css/horizontal-formset.css' %}">
   <link rel="stylesheet" href="{% static 'custom/css/skeleton.css' %}">
-  <link rel="stylesheet" href="{% static 'custom/css/django-ajax-datatable.css' %}">
   <link rel="stylesheet" href="{% static 'custom/css/datatable.css' %}">
   <!--DataTable-->
   <link href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap4.css" rel="stylesheet">
@@ -178,7 +177,16 @@
         </div>
         <h5 class="ml-2 mb-1 mt-2">Halls</h5>
         <!--DataTable-->
-        <table id="datatable_halls" class="table table-striped table-bordered" style="width:100%"></table>
+        {% if form.instance.id %}
+          <table id="datatable_halls" class="table table-table-striped table-bordered" style="width:100%"></table>
+          <div class="d-flex justify-content-end">
+            <a href="{% url 'adminlte_halls_create_hall' cinema_id=form.instance.id %}"
+               class="btn btn-primary btn-success">
+              <i class="fa fa-plus-circle" aria-hidden="true"></i>
+              Add hall
+            </a>
+          </div>
+        {% endif %}
         <!--SEO Block-->
         <h5 class="ml-2 mb-1 mt-2">SEO Block</h5>
         <div class="input-group mb-2">
@@ -387,12 +395,11 @@
           })
         }
       )
-    {% endif %}
-  </script>
-  <script defer>
-    $(document).ready(function () {
+
+      const $datatable = $('#datatable_halls');
+
       AjaxDatatableViewUtils.initialize_table(
-        $('#datatable_halls'),
+        $datatable,
         "{% url 'adminlte_halls_datatable' %}",
         {
           processing: false,
@@ -404,15 +411,14 @@
         },
       );
 
-      $('#datatable_halls').on('drawCallback', function () {
+      $datatable.on('initComplete', function () {
         const $dtLength = $('.dt-length');
         const $dtSearch = $('.dt-search');
+        $dtLength.wrap('<div class="col-md-auto mr-auto"></div>');
+        $dtSearch.wrap('<div class="col-md-auto ml-auto"></div>');
 
         const $dtInfo = $('.dt-info');
         const $dtPaging = $('.dt-paging');
-
-        $dtLength.wrap('<div class="col-md-auto mr-auto"></div>');
-        $dtSearch.wrap('<div class="col-md-auto ml-auto"></div>');
         $dtInfo.wrap('<div class="col-md-auto mr-auto"></div>');
         $dtPaging.wrap('<div class="col-md-auto ml-auto"></div>');
 
@@ -420,14 +426,27 @@
           .append($dtLength.parent())
           .append($dtSearch.parent());
 
-        const secondRow = $('<div class="row justify-content-between"></div>')
+        const secondRow = $('<div class="row justify-content-between mb-2"></div>')
           .append($dtInfo.parent())
           .append($dtPaging.parent());
 
         firstRow.insertBefore('#datatable_halls');
         secondRow.insertAfter('#datatable_halls');
 
+        const $table = $('#datatable_halls')
+        $table.wrap('<div style="overflow-x: auto"></div>');
+
       });
-    });
+
+      $(document).on('click', '.update-hall-button', function () {
+        const currentHref = window.location.href;
+        const cropped = currentHref
+          .substring(0, currentHref.slice(0, currentHref.length - 1)
+            .lastIndexOf("/"));
+        window.location.href = `${cropped}/halls/${this.closest('tr').id.substr(4)}/update`
+      });
+    {% endif %}
+  </script>
+  <script defer>
   </script>
 {% endblock script %}

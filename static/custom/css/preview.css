@@ -1,4 +1,4 @@
-.preview-image, .preview-formset, .preview-logo, .preview-banner {
+.preview-poster, .preview-formset, .preview-logo, .preview-banner, .preview-scheme {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,12 +16,12 @@
 }
 
 
-.preview-image {
+.preview-poster {
   width: 100%;
   aspect-ratio: 9/16;
 }
 
-.preview-image img {
+.preview-poster img {
   height: 100%;
 }
 
@@ -40,5 +40,14 @@
 }
 
 .preview-banner img {
+  width: 100%;
+}
+
+.preview-scheme {
+  width: 100%;
+  aspect-ratio: 16/9;
+}
+
+.preview-scheme img {
   width: 100%;
 }

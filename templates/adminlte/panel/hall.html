@@ -1,7 +1,7 @@
 {% extends "adminlte/panel/base.html" %}
 {% load static %}
 {% block title %}
-  Film
+  Hall
 {% endblock %}
 {% block head %}
   <style>
@@ -15,7 +15,7 @@
 {% block content %}
   <div class="card">
     <div class="card-header p-2">
-      Film
+      Hall
     </div>
     <div class="card-body p-2">
       <ul class="nav nav-tabs mb-2">
@@ -33,58 +33,80 @@
         <h5 class="ml-2">General information</h5>
         <div class="input-group mb-2 en">
           <div class="input-group-prepend">
-            <span class="input-group-text">Film name in English</span>
+            <span class="input-group-text">Hall name in English</span>
           </div>
           {{ form.name_en }}
         </div>
         <div class="input-group mb-2 en">
           <div class="input-group-prepend">
             <span class="input-group-text">
-              Film description in English
+              Hall description in English
             </span>
           </div>
           {{ form.description_en }}
         </div>
         <div class="input-group mb-2 uk">
           <div class="input-group-prepend">
-            <span class="input-group-text">Film name in Ukrainian</span>
+            <span class="input-group-text">Hall name in Ukrainian</span>
           </div>
           {{ form.name_uk }}
         </div>
         <div class="input-group mb-2 uk">
           <div class="input-group-prepend">
             <span class="input-group-text">
-              Film description in Ukrainian
+              Hall description in Ukrainian
             </span>
           </div>
           {{ form.description_uk }}
         </div>
-        <div class="input-group mb-2">
-          <div class="input-group-prepend">
-            <span class="input-group-text">Trailer URL</span>
+        <!--Scheme-->
+        <h5 class="ml-2 mt-3">Scheme</h5>
+        <div class="d-flex justify-content-center">
+          <div style="width: min(50rem, 100%)">
+            {% if form.instance.scheme %}
+              <div class="preview-scheme">
+                <img src="{{ form.instance.scheme.url }}" alt="preview">
+              </div>
+            {% else %}
+              <div class="preview-scheme skeleton"></div>
+            {% endif %}
+            <div class="input-group mb-3">
+              <div class="custom-file">
+                <label class="custom-file-label" for="{{ form.scheme.auto_id }}">
+                  Choose file
+                </label>
+                {{ form.scheme }}
+              </div>
+              <button
+                type="button"
+                class="btn btn-primary btn-danger ml-2{% if not form.instance.scheme %} disabled {% endif %}"
+                id="delete-scheme-button">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+                Delete
+              </button>
+            </div>
           </div>
-          {{ form.trailer_url }}
         </div>
-        <!--Main Image-->
-        <h5 class="ml-2 mt-3">Main image</h5>
-        {% if form.instance.image %}
-          <div class="preview-poster">
-            <img src="{{ form.instance.image.url }}" alt="preview">
+        <!--Upper Banner-->
+        <h5 class="ml-2">Banner Image</h5>
+        {% if form.instance.upper_banner %}
+          <div class="preview-banner">
+            <img src="{{ form.instance.upper_banner.url }}" alt="preview">
           </div>
         {% else %}
-          <div class="preview-poster skeleton"></div>
+          <div class="preview-banner skeleton"></div>
         {% endif %}
         <div class="input-group mb-3">
           <div class="custom-file">
-            <label class="custom-file-label" for="{{ form.image.auto_id }}">
+            <label class="custom-file-label" for="{{ form.upper_banner.auto_id }}">
               Choose file
             </label>
-            {{ form.image }}
+            {{ form.upper_banner }}
           </div>
           <button
             type="button"
-            class="btn btn-primary btn-danger ml-2{% if not form.instance.image %} disabled {% endif %}"
-            id="delete-main-image-button">
+            class="btn btn-primary btn-danger ml-2{% if not form.instance.upper_banner %} disabled {% endif %}"
+            id="delete-banner-button">
             <i class="fa fa-trash" aria-hidden="true"></i>
             Delete
           </button>
@@ -130,50 +152,34 @@
         <div class="d-flex justify-content-end">
           <button type="button"
                   class="btn btn-primary btn-info"
-                  id="add-film-image-button">
+                  id="add-hall-image-button">
             <i class="fa fa-plus-circle" aria-hidden="true"></i>
             Add form
           </button>
         </div>
-        <!--Cinema Type-->
-        <div class="d-flex flex-row mb-2 mt-3">
-          <div class="ml-2 mr-4 pt-1"><h5 class="mb-1">Cinema type</h5></div>
-          <div class="form-check form-check-inline">
-            {{ form.is_3d }}
-            <label class="form-check-label" for={{ form.is_3d.auto_id }}>3D</label>
-          </div>
-          <div class="form-check form-check-inline">
-            {{ form.is_2d }}
-            <label class="form-check-label" for={{ form.is_2d.auto_id }}>2D</label>
-          </div>
-          <div class="form-check form-check-inline">
-            {{ form.is_imax }}
-            <label class="form-check-label" for={{ form.is_imax.auto_id }}>IMAX</label>
-          </div>
-        </div>
         <!--SEO Block-->
-        <h5 class="ml-2 mb-1">SEO Block</h5>
+        <h5 class="ml-2 mb-1 mt-2">SEO Block</h5>
         <div class="input-group mb-2">
           <div class="input-group-prepend">
-            <span class="input-group-text" id="film-seo-url-span">URL</span>
+            <span class="input-group-text">URL</span>
           </div>
           {{ form.seo_url }}
         </div>
         <div class="input-group mb-2">
           <div class="input-group-prepend">
-            <span class="input-group-text" id="film-seo-title-span">Title</span>
+            <span class="input-group-text">Title</span>
           </div>
           {{ form.seo_title }}
         </div>
         <div class="input-group mb-2">
           <div class="input-group-prepend">
-            <span class="input-group-text" id="film-seo-keywords-span">Keywords</span>
+            <span class="input-group-text">Keywords</span>
           </div>
           {{ form.seo_keywords }}
         </div>
         <div class="input-group mb-2">
           <div class="input-group-prepend">
-            <span class="input-group-text" id="film-seo-description-span">Description</span>
+            <span class="input-group-text">Description</span>
           </div>
           {{ form.seo_description }}
         </div>
@@ -182,7 +188,7 @@
             <i class="fa fa-bookmark" aria-hidden="true"></i>
             Save
           </button>
-          <button class="btn btn-info ml-2" id="reset-form-button">
+          <button type="button" class="btn btn-info ml-2" id="reset-form-button">
             <i class="fa fa fa-minus" aria-hidden="true"></i>
             Reset
           </button>
@@ -191,11 +197,10 @@
     </div>
   </div>
 {% endblock %}
-
 {% block script %}
   <script>
     const $wrappers = $('.scrolling-wrapper');
-    const $emptyFilmImageForm = $wrappers.eq(0).find('.mt-3 .card:last-child').clone(true);
+    const $emptyHallImageForm = $wrappers.eq(0).find('.mt-3 .card:last-child').clone(true);
 
     $wrappers.each(function () {
       let isDown = false;
@@ -262,6 +267,29 @@
       });
     })
 
+    $('#add-hall-image-button').click(function () {
+      const $totalForms = $('#id_hallimage_set-TOTAL_FORMS');
+      const count = parseInt($totalForms.val());
+
+      const $hallImageFormMarkup = $emptyHallImageForm.prop('outerHTML');
+      const regex = /hallimage_set-(\d+)-/g;
+      const $compiledCinemaImageForm = $hallImageFormMarkup.replace(regex, `hallimage_set-${count}-`);
+
+      $wrappers.eq(0).find('.mt-3').append($compiledCinemaImageForm);
+
+      $totalForms.attr('value', count + 1);
+
+      $wrappers.eq(0).animate({
+        scrollLeft: $wrappers.eq(0).prop('scrollWidth')
+      }, 500);
+    });
+
+    $(document).on('click', '.delete-corner-button', function () {
+      const $card = $(this).closest('.card');
+      $card.find('input[type="checkbox"]').attr('checked', true);
+      $card.hide();
+    })
+
     $(document).on('change', 'input:file', function (e) {
       $(this).prev().html($(this).val().split('\\').pop());
 
@@ -270,7 +298,10 @@
 
       const $preview = $(this).parent().parent().prev();
 
-      const className = $($preview).hasClass("preview-formset") ? "preview-formset" : "preview-image";
+      const className = $($preview)
+        .attr('class')
+        .split(/\s+/)
+        .find(className => className.startsWith('preview'));
 
       $preview.remove();
 
@@ -281,50 +312,52 @@
       $previewContainer.append($image);
     });
 
-    $(document).on('click', '.delete-corner-button', function () {
-      const $card = $(this).closest('.card');
-      $card.find('input[type="checkbox"]').attr('checked', true);
-      $card.hide();
-    })
-
-    $('#add-film-image-button').click(function () {
-      const $totalForms = $('#id_filmimage_set-TOTAL_FORMS');
-      const count = parseInt($totalForms.val());
-
-      const $filmImageFormMarkup = $emptyFilmImageForm.prop('outerHTML');
-      const regex = /filmimage_set-(\d+)-/g;
-      const $compiledFilmImageForm = $filmImageFormMarkup.replace(regex, `filmimage_set-${count}-`);
-
-      $wrappers.eq(0).find('.mt-3').append($compiledFilmImageForm);
-
-      $totalForms.attr('value', count + 1);
-
-      $wrappers.eq(0).animate({
-        scrollLeft: $wrappers.eq(0).prop('scrollWidth')
-      }, 500);
-    });
     {% if form.instance.id %}
-      $('#delete-main-image-button').click(function () {
-        const $button = $(this);
-        $.ajax({
-          url: "{% url 'adminlte_films_delete_film_image' film_id=form.instance.id %}",
-          method: "DELETE",
-          success: function (data) {
-            if (data.status === 202) {
-              toastr.success("Film image was deleted successfully");
+      $('#delete-scheme-button').click(function () {
+          const $button = $(this);
+          $.ajax({
+            url: "{% url 'adminlte_halls_delete_hall_scheme' hall_id=form.instance.id %}",
+            method: "DELETE",
+            success: function (data) {
+              if (data.status === 202) {
+                toastr.success("Hall scheme was deleted successfully");
 
-              const $preview = $button.parent().prev();
-              $preview.remove();
-              const $previewContainer = $(`<div></div>`);
-              $previewContainer.addClass('preview-image skeleton')
-              $previewContainer.insertBefore($($button).closest('.input-group'));
+                const $preview = $button.parent().prev();
+                $preview.remove();
+                const $previewContainer = $(`<div></div>`);
+                $previewContainer.addClass('preview-scheme skeleton')
+                $previewContainer.insertBefore($($button).closest('.input-group'));
 
-              $("#id_image").prop('required', true);
-              $button.addClass("disabled")
+                $("#id_scheme").prop('required', true);
+                $button.addClass("disabled")
+              }
             }
-          }
-        });
-      })
+          })
+        }
+      );
+
+      $('#delete-banner-button').click(function () {
+          const $button = $(this);
+          $.ajax({
+            url: "{% url 'adminlte_halls_delete_hall_banner' hall_id=form.instance.id %}",
+            method: "DELETE",
+            success: function (data) {
+              if (data.status === 202) {
+                toastr.success("Hall banner was deleted successfully");
+
+                const $preview = $button.parent().prev();
+                $preview.remove();
+                const $previewContainer = $(`<div></div>`);
+                $previewContainer.addClass('preview-banner skeleton')
+                $previewContainer.insertBefore($($button).closest('.input-group'));
+
+                $("#id_upper_banner").prop('required', true);
+                $button.addClass("disabled")
+              }
+            }
+          })
+        }
+      )
     {% endif %}
   </script>
 {% endblock script %}

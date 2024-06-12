@@ -17,7 +17,7 @@
     <div class="card-body grid-container p-2">
       {% for film in current_films %}
         <div class="card p-2">
-          <div class="preview-image">
+          <div class="preview-poster">
             <img src="{{ film.image.url }}"
                  alt="preview">
           </div>
@@ -54,7 +54,7 @@
     <div class="card-body grid-container p-2">
       {% for film in upcoming_films %}
         <div class="card p-2">
-          <div class="preview-image">
+          <div class="preview-poster">
             <img src="{{ film.image.url }}"
                  alt="preview">
           </div>
