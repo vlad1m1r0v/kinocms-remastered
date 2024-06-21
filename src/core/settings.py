@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     "apps.films.apps.FilmsConfig",
     "apps.cinemas.apps.CinemasConfig",
     "apps.halls.apps.HallsConfig",
+    "apps.news.apps.NewsConfig",
+    "apps.promotions.apps.PromotionsConfig",
     "ajax_datatable",
 ]
 

@@ -252,6 +252,7 @@
   <!--DataTable-->
   <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
   <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap4.js"></script>
+  <script src="{% static 'custom/js/restructure-datatable.js' %}"></script>
   <!--Django AJAX DataTable-->
   <script type="text/javascript" src="{% static 'plugins/ajax_datatable/js/utils.js' %}"></script>
   <script>
@@ -431,30 +432,7 @@
       );
 
       $datatable.on('initComplete', function () {
-        const $dtLength = $('.dt-length');
-        const $dtSearch = $('.dt-search');
-        $dtLength.wrap('<div class="col-md-auto mr-auto"></div>');
-        $dtSearch.wrap('<div class="col-md-auto ml-auto"></div>');
-
-        const $dtInfo = $('.dt-info');
-        const $dtPaging = $('.dt-paging');
-        $dtInfo.wrap('<div class="col-md-auto mr-auto"></div>');
-        $dtPaging.wrap('<div class="col-md-auto ml-auto"></div>');
-
-        const firstRow = $('<div class="row justify-content-between"></div>')
-          .append($dtLength.parent())
-          .append($dtSearch.parent());
-
-        const secondRow = $('<div class="row justify-content-between mb-2"></div>')
-          .append($dtInfo.parent())
-          .append($dtPaging.parent());
-
-        firstRow.insertBefore('#datatable_halls');
-        secondRow.insertAfter('#datatable_halls');
-
-        const $table = $('#datatable_halls')
-        $table.wrap('<div style="overflow-x: auto"></div>');
-
+        restructureDatatable()
       });
 
       $(document).on('click', '.update-hall-button', function () {
@@ -472,7 +450,7 @@
         const cropped = currentHref
           .substring(0, currentHref.slice(0, currentHref.length - 1)
             .lastIndexOf("/"));
-        $('#delete-hall-form').attr('action', `${cropped}/halls/${id}/delete`);
+        $('#delete-hall-form').attr('action', `${cropped}/halls/${id}/delete/`);
       })
     {% endif %}
   </script>

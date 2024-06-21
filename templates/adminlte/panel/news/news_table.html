@@ -1,0 +1,90 @@
+{% extends "adminlte/panel/base.html" %}
+{% load static %}
+{% block title %}
+  News
+{% endblock %}
+{% block head %}
+  <link rel="stylesheet" href="{% static 'custom/css/datatable.css' %}">
+  <!--DataTable-->
+  <link href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap4.css" rel="stylesheet">
+{% endblock head %}
+{% block content %}
+  <!--DataTable-->
+  <table id="datatable_news" class="table table-table-striped table-bordered"
+         style="width:100%; background: white"></table>
+  <div class="d-flex justify-content-end">
+    <a href="{% url 'adminlte_news_create_news' %}"
+       class="btn btn-primary btn-success">
+      <i class="fa fa-plus-circle" aria-hidden="true"></i>
+      Add news
+    </a>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmationModalLabel">Confirmation window</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete news?
+        </div>
+        <form method="post" id="delete-news-form">
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Confirm</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block script %}
+  <!--DataTable-->
+  <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+  <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap4.js"></script>
+  <script src="{% static 'custom/js/restructure-datatable.js' %}"></script>
+  <!--Django AJAX DataTable-->
+  <script type="text/javascript" src="{% static 'plugins/ajax_datatable/js/utils.js' %}"></script>
+  <script>
+    const $datatable = $('#datatable_news');
+
+    AjaxDatatableViewUtils.initialize_table(
+      $datatable,
+      "{% url 'adminlte_news_datatable' %}",
+      {
+        processing: false,
+        autoWidth: false,
+        full_row_select: true,
+        scrollX: false
+      }
+    );
+
+    $datatable.on('initComplete', function () {
+      restructureDatatable();
+    });
+
+    $(document).on('click', '.update-news-button', function () {
+      const id = this.closest('tr').id.substr(4);
+      const currentHref = window.location.href;
+      const cropped = currentHref
+        .substring(0, currentHref.slice(0, currentHref.length - 1)
+          .lastIndexOf("/"));
+      window.location.href = `${cropped}/news/${id}/update`;
+    });
+
+    $(document).on('click', '.btn-danger', function () {
+      const id = this.closest('tr').id.substr(4);
+      const currentHref = window.location.href;
+      const cropped = currentHref
+        .substring(0, currentHref.slice(0, currentHref.length - 1)
+          .lastIndexOf("/"));
+      $('#delete-news-form').attr('action', `${cropped}/news/${id}/delete/`);
+    })
+  </script>
+{% endblock script %}

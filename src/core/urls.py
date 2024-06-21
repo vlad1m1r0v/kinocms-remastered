@@ -12,6 +12,8 @@ from apps.cinemas.views import AdminCinemasView, AdminCreateCinemaView, AdminUpd
     AdminDeleteCinemaBannerView, AdminDeleteCinemaLogoView
 from apps.halls.views import AdminHallsDataTableView, AdminCreateHallView, AdminUpdateHallView, \
     AdminDeleteHallSchemeView, AdminDeleteHallBannerView, AdminDeleteHallView
+from apps.news.views import AdminNewsView, AdminCreateNewsView, AdminUpdateNewsView, AdminDeleteNewsImageView, \
+    AdminNewsDataTableView, AdminDeleteNewsView
 
 adminlte = [
     path("authentication/login/", AdminLoginView.as_view(), name="adminlte_authentication_login"),
@@ -36,15 +38,22 @@ adminlte = [
          name="adminlte_cinema_delete_cinema_banner"),
     path("cinemas/<int:cinema_id>/logo/", AdminDeleteCinemaLogoView.as_view(),
          name="adminlte_cinema_delete_cinema_logo"),
-    path("cinemas/<int:cinema_id>/halls/create", AdminCreateHallView.as_view(), name="adminlte_halls_create_hall"),
-    path("cinemas/<int:cinema_id>/halls/<int:hall_id>/update", AdminUpdateHallView.as_view(),
+    path("cinemas/<int:cinema_id>/halls/create/", AdminCreateHallView.as_view(), name="adminlte_halls_create_hall"),
+    path("cinemas/<int:cinema_id>/halls/<int:hall_id>/update/", AdminUpdateHallView.as_view(),
          name="adminlte_halls_update_hall"),
-    path("cinemas/<int:cinema_id>/halls/<int:hall_id>/delete", AdminDeleteHallView.as_view(),
+    path("cinemas/<int:cinema_id>/halls/<int:hall_id>/delete/", AdminDeleteHallView.as_view(),
          name="adminlte_halls_delete_hall"),
-    path("halls/", AdminHallsDataTableView.as_view(), name="adminlte_halls_datatable"),
+    path("halls/datatable/", AdminHallsDataTableView.as_view(), name="adminlte_halls_datatable"),
     path("halls/<int:hall_id>/banner/", AdminDeleteHallBannerView.as_view(), name="adminlte_halls_delete_hall_banner"),
     path("halls/<int:hall_id>/scheme/", AdminDeleteHallSchemeView.as_view(), name="adminlte_halls_delete_hall_scheme"),
-
+    path("news/", AdminNewsView.as_view(), name="adminlte_news"),
+    path("news/datatable/", AdminNewsDataTableView.as_view(), name="adminlte_news_datatable"),
+    path("news/create/", AdminCreateNewsView.as_view(), name="adminlte_news_create_news"),
+    path("news/<int:news_id>/update/", AdminUpdateNewsView.as_view(), name="adminlte_news_update_news"),
+    path("news/<int:news_id>/image/", AdminDeleteNewsImageView.as_view(),
+         name="adminlte_news_delete_news_image"),
+    path("news/<int:news_id>/delete/", AdminDeleteNewsView.as_view(),
+         name="adminlte_news_delete_news"),
 ]
 
 site = [
