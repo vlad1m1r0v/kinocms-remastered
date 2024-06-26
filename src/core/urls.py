@@ -14,6 +14,8 @@ from apps.halls.views import AdminHallsDataTableView, AdminCreateHallView, Admin
     AdminDeleteHallSchemeView, AdminDeleteHallBannerView, AdminDeleteHallView
 from apps.news.views import AdminNewsView, AdminCreateNewsView, AdminUpdateNewsView, AdminDeleteNewsImageView, \
     AdminNewsDataTableView, AdminDeleteNewsView
+from apps.promotions.views import AdminPromotionsView, AdminPromotionsDataTableView, AdminCreatePromotionView, \
+    AdminUpdatePromotionView, AdminDeletePromotionView, AdminDeletePromotionImageView
 
 adminlte = [
     path("authentication/login/", AdminLoginView.as_view(), name="adminlte_authentication_login"),
@@ -54,6 +56,15 @@ adminlte = [
          name="adminlte_news_delete_news_image"),
     path("news/<int:news_id>/delete/", AdminDeleteNewsView.as_view(),
          name="adminlte_news_delete_news"),
+    path("promotions/", AdminPromotionsView.as_view(), name="adminlte_promotions"),
+    path("promotions/datatable/", AdminPromotionsDataTableView.as_view(), name="adminlte_promotions_datatable"),
+    path("promotions/create/", AdminCreatePromotionView.as_view(), name="adminlte_promotions_create_promotion"),
+    path("promotions/<int:promotion_id>/update/", AdminUpdatePromotionView.as_view(),
+         name="adminlte_promotions_update_promotion"),
+    path("promotions/<int:promotion_id>/image/", AdminDeletePromotionImageView.as_view(),
+         name="adminlte_promotions_delete_promotion_image"),
+    path("news/<int:promotion_id>/delete/", AdminDeletePromotionView.as_view(),
+         name="adminlte_promotions_delete_promotion"),
 ]
 
 site = [

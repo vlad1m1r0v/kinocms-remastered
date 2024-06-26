@@ -1,0 +1,335 @@
+{% extends "adminlte/panel/base.html" %}
+{% load static %}
+{% block title %}
+  Promotion
+{% endblock %}
+{% block head %}
+  <link rel="stylesheet" href="{% static 'custom/css/responsive-inputs.css' %}">
+  <link rel="stylesheet" href="{% static 'custom/css/preview.css' %}">
+  <link rel="stylesheet" href="{% static 'custom/css/delete-corner-button.css' %}">
+  <link rel="stylesheet" href="{% static 'custom/css/horizontal-formset.css' %}">
+  <link rel="stylesheet" href="{% static 'custom/css/skeleton.css' %}">
+{% endblock head %}
+{% block content %}
+  <div class="card">
+    <div class="card-header p-2">
+      Promotion
+    </div>
+    <div class="card-body p-2">
+      <form method="post" enctype="multipart/form-data">
+        <ul class="nav nav-tabs mb-2">
+          <li class="nav-item ml-auto">
+            <a class="nav-link active" id="tab-en">English</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="tab-uk">Українська</a>
+          </li>
+        </ul>
+        {% csrf_token %}
+        {{ form.id }}
+        <!--General Information-->
+        <h5 class="ml-2">General information</h5>
+        <div class="switch-date mb-2">
+          <!--Switch-->
+          <div class="custom-control custom-switch">
+            {{ form.is_active }}
+            <label class="custom-control-label form-check-label mb-1"
+                   for="id_is_active">
+              Enabled / Disabled
+            </label>
+          </div>
+          <!--Date picker-->
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+            </div>
+            {{ form.publication_date }}
+          </div>
+        </div>
+        <div class="input-group mb-2 en">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Promotion name in English</span>
+          </div>
+          {{ form.name_en }}
+        </div>
+        <div class="input-group mb-2 en">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Promotion description in English</span>
+          </div>
+          {{ form.description_en }}
+        </div>
+        <div class="input-group mb-2 uk">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Promotion name in Ukrainian</span>
+          </div>
+          {{ form.name_uk }}
+        </div>
+        <div class="input-group mb-2 uk">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Promotion description in Ukrainian</span>
+          </div>
+          {{ form.description_uk }}
+        </div>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Video URL</span>
+          </div>
+          {{ form.video_url }}
+        </div>
+        <!--Main Image-->
+        <h5 class="ml-2">Main Image</h5>
+        {% if form.instance.image %}
+          <div class="preview-banner">
+            <img src="{{ form.instance.image.url }}" alt="preview">
+          </div>
+        {% else %}
+          <div class="preview-banner skeleton"></div>
+        {% endif %}
+        <div class="input-group mb-3">
+          <div class="custom-file">
+            <label class="custom-file-label" for=for="{{ form.image.auto_id }}">
+              Choose file
+            </label>
+            {{ form.image }}
+          </div>
+          <button
+            type="button"
+            class="btn btn-primary btn-danger ml-2{% if not form.instance.image %} disabled {% endif %}"
+            id="delete-promotion-main-image-button">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+            Delete
+          </button>
+        </div>
+        <!--Image Gallery-->
+        <h5 class="ml-2 mt-2">Image gallery</h5>
+        <p class="ml-2 mb-0">Size: 1000 × 190</p>
+        <div class="scrolling-wrapper">
+          <div class="mt-3">
+            {{ formset.management_form }}
+            {% for form in formset %}
+              {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+              {% endfor %}
+              <div class="card border">
+                <div class="card-body p-2">
+                  {% if form.instance.image %}
+                    <div class="preview-formset">
+                      <img src="{{ form.instance.image.url }}" alt="preview">
+                    </div>
+                  {% else %}
+                    <div class="preview-formset skeleton">
+                    </div>
+                  {% endif %}
+                  <div class="input-group mb-3">
+                    <div class="custom-file">
+                      <label class="custom-file-label">Choose file</label>
+                      {{ form.image }}
+                    </div>
+                  </div>
+                </div>
+                <div style="display: none">
+                  {{ form.DELETE }}
+                </div>
+                <button type="button"
+                        class="btn btn-sm btn-primary btn-danger btn-circle delete-corner-button delete-promotion-image-button">
+                  <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button type="button"
+                  class="btn btn-primary btn-info"
+                  id="add-promotion-image-button">
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            Add form
+          </button>
+        </div>
+        <!--SEO Block-->
+        <h5 class="ml-2 mb-1 mt-3">SEO Block</h5>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">URL</span>
+          </div>
+          {{ form.seo_url }}
+        </div>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Title</span>
+          </div>
+          {{ form.seo_title }}
+        </div>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Keywords</span>
+          </div>
+          {{ form.seo_keywords }}
+        </div>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Description</span>
+          </div>
+          {{ form.seo_description }}
+        </div>
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="btn btn-success mr-2">
+            <i class="fa fa-bookmark" aria-hidden="true"></i>
+            Save
+          </button>
+          <button type="button" class="btn btn-info" id="reset-form-button">
+            <i class="fa fa fa-minus" aria-hidden="true"></i>
+            Reset
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+{% block script %}
+  <script>
+    $(function () {
+      $('#id_date-picker').inputmask('dd/mm/yyyy', {'placeholder': 'dd/mm/yyyy'});
+      $('[data-mask]').inputmask();
+    });
+
+    const $wrappers = $('.scrolling-wrapper');
+    const $emptyPromotionImageForm = $wrappers.eq(0).find('.mt-3 .card:last-child').clone(true);
+
+    $wrappers.each(function () {
+      let isDown = false;
+      let startX;
+      let startY;
+      let scrollLeft;
+      let scrollTop;
+
+      $(this).on('mousedown', function (e) {
+        isDown = true;
+        startX = e.pageX;
+        startY = e.pageY;
+        scrollLeft = $(this).scrollLeft();
+        scrollTop = $(this).scrollTop();
+        $(this).css('cursor', 'grabbing');
+      });
+
+      $(this).on('mouseleave mouseup', function () {
+        isDown = false;
+        $(this).css('cursor', 'grab');
+      })
+
+      const $wrapper = this;
+
+      $(document).on('mousemove', function (e) {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - $wrapper.offsetLeft;
+        const y = e.pageY - $wrapper.offsetTop;
+        const walkX = x - startX;
+        const walkY = y - startY;
+        $wrapper.scrollLeft = scrollLeft - walkX;
+        $wrapper.scrollTop = scrollTop - walkY;
+      });
+    })
+
+
+    $('#add-promotion-image-button').click(function () {
+      const $totalForms = $('#id_promotionsimage_set-TOTAL_FORMS');
+      const count = parseInt($totalForms.val());
+
+      const $promotionImageFormMarkup = $emptyPromotionImageForm.prop('outerHTML');
+      const regex = /promotionsimage_set-(\d+)-/g;
+      const $compiledPromotionImageForm = $promotionImageFormMarkup.replace(regex, `promotionsimage_set-${count}-`);
+
+      $wrappers.eq(0).find('.mt-3').append($compiledPromotionImageForm);
+
+      $totalForms.attr('value', count + 1);
+
+      $wrappers.eq(0).animate({
+        scrollLeft: $wrappers.eq(0).prop('scrollWidth')
+      }, 500);
+    });
+
+    $(document).on('click', '.delete-promotion-image-button', function () {
+      const $card = $(this).closest('.card');
+      $card.find('input[type="checkbox"]').prop('checked', true);
+      $card.hide();
+    })
+
+    $('.uk').hide();
+
+    $('.card-body .nav-link').click(function () {
+      const clickedTabId = $(this).attr('id');
+
+      $('.card-body .nav-link').removeClass('active');
+      $(this).addClass('active');
+
+      if (clickedTabId === 'tab-en') {
+        $('.uk').hide();
+        $('.en').show();
+      } else {
+        $('.uk').show();
+        $('.en').hide();
+      }
+    });
+
+    $("input[type='text'], input[type='url'], textarea").each(function () {
+      $(this).attr('data-initial', $(this).val());
+    });
+
+    $("#reset-form-button").click(function (e) {
+      e.preventDefault();
+
+      $("input[type='text'], input[type='url'], textarea").each(function () {
+        const initial = $(this).attr('data-initial');
+        $(this).val(initial);
+      });
+    })
+
+    $(document).on('change', 'input:file', function (e) {
+      $(this).prev().html($(this).val().split('\\').pop());
+
+      const image = e.target.files[0];
+      const src = URL.createObjectURL(image);
+
+      const $preview = $(this).parent().parent().prev();
+
+      const className = $($preview)
+        .attr('class')
+        .split(/\s+/)
+        .find(className => className.startsWith('preview'));
+
+      $preview.remove();
+
+      const $previewContainer = $(`<div class=${className}>`);
+      $previewContainer.insertBefore($(this).closest('.input-group'));
+
+      const $image = $(`<img src=${src} alt="preview">`);
+      $previewContainer.append($image);
+    });
+
+    {% if form.instance.id %}
+      $('#delete-promotion-main-image-button').click(function () {
+          const $button = $(this);
+          $.ajax({
+            url: "{% url 'adminlte_promotions_delete_promotion_image' promotion_id=form.instance.id %}",
+            method: "DELETE",
+            success: function (data) {
+              if (data.status === 202) {
+                toastr.success("Promotion image was deleted successfully");
+
+                const $preview = $button.parent().prev();
+                $preview.remove();
+                const $previewContainer = $(`<div></div>`);
+                $previewContainer.addClass('preview-banner skeleton')
+                $previewContainer.insertBefore($($button).closest('.input-group'));
+
+                $("#id_image").prop('required', true);
+                $button.addClass("disabled")
+              }
+            }
+          })
+        }
+      )
+    {% endif %}
+  </script>
+{% endblock script %}
