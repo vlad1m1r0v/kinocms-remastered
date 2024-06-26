@@ -1,0 +1,88 @@
+{% extends "adminlte/panel/base.html" %}
+{% block title %}
+  Pages
+{% endblock title %}
+{% block head %}
+{% endblock %}
+{% block content %}
+  <div>
+    <table class="table table-bordered" style="width:100%; background: white">
+      <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Creation Date</th>
+        <th scope="col">Status</th>
+        <th scope="col">Update</th>
+        <th scope="col">Delete</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <!--Main Page-->
+        <td>Main page</td>
+        <td>{{ main_page.created_at|date:"m/d/y"}}</td>
+        <td>
+          {% if main_page.is_active %}
+            Enabled
+          {% else %}
+            Disabled
+          {% endif %}
+        </td>
+        <td>
+          <a type="button"
+             class="btn btn-primary"
+             href="{% url 'adminlte_pages_main_page' %}">
+            <i class="fa fa-pen" aria-hidden="true"></i>
+            <span class="pages-button-text">
+                                        Update
+                                    </span>
+          </a>
+        </td>
+        <td>
+          <a type="button"
+             class="btn btn-secondary disabled"
+             data-toggle="modal"
+             data-target="#confirmationModal">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+            <span class="pages-button-text">
+                                        Delete
+                                    </span>
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmationModalLabel">Confirmation window</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete page?
+        </div>
+        <form method="post" id="delete-page-form">
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Confirm</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+{% block script %}
+  <script>
+    $(document).on('click', '.delete-page-button', function () {
+        $('#delete-page-form').attr('action', $(this).attr('href'))
+      }
+    )
+  </script>
+{% endblock script %}

@@ -1,0 +1,138 @@
+{% extends "adminlte/panel/base.html" %}
+{% load static %}
+{% block title %}
+  Main page
+{% endblock %}
+{% block head %}
+  <link rel="stylesheet" href="{% static 'custom/css/responsive-inputs.css' %}">
+{% endblock head %}
+{% block content %}
+  <div class="card">
+    <div class="card-header p-2">
+      Main page
+    </div>
+    <div class="card-body p-2">
+      <form method="post">
+        <ul class="nav nav-tabs mb-2">
+          <li class="nav-item ml-auto">
+            <a class="nav-link active" id="tab-en">English</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="tab-uk">Українська</a>
+          </li>
+        </ul>
+        {% csrf_token %}
+        <!--General Information-->
+        {{ form.id }}
+        <h5 class="ml-2">General information</h5>
+        <!--Switch-->
+        <div class="custom-control custom-switch mb-1">
+          {{ form.is_active }}
+          <label class="custom-control-label form-check-label" for="id_is_active">
+            Enabled / Disabled
+          </label>
+        </div>
+        <!--Phones-->
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">First phone</span>
+          </div>
+          {{ form.first_phone }}
+        </div>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Second phone</span>
+          </div>
+          {{ form.second_phone }}
+        </div>
+        <!--SEO Text-->
+        <div class="input-group mb-2 en">
+          <div class="input-group-prepend">
+            <span class="input-group-text">SEO text in English</span>
+          </div>
+          {{ form.seo_text_en }}
+        </div>
+        <div class="input-group mb-2 uk">
+          <div class="input-group-prepend">
+            <span class="input-group-text">SEO text in Ukrainian</span>
+          </div>
+          {{ form.seo_text_uk }}
+        </div>
+        <!--SEO Block-->
+        <h5 class="ml-2 mb-1 mt-3">SEO Block</h5>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">URL</span>
+          </div>
+          {{ form.seo_url }}
+        </div>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Title</span>
+          </div>
+          {{ form.seo_title }}
+        </div>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Keywords</span>
+          </div>
+          {{ form.seo_keywords }}
+        </div>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Description</span>
+          </div>
+          {{ form.seo_description }}
+        </div>
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="btn btn-success mr-2">
+            <i class="fa fa-bookmark" aria-hidden="true"></i>
+            Save
+          </button>
+          <button type="button" class="btn btn-info" id="reset-form-button">
+            <i class="fa fa fa-minus" aria-hidden="true"></i>
+            Reset
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+  <script>
+    $(document).ready(function () {
+      $('.phone').inputmask({"mask": "+380 (09{2}) 9{3}-9{2}-9{2}"});
+    });
+
+    $('.uk').hide();
+
+    $('.card-body .nav-link').click(function () {
+      const clickedTabId = $(this).attr('id');
+
+      $('.card-body .nav-link').removeClass('active');
+      $(this).addClass('active');
+
+      if (clickedTabId === 'tab-en') {
+        $('.uk').hide();
+        $('.en').show();
+      } else {
+        $('.uk').show();
+        $('.en').hide();
+      }
+    });
+
+    $("input[type='text'], input[type='url'], textarea").each(function () {
+      $(this).attr('data-initial', $(this).val());
+    });
+
+    $("#reset-form-button").click(function (e) {
+      e.preventDefault();
+
+      $("input[type='text'], input[type='url'], textarea").each(function () {
+        const initial = $(this).attr('data-initial');
+        $(this).val(initial);
+      });
+    })
+  </script>
+{% endblock script %}

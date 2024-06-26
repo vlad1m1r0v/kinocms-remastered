@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "apps.halls.apps.HallsConfig",
     "apps.news.apps.NewsConfig",
     "apps.promotions.apps.PromotionsConfig",
+    "apps.pages.apps.PagesConfig",
     "ajax_datatable",
 ]
 

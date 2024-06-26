@@ -16,6 +16,7 @@ from apps.news.views import AdminNewsView, AdminCreateNewsView, AdminUpdateNewsV
     AdminNewsDataTableView, AdminDeleteNewsView
 from apps.promotions.views import AdminPromotionsView, AdminPromotionsDataTableView, AdminCreatePromotionView, \
     AdminUpdatePromotionView, AdminDeletePromotionView, AdminDeletePromotionImageView
+from apps.pages.views import AdminPagesView, AdminMainPageView
 
 adminlte = [
     path("authentication/login/", AdminLoginView.as_view(), name="adminlte_authentication_login"),
@@ -65,6 +66,8 @@ adminlte = [
          name="adminlte_promotions_delete_promotion_image"),
     path("news/<int:promotion_id>/delete/", AdminDeletePromotionView.as_view(),
          name="adminlte_promotions_delete_promotion"),
+    path("pages/", AdminPagesView.as_view(), name="adminlte_pages"),
+    path("pages/main/", AdminMainPageView.as_view(), name="adminlte_pages_main_page")
 ]
 
 site = [
