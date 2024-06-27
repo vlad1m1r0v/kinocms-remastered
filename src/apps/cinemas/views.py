@@ -95,3 +95,13 @@ class AdminDeleteCinemaLogoView(View):
         cinema_id: int = kwargs.get('cinema_id')
         Cinema.objects.get(pk=cinema_id).logo.delete()
         return JsonResponse({"status": 202})
+
+
+@admin_only
+class AdminDeleteCinemaView(View):
+    @staticmethod
+    def post(request: HttpRequest, *args, **kwargs):
+        cinema_id: int = kwargs.get('cinema_id')
+        Cinema.objects.get(pk=cinema_id).delete()
+        messages.success(request, "Cinema was deleted successfully")
+        return redirect('adminlte_cinemas')

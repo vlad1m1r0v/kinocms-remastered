@@ -3,7 +3,6 @@ from django.forms import inlineformset_factory
 
 from .models import News, NewsImage
 
-
 class NewsForm(forms.ModelForm):
     publication_date = forms.DateField(
         input_formats=['%d/%m/%Y'],

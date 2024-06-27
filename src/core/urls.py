@@ -9,14 +9,15 @@ from apps.users.views import AdminLoginView, AdminLogoutView
 from apps.banners.views import AdminBannersView, AdminBackgroundSettingsView, AdminTopBannersView, \
     AdminAdvertisementBannersView, AdminDeleteBackgroundView
 from apps.cinemas.views import AdminCinemasView, AdminCreateCinemaView, AdminUpdateCinemaView, \
-    AdminDeleteCinemaBannerView, AdminDeleteCinemaLogoView
+    AdminDeleteCinemaBannerView, AdminDeleteCinemaLogoView, AdminDeleteCinemaView
 from apps.halls.views import AdminHallsDataTableView, AdminCreateHallView, AdminUpdateHallView, \
     AdminDeleteHallSchemeView, AdminDeleteHallBannerView, AdminDeleteHallView
 from apps.news.views import AdminNewsView, AdminCreateNewsView, AdminUpdateNewsView, AdminDeleteNewsImageView, \
     AdminNewsDataTableView, AdminDeleteNewsView
 from apps.promotions.views import AdminPromotionsView, AdminPromotionsDataTableView, AdminCreatePromotionView, \
     AdminUpdatePromotionView, AdminDeletePromotionView, AdminDeletePromotionImageView
-from apps.pages.views import AdminPagesView, AdminMainPageView
+from apps.pages.views import AdminPagesView, AdminMainPageView, AdminCreatePageView, AdminUpdatePageView, \
+    AdminDeletePageView, AdminDeletePageImageView
 
 adminlte = [
     path("authentication/login/", AdminLoginView.as_view(), name="adminlte_authentication_login"),
@@ -37,6 +38,7 @@ adminlte = [
     path("cinemas/", AdminCinemasView.as_view(), name="adminlte_cinemas"),
     path("cinemas/create/", AdminCreateCinemaView.as_view(), name="adminlte_cinemas_create_cinema"),
     path("cinemas/<int:cinema_id>/update/", AdminUpdateCinemaView.as_view(), name="adminlte_cinemas_update_cinema"),
+    path("cinemas/<int:cinema_id>/delete/", AdminDeleteCinemaView.as_view(), name="adminlte_cinemas_delete_cinema"),
     path("cinemas/<int:cinema_id>/banner/", AdminDeleteCinemaBannerView.as_view(),
          name="adminlte_cinema_delete_cinema_banner"),
     path("cinemas/<int:cinema_id>/logo/", AdminDeleteCinemaLogoView.as_view(),
@@ -64,10 +66,14 @@ adminlte = [
          name="adminlte_promotions_update_promotion"),
     path("promotions/<int:promotion_id>/image/", AdminDeletePromotionImageView.as_view(),
          name="adminlte_promotions_delete_promotion_image"),
-    path("news/<int:promotion_id>/delete/", AdminDeletePromotionView.as_view(),
+    path("promotions/<int:promotion_id>/delete/", AdminDeletePromotionView.as_view(),
          name="adminlte_promotions_delete_promotion"),
     path("pages/", AdminPagesView.as_view(), name="adminlte_pages"),
-    path("pages/main/", AdminMainPageView.as_view(), name="adminlte_pages_main_page")
+    path("pages/main/", AdminMainPageView.as_view(), name="adminlte_pages_main_page"),
+    path("pages/create/", AdminCreatePageView.as_view(), name="adminlte_pages_create_page"),
+    path("pages/<int:page_id>/update/", AdminUpdatePageView.as_view(), name="adminlte_pages_update_page"),
+    path("pages/<int:page_id>/delete/", AdminDeletePageView.as_view(), name="adminlte_pages_delete_page"),
+    path("pages/<int:page_id>/image/", AdminDeletePageImageView.as_view(), name="adminlte_pages_delete_page_image")
 ]
 
 site = [

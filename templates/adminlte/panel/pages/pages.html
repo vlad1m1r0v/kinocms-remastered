@@ -5,22 +5,21 @@
 {% block head %}
 {% endblock %}
 {% block content %}
-  <div>
-    <table class="table table-bordered" style="width:100%; background: white">
+  <div style="overflow-x: auto;">
+    <table class="table table-bordered mb-2" style="width:100%; background: white">
       <thead>
       <tr>
         <th scope="col">Name</th>
         <th scope="col">Creation Date</th>
         <th scope="col">Status</th>
-        <th scope="col">Update</th>
-        <th scope="col">Delete</th>
+        <th scope="col">Update Or Delete</th>
       </tr>
       </thead>
       <tbody>
       <tr>
         <!--Main Page-->
         <td>Main page</td>
-        <td>{{ main_page.created_at|date:"m/d/y"}}</td>
+        <td>{{ main_page.created_at|date:"m/d/y" }}</td>
         <td>
           {% if main_page.is_active %}
             Enabled
@@ -29,29 +28,61 @@
           {% endif %}
         </td>
         <td>
-          <a type="button"
-             class="btn btn-primary"
-             href="{% url 'adminlte_pages_main_page' %}">
-            <i class="fa fa-pen" aria-hidden="true"></i>
-            <span class="pages-button-text">
-                                        Update
-                                    </span>
-          </a>
-        </td>
-        <td>
-          <a type="button"
-             class="btn btn-secondary disabled"
-             data-toggle="modal"
-             data-target="#confirmationModal">
-            <i class="fa fa-trash" aria-hidden="true"></i>
-            <span class="pages-button-text">
-                                        Delete
-                                    </span>
-          </a>
+          <div class="d-flex flex-nowrap">
+            <a class="btn btn-primary text-nowrap mr-2"
+               href="{% url 'adminlte_pages_main_page' %}">
+              <i class="fa fa-pen" aria-hidden="true"></i>
+              Update
+            </a>
+            <a
+              class="btn btn-info btn-danger text-nowrap disabled" disabled
+            >
+              <i class="fa fa-trash" aria-hidden="true"></i>
+              Delete
+            </a>
+          </div>
         </td>
       </tr>
+      <!--Pages-->
+      {% for page in pages %}
+        <tr>
+          <td>{{ page.name_en }}</td>
+          <td>{{ page.created_at|date:"m/d/y" }}</td>
+          <td>
+            {% if page.is_active %}
+              Enabled
+            {% else %}
+              Disabled
+            {% endif %}
+          </td>
+          <td>
+            <div class="d-flex flex-nowrap">
+              <a class="btn btn-primary text-nowrap mr-2"
+                 href="{% url 'adminlte_pages_update_page' page_id=page.id %}">
+                <i class="fa fa-pen" aria-hidden="true"></i>
+                Update
+              </a>
+              <a
+                class="btn btn-info btn-danger text-nowrap {% if page.can_be_deleted is False %}disabled {% endif %}btn-danger delete-page-button"
+                href="{% url 'adminlte_pages_delete_page' page_id=page.id %}"
+                data-toggle="modal"
+                data-target="#confirmationModal"
+              >
+                <i class=" fa fa-trash" aria-hidden="true"></i>
+                Delete
+              </a>
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
       </tbody>
     </table>
+  </div>
+  <div class="d-flex justify-content-end">
+    <a href="{% url 'adminlte_pages_create_page' %}" class="btn btn-primary btn-success">
+      <i class="fa fa-plus-circle" aria-hidden="true"></i>
+      Add page
+    </a>
   </div>
   <!-- Modal -->
   <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel"

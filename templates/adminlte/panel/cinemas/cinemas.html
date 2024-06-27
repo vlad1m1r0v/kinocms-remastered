@@ -32,7 +32,8 @@
                     Update
                   </a>
                   <a type="button"
-                     class="btn btn-danger w-100 delete-film-button"
+                     class="btn btn-danger w-100 delete-cinema-button"
+                     href="{% url 'adminlte_cinemas_delete_cinema' cinema_id=cinema.id %}"
                      data-toggle="modal"
                      data-target="#confirmationModal">
                     <i class="fa fa-trash" aria-hidden="true"></i>
@@ -76,6 +77,11 @@
     </div>
   </div>
 {% endblock content %}
-
 {% block script %}
+  <script>
+    $(document).on('click', '.delete-cinema-button', function () {
+        $('#delete-cinema-form').attr('action', $(this).attr('href'))
+      }
+    )
+  </script>
 {% endblock script %}
