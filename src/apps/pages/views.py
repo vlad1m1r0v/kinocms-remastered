@@ -5,8 +5,8 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View
 
-from apps.pages.forms import MainPageForm, PageForm, PageImageFormSet
-from apps.pages.models import MainPage, Page
+from apps.pages.forms import MainPageForm, PageForm, PageImageFormSet, ContactsForm, ContactFormSet
+from apps.pages.models import MainPage, Page, Contacts, Contact
 from core.utilities.guards import admin_only
 
 
@@ -17,6 +17,7 @@ class AdminPagesView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['main_page'] = MainPage.load()
+        context['contacts'] = Contacts.load()
         context['pages'] = Page.objects.all()
         return context
 
@@ -126,4 +127,40 @@ class AdminDeletePageImageView(View):
     def delete(request: HttpRequest, *args, **kwargs):
         page_id: int = kwargs.get('page_id')
         Page.objects.get(pk=page_id).image.delete()
+        return JsonResponse({"status": 202})
+
+
+@admin_only
+class AdminContactsView(TemplateView):
+    template_name = 'adminlte/panel/pages/contacts.html'
+
+    def get(self, *args, **kwargs):
+        contacts = Contacts.load()
+        form = ContactsForm(instance=contacts)
+        formset = ContactFormSet(instance=contacts)
+        return self.render_to_response(self.get_context_data(form=form, formset=formset))
+
+    def post(self, request: HttpRequest, *args, **kwargs):
+        instance = Contacts.load()
+        form = ContactsForm(request.POST, request.FILES, instance=instance)
+        formset = ContactFormSet(request.POST, request.FILES, instance=instance)
+
+        if form.is_valid() and formset.is_valid():
+            form.save(commit=True)
+            formset.save(commit=True)
+
+            messages.success(request, "Contacts were updated successfully")
+            return redirect('adminlte_pages')
+
+        messages.error(request, "Some errors occurred while updating contacts")
+        return self.render_to_response(self.get_context_data(form=form, formset=formset))
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+@admin_only
+class AdminDeleteContactLogoView(View):
+    @staticmethod
+    def delete(request: HttpRequest, *args, **kwargs):
+        contact_id: int = kwargs.get('contact_id')
+        Contact.objects.get(pk=contact_id).logo.delete()
         return JsonResponse({"status": 202})

@@ -26,3 +26,20 @@ class Page(SEOModel):
 class PageImage(models.Model):
     image = models.ImageField(upload_to=get_upload_path)
     page = models.ForeignKey(Page, on_delete=models.CASCADE)
+
+
+class Contacts(SEOModel, Singleton):
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateField(auto_now_add=True)
+
+
+class Contact(models.Model):
+    contacts = models.ForeignKey(Contacts, on_delete=models.CASCADE)
+    is_active = models.BooleanField(default=True)
+    name_uk = models.CharField()
+    name_en = models.CharField()
+    address_uk = models.TextField()
+    address_en = models.TextField()
+    lat = models.FloatField()
+    lon = models.FloatField()
+    logo = models.ImageField(upload_to=get_upload_path)

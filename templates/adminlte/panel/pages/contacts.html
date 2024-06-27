@@ -1,0 +1,296 @@
+{% extends "adminlte/panel/base.html" %}
+{% load static %}
+{% block title %}
+  Contacts
+{% endblock %}
+{% block head %}
+  <link rel="stylesheet" href="{% static 'custom/css/responsive-inputs.css' %}">
+  <link rel="stylesheet" href="{% static 'custom/css/preview.css' %}">
+  <link rel="stylesheet" href="{% static 'custom/css/delete-corner-button.css' %}">
+  <link rel="stylesheet" href="{% static 'custom/css/horizontal-formset.css' %}">
+  <link rel="stylesheet" href="{% static 'custom/css/skeleton.css' %}">
+{% endblock head %}
+{% block content %}
+  <div class="card">
+    <div class="card-header p-2">
+      Contacts
+    </div>
+    <div class="card-body p-3">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.id }}
+        <div class="custom-control custom-switch mb-2 ml-2">
+          {{ form.is_active }}
+          <label class="custom-control-label form-check-label"
+                 for="{{ form.is_active.id_for_label }}">
+            Enabled / Disabled
+          </label>
+        </div>
+        <!--Contacts-->
+        <div id="contacts-list">
+          {{ formset.management_form }}
+          {% for form in formset %}
+            {% for hidden in form.hidden_fields %}
+              {{ hidden }}
+            {% endfor %}
+            <div class="card border">
+              <div class="card-body p-2">
+                <!--English / Українська-->
+                <ul class="nav nav-tabs mb-2">
+                  <li class="nav-item ml-auto">
+                    <a class="nav-link tab-en active">English</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link tab-uk">Українська</a>
+                  </li>
+                </ul>
+                <h5 class="ml-2">General information</h5>
+                <div class="custom-control custom-switch mb-2">
+                  {{ form.is_active }}
+                  <label class="custom-control-label form-check-label"
+                         for="{{ form.is_active.id_for_label }}">
+                    Enabled / Disabled
+                  </label>
+                </div>
+                <!--General Information-->
+                <div class="input-group mb-2 en">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Contact name in English</span>
+                  </div>
+                  {{ form.name_en }}
+                </div>
+                <div class="input-group mb-2 en">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Contact address in English</span>
+                  </div>
+                  {{ form.address_en }}
+                </div>
+                <div class="input-group mb-2 uk">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Contact name in Ukrainian</span>
+                  </div>
+                  {{ form.name_uk }}
+                </div>
+                <div class="input-group mb-2 uk">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Contact address in Ukrainian</span>
+                  </div>
+                  {{ form.address_uk }}
+                </div>
+                <!--Location-->
+                <h5 class="mt-2 ml-2">Location</h5>
+                <div class="row">
+                  <div class="col">
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                                <span class="input-group-text"
+                                      id="contact-lon-span">Longitude</span>
+                      </div>
+                      {{ form.lon }}
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                                <span class="input-group-text"
+                                      id="contact-lat-span">Latitude</span>
+                      </div>
+                      {{ form.lat }}
+                    </div>
+                  </div>
+                </div>
+                <!--Logo Image-->
+                <h5 class="ml-2 mt-2">Logo image</h5>
+                <div class="d-flex justify-content-center">
+                  <div style="width: min(25rem, 100%)">
+                    {% if form.instance.logo %}
+                      <div class="preview-logo">
+                        <img src="{{ form.instance.logo.url }}" alt="preview">
+                      </div>
+                    {% else %}
+                      <div class="preview-logo skeleton"></div>
+                    {% endif %}
+                    <div class="input-group mb-3">
+                      <div class="custom-file">
+                        <label class="custom-file-label">
+                          Choose file
+                        </label>
+                        {{ form.logo }}
+                      </div>
+                      <button
+                        type="button"
+                        class="btn btn-primary btn-danger ml-2{% if not form.instance.logo %} disabled {% endif %}"
+                        {% if form.instance.id %}
+                        data-href="{% url 'adminlte_pages_contacts_delete_contact_logo' contact_id=form.instance.id %}"
+                        {% endif %}
+                        id="delete-contact-logo-button">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style="display: none">
+                {{ form.DELETE }}
+              </div>
+              <button type="button"
+                      class="btn btn-sm btn-primary btn-danger btn-circle delete-corner-button">
+                <i class="fa fa-times" aria-hidden="true"></i>
+              </button>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="d-flex justify-content-end">
+          <button type="button"
+                  class="btn btn-primary btn-info"
+                  id="add-contact-button">
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            Add form
+          </button>
+        </div>
+        <div id="seo-block">
+          <h5 class="mt-2 ml-2">SEO Block</h5>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <span class="input-group-text">URL</span>
+            </div>
+            {{ form.seo_url }}
+          </div>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Title</span>
+            </div>
+            {{ form.seo_title }}
+          </div>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Keywords</span>
+            </div>
+            {{ form.seo_keywords }}
+          </div>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Description</span>
+            </div>
+            {{ form.seo_description }}
+          </div>
+          <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-success mr-2">
+              <i class="fa fa-bookmark" aria-hidden="true"></i>
+              Save
+            </button>
+            <button class="btn btn-info" id="reset-form-button" type="button">
+              <i class="fa fa fa-minus" aria-hidden="true"></i>
+              Reset
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock content %}
+{% block script %}
+  <script>
+    $(document).ready(function () {
+      $(document).on('focus', '.lon, .lat', function () {
+        $(this).inputmask({"mask": "9{1,3}.9{6}"});
+      });
+    });
+
+    $('.uk').hide();
+
+    const $wrapper = $('#contacts-list');
+    const $emptyContactForm = $wrapper.find('.card:last-child').clone(true);
+
+    $("input[type='text'], input[type='url'], textarea").each(function () {
+      $(this).attr('data-initial', $(this).val());
+    });
+
+    $("#reset-form-button").click(function (e) {
+      e.preventDefault();
+
+      $("input[type='text'], input[type='url'], textarea").each(function () {
+        const initial = $(this).attr('data-initial');
+        $(this).val(initial);
+      });
+    });
+
+    $(document).on('click', '.card-body .nav-link', function () {
+        const isEng = $(this).hasClass('tab-en');
+        const [anotherClass, currentClass] = isEng ? ['.uk', '.en'] : ['.en', '.uk'];
+
+        $(this).closest('.nav').find(`.nav-link.active`).removeClass('active');
+        $(this).addClass('active');
+
+        $(this).closest('.card-body').find(currentClass).show();
+        $(this).closest('.card-body').find(anotherClass).hide();
+
+      }
+    );
+
+    $(document).on('change', 'input:file', function (e) {
+      $(this).prev().html($(this).val().split('\\').pop());
+
+      const image = e.target.files[0];
+      const src = URL.createObjectURL(image);
+
+      const $cardBody = $(this).closest('.card-body');
+
+      const $preview = $cardBody.find('.preview-logo');
+
+      $preview.children().remove();
+
+      $preview.removeClass('skeleton');
+
+      const $image = $(`<img src=${src} alt="preview">`);
+
+      $image.attr("class", "preview-logo");
+
+      $preview.append($image);
+    });
+
+    $('#add-contact-button').click(function () {
+      const $totalForms = $('#id_contact_set-TOTAL_FORMS');
+      const count = parseInt($totalForms.val());
+
+      const $contactFormMarkup = $emptyContactForm.prop('outerHTML');
+      const regex = /contact_set-(\d+)-/g;
+      const $compiledContactForm = $contactFormMarkup.replace(regex, `contact_set-${count}-`);
+
+      $wrapper.append($compiledContactForm);
+
+      $totalForms.attr('value', count + 1);
+
+      $("html, body").animate({scrollTop: $wrapper.height()}, 500);
+    });
+
+    $(document).on('click', '.delete-corner-button', function () {
+      const $card = $(this).closest('.card');
+      $card.find('input[type="checkbox"]').attr('checked', true);
+      $card.hide();
+    });
+
+    $('#delete-contact-logo-button:not(.disabled)').click(function () {
+      const $button = $(this);
+      $.ajax({
+        url: $button.attr('data-href'),
+        method: "DELETE",
+        success: function (data) {
+          if (data.status === 202) {
+            toastr.success("Contact image was deleted successfully");
+
+            const $preview = $button.parent().prev();
+            $preview.remove();
+            const $previewContainer = $(`<div></div>`);
+            $previewContainer.addClass('preview-logo skeleton')
+            $previewContainer.insertBefore($($button).closest('.input-group'));
+            const $input = $button.siblings('.custom-file').children('input');
+            $input.prop('required', true);
+            $button.addClass("disabled")
+          }
+        }
+      });
+    });
+  </script>
+{% endblock script %}

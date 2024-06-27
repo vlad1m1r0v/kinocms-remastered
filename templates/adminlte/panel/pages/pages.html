@@ -16,9 +16,9 @@
       </tr>
       </thead>
       <tbody>
+      <!--Main Page-->
       <tr>
-        <!--Main Page-->
-        <td>Main page</td>
+        <td>Main Page</td>
         <td>{{ main_page.created_at|date:"m/d/y" }}</td>
         <td>
           {% if main_page.is_active %}
@@ -31,6 +31,33 @@
           <div class="d-flex flex-nowrap">
             <a class="btn btn-primary text-nowrap mr-2"
                href="{% url 'adminlte_pages_main_page' %}">
+              <i class="fa fa-pen" aria-hidden="true"></i>
+              Update
+            </a>
+            <a
+              class="btn btn-info btn-danger text-nowrap disabled" disabled
+            >
+              <i class="fa fa-trash" aria-hidden="true"></i>
+              Delete
+            </a>
+          </div>
+        </td>
+      </tr>
+      <!--Contacts Page-->
+      <tr>
+        <td>Contacts Page</td>
+        <td>{{ contacts.created_at|date:"m/d/y" }}</td>
+        <td>
+          {% if contacts.is_active %}
+            Enabled
+          {% else %}
+            Disabled
+          {% endif %}
+        </td>
+        <td>
+          <div class="d-flex flex-nowrap">
+            <a class="btn btn-primary text-nowrap mr-2"
+               href="{% url 'adminlte_pages_contacts' %}">
               <i class="fa fa-pen" aria-hidden="true"></i>
               Update
             </a>

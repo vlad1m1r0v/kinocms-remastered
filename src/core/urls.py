@@ -17,7 +17,7 @@ from apps.news.views import AdminNewsView, AdminCreateNewsView, AdminUpdateNewsV
 from apps.promotions.views import AdminPromotionsView, AdminPromotionsDataTableView, AdminCreatePromotionView, \
     AdminUpdatePromotionView, AdminDeletePromotionView, AdminDeletePromotionImageView
 from apps.pages.views import AdminPagesView, AdminMainPageView, AdminCreatePageView, AdminUpdatePageView, \
-    AdminDeletePageView, AdminDeletePageImageView
+    AdminDeletePageView, AdminDeletePageImageView, AdminContactsView, AdminDeleteContactLogoView
 
 adminlte = [
     path("authentication/login/", AdminLoginView.as_view(), name="adminlte_authentication_login"),
@@ -73,7 +73,10 @@ adminlte = [
     path("pages/create/", AdminCreatePageView.as_view(), name="adminlte_pages_create_page"),
     path("pages/<int:page_id>/update/", AdminUpdatePageView.as_view(), name="adminlte_pages_update_page"),
     path("pages/<int:page_id>/delete/", AdminDeletePageView.as_view(), name="adminlte_pages_delete_page"),
-    path("pages/<int:page_id>/image/", AdminDeletePageImageView.as_view(), name="adminlte_pages_delete_page_image")
+    path("pages/<int:page_id>/image/", AdminDeletePageImageView.as_view(), name="adminlte_pages_delete_page_image"),
+    path("pages/contacts/", AdminContactsView.as_view(), name="adminlte_pages_contacts"),
+    path("pages/contacts/<int:contact_id>/logo", AdminDeleteContactLogoView.as_view(),
+         name="adminlte_pages_contacts_delete_contact_logo")
 ]
 
 site = [

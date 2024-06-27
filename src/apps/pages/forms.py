@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import inlineformset_factory
 
-from .models import MainPage, Page, PageImage
+from .models import MainPage, Page, PageImage, Contact, Contacts
 
 
 class MainPageForm(forms.ModelForm):
@@ -127,6 +127,88 @@ PageImageFormSet = inlineformset_factory(
     parent_model=Page,
     model=PageImage,
     form=PageImageForm,
+    can_delete=True,
+    can_delete_extra=True,
+    extra=1)
+
+
+class ContactsForm(forms.ModelForm):
+    class Meta:
+        model = Contacts
+        fields = [
+            "is_active",
+            "seo_url",
+            "seo_title",
+            "seo_keywords",
+            "seo_description"
+        ]
+        widgets = {
+            "is_active": forms.CheckboxInput(attrs={'class': 'form-control custom-control-input'}),
+            "seo_url": forms.URLInput(attrs={
+                "class": "form-control",
+                "placeholder": "Enter SEO URL"
+            }),
+            "seo_title": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Enter SEO title"
+            }),
+            "seo_keywords": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Enter SEO keywords"
+            }),
+            "seo_description": forms.Textarea(attrs={
+                "class": "form-control",
+                "placeholder": "Enter SEO description",
+                "rows": 2
+            }),
+        }
+
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = Contact
+        fields = ['is_active',
+                  'name_uk',
+                  'name_en',
+                  'address_uk',
+                  'address_en',
+                  'lat',
+                  'lon',
+                  'logo']
+        widgets = {
+            "is_active": forms.CheckboxInput(attrs={'class': 'form-control custom-control-input'}),
+            "name_uk": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Enter contact name in Ukrainian"
+            }),
+            "name_en": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Enter contact name in English"
+            }),
+            "address_uk": forms.Textarea(attrs={
+                "class": "form-control",
+                "placeholder": "Enter address in Ukrainian"
+            }),
+            "address_en": forms.Textarea(attrs={
+                "class": "form-control",
+                "placeholder": "Enter address in English"
+            }),
+            "lon": forms.TextInput(attrs={
+                "class": "form-control lon",
+                "placeholder": "Enter longitude"
+            }),
+            "lat": forms.TextInput(attrs={
+                "class": "form-control lat",
+                "placeholder": "Enter latitude"
+            }),
+            "logo": forms.FileInput(attrs={"class": "form-control custom-file-input", "type": "file"}),
+        }
+
+
+ContactFormSet = inlineformset_factory(
+    parent_model=Contacts,
+    model=Contact,
+    form=ContactForm,
     can_delete=True,
     can_delete_extra=True,
     extra=1)
