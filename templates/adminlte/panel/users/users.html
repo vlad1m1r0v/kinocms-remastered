@@ -1,0 +1,74 @@
+{% extends "adminlte/panel/base.html" %}
+{% load static %}
+{% block title %}
+  Users
+{% endblock title %}
+{% block head %}
+  <link rel="stylesheet" href="{% static 'custom/css/datatable.css' %}">
+  <!--DataTable-->
+  <link href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap4.css" rel="stylesheet">
+{% endblock %}
+{% block content %}
+  <!--DataTable-->
+  <table id="datatable_users" class="table table-bordered"
+         style="width:100%; background: white"></table>
+  <!-- Modal -->
+  <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmationModalLabel">Confirmation window</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete user?
+        </div>
+        <form method="post" id="delete-user-form">
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Confirm</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+{% block script %}
+  <!--DataTable-->
+  <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+  <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap4.js"></script>
+  <script src="{% static 'custom/js/restructure-datatable.js' %}"></script>
+  <!--Django AJAX DataTable-->
+  <script type="text/javascript" src="{% static 'plugins/ajax_datatable/js/utils.js' %}"></script>
+  <script>
+    const $datatable = $('#datatable_users');
+
+    AjaxDatatableViewUtils.initialize_table(
+      $datatable,
+      "{% url 'adminlte_users_datatable' %}",
+      {
+        processing: false,
+        autoWidth: false,
+        full_row_select: true,
+        scrollX: false
+      }
+    );
+
+    $datatable.on('initComplete', function () {
+      restructureDatatable();
+    });
+    $(document).on('click', '.update-user-button', function () {
+      window.location.href = `${this.closest('tr').id.substr(4)}/update/`
+    });
+
+    $(document).on('click', '.btn-danger', function () {
+        $('#delete-user-form').attr('action', `${this.closest('tr').id.substr(4)}/delete/`
+        )
+      }
+    )
+  </script>
+{% endblock script %}

@@ -5,7 +5,8 @@ from django.urls import path, include
 
 from apps.films.views import AdminFilmsView, AdminCreateFilmView, AdminUpdateFilmView, AdminDeleteFilmImageView, \
     AdminDeleteFilmView
-from apps.users.views import AdminLoginView, AdminLogoutView
+from apps.users.views import AdminLoginView, AdminLogoutView, AdminUsersView, AdminUsersDatatableView, \
+    AdminUpdateUserView, AdminDeleteUserView
 from apps.banners.views import AdminBannersView, AdminBackgroundSettingsView, AdminTopBannersView, \
     AdminAdvertisementBannersView, AdminDeleteBackgroundView
 from apps.cinemas.views import AdminCinemasView, AdminCreateCinemaView, AdminUpdateCinemaView, \
@@ -76,7 +77,11 @@ adminlte = [
     path("pages/<int:page_id>/image/", AdminDeletePageImageView.as_view(), name="adminlte_pages_delete_page_image"),
     path("pages/contacts/", AdminContactsView.as_view(), name="adminlte_pages_contacts"),
     path("pages/contacts/<int:contact_id>/logo", AdminDeleteContactLogoView.as_view(),
-         name="adminlte_pages_contacts_delete_contact_logo")
+         name="adminlte_pages_contacts_delete_contact_logo"),
+    path("users/", AdminUsersView.as_view(), name="adminlte_users"),
+    path("users/datatable", AdminUsersDatatableView.as_view(), name="adminlte_users_datatable"),
+    path("users/<int:user_id>/update/", AdminUpdateUserView.as_view(), name="adminlte_users_update_user"),
+    path("users/<int:user_id>/delete/", AdminDeleteUserView.as_view(), name="adminlte_users_delete_user")
 ]
 
 site = [

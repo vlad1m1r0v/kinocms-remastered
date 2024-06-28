@@ -27,6 +27,7 @@ class CustomUser(AbstractUser):
         ("FEMALE", "Female")
     ]
     sex = models.CharField(choices=sex_choices, default='MALE')
+    created_at = models.DateField(auto_now_add=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

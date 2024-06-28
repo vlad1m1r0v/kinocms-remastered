@@ -1,0 +1,160 @@
+{% extends "adminlte/panel/base.html" %}
+{% load static %}
+{% block title %}
+  User
+{% endblock title %}
+{% block head %}
+  <link rel="stylesheet" href="{% static 'custom/css/responsive-inputs.css' %}">
+  <!--Select2 Bootstrap Theme-->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
+{% endblock %}
+{% block content %}
+  <div class="card">
+    <div class="card-header p-2">
+      User
+    </div>
+    <div class="card-body p-2">
+      <form method="post">
+        {% csrf_token %}
+        {{ form.id }}
+        <h5 class="ml-2">General information</h5>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">First name</span>
+          </div>
+
+          {{ form.first_name }}
+        </div>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Last name</span>
+          </div>
+
+          {{ form.last_name }}
+        </div>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Nick name</span>
+          </div>
+
+          {{ form.nick_name }}
+        </div>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">E-mail</span>
+          </div>
+
+          {{ form.email }}
+        </div>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Address</span>
+          </div>
+
+          {{ form.address }}
+        </div>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Card number</span>
+          </div>
+
+          {{ form.card_number }}
+        </div>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Language</span>
+          </div>
+
+          {{ form.language }}
+        </div>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Sex</span>
+          </div>
+          {{ form.sex }}
+        </div>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Phone</span>
+          </div>
+          {{ form.phone }}
+        </div>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Birth date</span>
+          </div>
+          {{ form.birth_date }}
+        </div>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">City</span>
+          </div>
+          {{ form.city }}
+        </div>
+        <h5 class="ml-2">Change password</h5>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Old password</span>
+          </div>
+          {{ reset_password.old_password }}
+        </div>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">New password</span>
+          </div>
+          {{ reset_password.new_password1 }}
+        </div>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Confirm new password</span>
+          </div>
+          {{ reset_password.new_password2 }}
+        </div>
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="btn btn-success mr-2">
+            <i class="fa fa-bookmark" aria-hidden="true"></i>
+            Save
+          </button>
+          <button class="btn btn-info" id="reset-form-button">
+            <i class="fa fa fa-minus" aria-hidden="true"></i>
+            Reset
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock content %}
+{% block script %}
+  <script>
+    $(document).ready(function () {
+      $('#id_form-language').select2({
+        theme: 'bootstrap4'
+      });
+
+      $('#id_form-sex').select2({
+        theme: 'bootstrap4'
+      });
+
+      $("#id_form-card_number").inputmask({"mask": "9{16}"})
+
+      $('#id_form-phone').inputmask({"mask": "+380 (09{2}) 9{3}-9{2}-9{2}"});
+
+      $('#id_form-birth_date').inputmask('dd/mm/yyyy', {'placeholder': 'dd/mm/yyyy'});
+      $('[data-mask]').inputmask();
+    })
+
+    $("input[type='text'], input[type='url'], textarea").each(function () {
+      $(this).attr('data-initial', $(this).val());
+    });
+
+    $("#reset-form-button").click(function (e) {
+      e.preventDefault();
+
+      $("input[type='text'], input[type='url'], textarea").each(function () {
+        const initial = $(this).attr('data-initial');
+        $(this).val(initial);
+      });
+    })
+  </script>
+{% endblock script %}
