@@ -1,0 +1,188 @@
+{% extends "adminlte/panel/base.html" %}
+{% load static %}
+{% block title %}
+  Mailing
+{% endblock title %}
+{% block head %}
+  <link rel="stylesheet" href="{% static 'custom/css/datatable.css' %}">
+  <!--DataTable-->
+  <link href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap4.css" rel="stylesheet">
+{% endblock %}
+{% block content %}
+  <div class="card">
+    <div class="card-header p-2">
+      Mailing
+    </div>
+    <div class="card-body p-2">
+      <!--Everyone / Selectively-->
+      <h5>Select sending option</h5>
+      <div class="d-flex align-items-center justify-content-between mb-2">
+        <div>
+          {% for radio in sending_option.choice_field %}
+            <span class="mr-1 radio">{{ radio.tag }}</span>
+            <span class="mr-2">{{ radio.choice_label }}</span>
+          {% endfor %}
+        </div>
+        <button class="btn btn-info float-right"
+                id="select-users"
+                data-toggle="modal"
+                data-target="#datatable-modal"
+                disabled>
+          <i class="fa fa-th-list" aria-hidden="true"></i>
+          Select users
+        </button>
+      </div>
+      <h5>Select template</h5>
+      <div class="border rounded-sm py-1 px-2 mb-2">
+        {% for template in templates %}
+          <div class="form-check d-flex justify-content-between">
+            <input class="form-check-input pb-1"
+                   type="radio"
+                   name="radios"
+                   id="{{ template.id }}"
+                   value="{{ template.id }}"
+                   checked
+            >
+            <label class="form-check-label" for="{{ template.id }}">
+              {{ template.name }}
+            </label>
+            <a
+              type="button"
+              class="text-danger delete-template-button"
+              data-toggle="modal"
+              data-target="#delete-template-modal"
+              href="{% url 'adminlte_mailing_delete_template' template_id=template.id %}">
+              <u>
+                Delete
+              </u>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+      <h5>Upload template</h5>
+      <form method="post" enctype="multipart/form-data" action="{% url 'adminlte_mailing_upload_template' %}">
+        {% csrf_token %}
+        <div class="input-group mt-2">
+          <div class="custom-file">
+            <label class="custom-file-label" for="{{ upload_template.file.auto_id }}">
+              Choose template
+            </label>
+            {{ upload_template.file }}
+          </div>
+          <button class="btn btn-info ml-2" id="upload-template-button">
+            <i class="fa fa-upload" aria-hidden="true"></i>
+            Upload
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Datatable Modal-->
+  <div class="modal fade" id="datatable-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Select users</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <table id="datatable"
+                 class="table table-bordered" width="100%">
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Delete template modal-->
+  <div class="modal fade" id="delete-template-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirmation window</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete template?
+        </div>
+        <form method="post" id="delete-template-form">
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Confirm</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+{% block script %}
+  <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+  <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap4.js"></script>
+  <script src="{% static 'custom/js/restructure-datatable.js' %}"></script>
+  <!--Django AJAX DataTable-->
+  <script type="text/javascript" src="{% static 'plugins/ajax_datatable/js/utils.js' %}"></script>
+  <script>
+    const $everyone = $("#id_choice_field_0");
+    const $selectively = $("#id_choice_field_1");
+    const $selectUsers = $("#select-users");
+
+    $everyone.attr("checked", true);
+
+    $selectively.click(function () {
+      $selectUsers.attr("disabled", false);
+    })
+
+    $everyone.click(function () {
+      $selectUsers.attr("disabled", true);
+    })
+
+    $(document).on('change', 'input:file', function (e) {
+      $(this).prev().html($(this).val().split('\\').pop());
+    });
+
+    $(document).on('click', '.delete-template-button', function () {
+        $('#delete-template-form').attr('action', $(this).attr('href'))
+      }
+    )
+
+    const selected = new Set();
+
+    function updateCheckboxes() {
+      $('td input[type=checkbox]').each(function () {
+        $(this).prop('checked', selected.has($(this).prop('id')));
+      });
+    }
+
+    function handleCheckboxClick() {
+      $('td input[type=checkbox]').click(function () {
+        selected.add($(this).prop('id'));
+      })
+    }
+
+    $(document).ready(function () {
+        const $datatable = $('#datatable');
+
+        AjaxDatatableViewUtils.initialize_table(
+          $datatable,
+          "{% url 'adminlte_mailing_datatable' %}",
+          {
+            scrollX: false,
+          }, {},
+        );
+
+        $datatable.on('initComplete', function () {
+          restructureDatatable();
+        });
+
+        $datatable.on('drawCallback', function () {
+          updateCheckboxes();
+          handleCheckboxClick();
+        });
+      }
+    )
+  </script>
+{% endblock script %}

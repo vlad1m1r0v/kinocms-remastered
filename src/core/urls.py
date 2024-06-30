@@ -19,6 +19,8 @@ from apps.promotions.views import AdminPromotionsView, AdminPromotionsDataTableV
     AdminUpdatePromotionView, AdminDeletePromotionView, AdminDeletePromotionImageView
 from apps.pages.views import AdminPagesView, AdminMainPageView, AdminCreatePageView, AdminUpdatePageView, \
     AdminDeletePageView, AdminDeletePageImageView, AdminContactsView, AdminDeleteContactLogoView
+from apps.mailing.views import AdminMailingView, AdminUploadTemplateView, AdminDeleteTemplateView, \
+    AdminMailingDatatableView
 
 adminlte = [
     path("authentication/login/", AdminLoginView.as_view(), name="adminlte_authentication_login"),
@@ -76,12 +78,17 @@ adminlte = [
     path("pages/<int:page_id>/delete/", AdminDeletePageView.as_view(), name="adminlte_pages_delete_page"),
     path("pages/<int:page_id>/image/", AdminDeletePageImageView.as_view(), name="adminlte_pages_delete_page_image"),
     path("pages/contacts/", AdminContactsView.as_view(), name="adminlte_pages_contacts"),
-    path("pages/contacts/<int:contact_id>/logo", AdminDeleteContactLogoView.as_view(),
+    path("pages/contacts/<int:contact_id>/logo/", AdminDeleteContactLogoView.as_view(),
          name="adminlte_pages_contacts_delete_contact_logo"),
     path("users/", AdminUsersView.as_view(), name="adminlte_users"),
-    path("users/datatable", AdminUsersDatatableView.as_view(), name="adminlte_users_datatable"),
+    path("users/datatable/", AdminUsersDatatableView.as_view(), name="adminlte_users_datatable"),
     path("users/<int:user_id>/update/", AdminUpdateUserView.as_view(), name="adminlte_users_update_user"),
-    path("users/<int:user_id>/delete/", AdminDeleteUserView.as_view(), name="adminlte_users_delete_user")
+    path("users/<int:user_id>/delete/", AdminDeleteUserView.as_view(), name="adminlte_users_delete_user"),
+    path("mailing/", AdminMailingView.as_view(), name="adminlte_mailing"),
+    path("mailing/upload/", AdminUploadTemplateView.as_view(), name="adminlte_mailing_upload_template"),
+    path("mailing/templates/<int:template_id>/delete/", AdminDeleteTemplateView.as_view(),
+         name="adminlte_mailing_delete_template"),
+    path("mailing/datatable/", AdminMailingDatatableView.as_view(), name="adminlte_mailing_datatable")
 ]
 
 site = [
