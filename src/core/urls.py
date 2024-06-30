@@ -20,7 +20,7 @@ from apps.promotions.views import AdminPromotionsView, AdminPromotionsDataTableV
 from apps.pages.views import AdminPagesView, AdminMainPageView, AdminCreatePageView, AdminUpdatePageView, \
     AdminDeletePageView, AdminDeletePageImageView, AdminContactsView, AdminDeleteContactLogoView
 from apps.mailing.views import AdminMailingView, AdminUploadTemplateView, AdminDeleteTemplateView, \
-    AdminMailingDatatableView
+    AdminMailingDatatableView, admin_send_emails_view
 
 adminlte = [
     path("authentication/login/", AdminLoginView.as_view(), name="adminlte_authentication_login"),
@@ -88,7 +88,8 @@ adminlte = [
     path("mailing/upload/", AdminUploadTemplateView.as_view(), name="adminlte_mailing_upload_template"),
     path("mailing/templates/<int:template_id>/delete/", AdminDeleteTemplateView.as_view(),
          name="adminlte_mailing_delete_template"),
-    path("mailing/datatable/", AdminMailingDatatableView.as_view(), name="adminlte_mailing_datatable")
+    path("mailing/datatable/", AdminMailingDatatableView.as_view(), name="adminlte_mailing_datatable"),
+    path("mailing/send/", admin_send_emails_view, name="adminlte_mailing_send_email")
 ]
 
 site = [

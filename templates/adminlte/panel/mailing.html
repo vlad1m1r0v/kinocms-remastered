@@ -62,7 +62,7 @@
       <h5>Upload template</h5>
       <form method="post" enctype="multipart/form-data" action="{% url 'adminlte_mailing_upload_template' %}">
         {% csrf_token %}
-        <div class="input-group mt-2">
+        <div class="input-group my-2">
           <div class="custom-file">
             <label class="custom-file-label" for="{{ upload_template.file.auto_id }}">
               Choose template
@@ -75,6 +75,18 @@
           </button>
         </div>
       </form>
+      <!--Progress bar-->
+      <h5>Send E-Mails</h5>
+      <div class="d-flex align-items-center">
+        <div class="progress mr-2" style="width: calc(100% - 85px)">
+          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+               aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <button id="send-emails-button" class="btn btn-success">
+          <i class="fa fa-play" aria-hidden="true"></i>
+          Start
+        </button>
+      </div>
     </div>
   </div>
   <!-- Datatable Modal-->
@@ -189,5 +201,48 @@
         });
       }
     )
+
+    const $sendEmailsButton = $('#send-emails-button');
+
+    $sendEmailsButton.click(function () {
+      const toEveryone = $('#id_choice_field_0').is(':checked');
+      const templateId = $('.form-check-input:checked').prop('id');
+
+      const $progressbar = $('div[role=progressbar]');
+      const $progress = $('.progress');
+
+      const data = {
+        to_everyone: toEveryone,
+        template_id: templateId,
+      }
+
+      if (!toEveryone) {
+        data.users = Array.from(selected);
+      }
+
+      $.ajax({
+        url: "{% url 'adminlte_mailing_send_email' %}",
+        method: 'post',
+        data,
+        success: function (data) {
+          const socket = new WebSocket(`ws://localhost:8000/ws/${data.task_id}/`);
+          socket.onmessage = function (event) {
+            const data = JSON.parse(event.data);
+            if (data.status === 'start') {
+              $progress.show();
+              $progressbar.css({'width': '0%'});
+              $(this).prop({'disabled': true});
+            } else if (data.status === 'progress') {
+              $progressbar.css({'width': `${100 * Number(data.progress)}%`});
+            } else if (data.status === 'complete') {
+              $progressbar.css({'width': '100%'});
+              $progressbar.removeClass('progress-bar-striped')
+              $(this).prop({'disabled': false});
+            }
+          }
+        }
+
+      })
+    })
   </script>
 {% endblock script %}

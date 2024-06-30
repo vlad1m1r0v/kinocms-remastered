@@ -3,11 +3,14 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Value
 from django.db.models.functions import Concat
-from django.http import HttpRequest
+from django.http import HttpRequest, JsonResponse
 from django.shortcuts import redirect
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View
+
 from .forms import SendingOptionForm, UploadTemplateForm
 from .models import Template
+from .tasks import send_email_task
 from ..users.models import CustomUser
 
 
@@ -74,3 +77,12 @@ class AdminMailingDatatableView(AjaxDatatableView):
 
     def customize_row(self, row, obj):
         row['select'] = "<input type=\"checkbox\" id={}>".format(obj.id)
+
+
+@csrf_exempt
+def admin_send_emails_view(request: HttpRequest, *args, **kwargs):
+    ids = list(map(lambda x: int(x), request.POST.getlist('users[]')))
+    template_id = int(request.POST.get('template_id'))
+    to_everyone = request.POST.get('to_everyone') == 'true'
+    celery_task = send_email_task.delay(ids, template_id, to_everyone)
+    return JsonResponse({'task_id': celery_task.id})
