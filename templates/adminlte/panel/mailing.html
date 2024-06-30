@@ -159,7 +159,12 @@
 
     function handleCheckboxClick() {
       $('td input[type=checkbox]').click(function () {
-        selected.add($(this).prop('id'));
+        const $id = $(this).prop('id');
+        if (selected.has($id)) {
+          selected.delete($id);
+        } else {
+          selected.add($(this).prop('id'));
+        }
       })
     }
 
