@@ -7,6 +7,61 @@ from django.contrib.auth.password_validation import validate_password
 from apps.users.models import CustomUser
 
 
+class RegisterForm(forms.ModelForm):
+    password = forms.CharField(
+        label="Password",
+        required=True,
+        widget=widgets.Input(attrs={"class": "form-control", "placeholder": "Enter password", "type": "password"}),
+        min_length=6,
+        max_length=30,
+    )
+
+    password2 = forms.CharField(
+        label="Password",
+        required=True,
+        widget=widgets.Input(attrs={"class": "form-control", "placeholder": "Enter password", "type": "password"}),
+        min_length=6,
+        max_length=30,
+    )
+
+    class Meta:
+        model = CustomUser
+        fields = [
+            "first_name",
+            "last_name",
+            "email",
+            "password",
+            "password2"
+        ]
+        widgets = {
+            "first_name": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Enter first name", "minlength": 2, "required": True}),
+            "last_name": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Enter last name", "minlength": 2, "required": True}),
+            "email": forms.EmailInput(attrs={"class": "form-control", "placeholder": "Enter email address"}),
+            "password": forms.PasswordInput(
+                attrs={"class": "form-control", "placeholder": "Enter password", "type": "password"}, ),
+        }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        password2 = cleaned_data.get('password2')
+
+        if password and password2:
+            if password != password2:
+                raise forms.ValidationError("Passwords don't match")
+
+        return cleaned_data
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data['password'])
+        if commit:
+            user.save()
+        return user
+
+
 class LoginForm(forms.Form):
     email = forms.EmailField(
         label="Email",

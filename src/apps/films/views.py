@@ -23,7 +23,7 @@ class AdminFilmsView(TemplateView):
         today = date.today()
 
         current_films = Film.objects.filter(
-            Q(created_at__lte=today-timedelta(7)) & Q(created_at__gte=today-timedelta(30)),
+            Q(created_at__lte=today-timedelta(7)),
         )
         context['current_films'] = current_films
 

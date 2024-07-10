@@ -6,7 +6,7 @@ from django.urls import path, include
 from apps.films.views import AdminFilmsView, AdminCreateFilmView, AdminUpdateFilmView, AdminDeleteFilmImageView, \
     AdminDeleteFilmView
 from apps.users.views import AdminLoginView, AdminLogoutView, AdminUsersView, AdminUsersDatatableView, \
-    AdminUpdateUserView, AdminDeleteUserView
+    AdminUpdateUserView, AdminDeleteUserView, LoginView, RegisterView
 from apps.banners.views import AdminBannersView, AdminBackgroundSettingsView, AdminTopBannersView, \
     AdminAdvertisementBannersView, AdminDeleteBackgroundView
 from apps.cinemas.views import AdminCinemasView, AdminCreateCinemaView, AdminUpdateCinemaView, \
@@ -93,11 +93,12 @@ adminlte = [
 ]
 
 site = [
-
+    path("authentication/register/", RegisterView.as_view(), name="site_authentication_register"),
+    path("authentication/login/", LoginView.as_view(), name="site_authentication_login"),
 ]
 
 urlpatterns = [
                   path("admin/", admin.site.urls),
                   path("adminlte/", include(adminlte)),
-                  path("/", include(site))
+                  path("", include(site))
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

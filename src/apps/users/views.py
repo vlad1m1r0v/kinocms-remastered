@@ -8,7 +8,7 @@ from django.views.generic import View, TemplateView
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
 
 from core.utilities.guards import admin_only
-from .forms import LoginForm, UserForm, ChangePasswordForm
+from .forms import LoginForm, RegisterForm, UserForm, ChangePasswordForm
 from .models import CustomUser
 
 
@@ -139,3 +139,17 @@ class AdminDeleteUserView(View):
             return redirect('adminlte_authentication_login')
 
         return redirect("adminlte_users")
+
+
+class RegisterView(TemplateView):
+    template_name = "site/authentication/register.html"
+
+    def get(self, request: HttpRequest, *args, **kwargs):
+        return self.render_to_response(self.get_context_data(form=RegisterForm()))
+
+
+class LoginView(TemplateView):
+    template_name = "site/authentication/login.html"
+
+    def get(self, request: HttpRequest, *args, **kwargs):
+        return self.render_to_response(self.get_context_data(form=LoginForm()))
