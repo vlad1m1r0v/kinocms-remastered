@@ -147,6 +147,15 @@ class RegisterView(TemplateView):
     def get(self, request: HttpRequest, *args, **kwargs):
         return self.render_to_response(self.get_context_data(form=RegisterForm()))
 
+    def post(self, request: HttpRequest, *args, **kwargs):
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "User registered successfully")
+            return redirect('site_authentication_login')
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
+
 
 class LoginView(TemplateView):
     template_name = "site/authentication/login.html"

@@ -11,6 +11,8 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!--SweetAlert2 Bootstrap theme-->
+  <link rel="stylesheet" href="{% static 'plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css' %}">
   <title>Login</title>
 </head>
 <body style="background-color:#f4f6f9">
@@ -18,7 +20,7 @@
 <div class="container min-vh-100 d-flex justify-content-center align-items-center">
   <div class="card p-3" style="width: 25rem">
     <div class="d-flex flex-row justify-content-center">
-      <p class="mb-1" style="font-size: 24px;">
+      <p class="h4">
         <i class="fas fa-film"></i><b>Kino</b>
         <span class="fw-light"> | Login</span>
       </p>
@@ -54,34 +56,64 @@
 <!--Validation plugins-->
 <script src="{% static 'plugins/jquery-validation/jquery.validate.min.js' %}"></script>
 <script src="{% static 'plugins/jquery-validation/additional-methods.min.js' %}"></script>
+<!--Sweet Alert-->
+<script src="{% static 'plugins/sweetalert2/sweetalert2.all.min.js' %}"></script>
 <script>
-  $(document).ready(function () {
-    const $form = $("form");
-    const $button = $("button[type='submit']");
-
-    $form.on('blur keyup change', 'input', function () {
-      validateForm();
+  $(function () {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
     });
 
-    const validateForm = function () {
-      const isValid = $form.validate({
-        errorElement: 'small',
-        errorPlacement: function (error, element) {
-          error.addClass('text-danger ml-1');
-          element.parent().append(error);
-        },
-        highlight: function (element) {
-          $(element).addClass('is-invalid');
-        },
-        unhighlight: function (element) {
-          $(element).removeClass('is-invalid');
+    {% for _, errors in form.errors.items %}
+      {% for error in errors %}
+        Toast.fire({
+          icon: "error",
+          title: "{{ error|escape }}"
+        })
+      {% endfor %}
+    {% endfor %}
+
+    {% if messages %}
+      {% for message in messages %}
+        Toast.fire({
+          icon: "{{ message.tags }}",
+          title: "{{ message }}"
+        })
+      {% endfor %}
+    {% endif %}
+  })
+
+  $(document).ready(function () {
+      const $form = $("form");
+      const $button = $("button[type='submit']");
+
+      $form.on('blur keyup change', 'input', function () {
+        validateForm();
+      });
+
+      const validateForm = function () {
+        const isValid = $form.validate({
+          errorElement: 'small',
+          errorPlacement: function (error, element) {
+            error.addClass('text-danger ml-1');
+            element.parent().append(error);
+          },
+          highlight: function (element) {
+            $(element).addClass('is-invalid');
+          },
+          unhighlight: function (element) {
+            $(element).removeClass('is-invalid');
+          }
+        }).checkForm();
+        if (isValid) {
+          $button.prop('disabled', false);
+        } else {
+          $button.prop('disabled', 'disabled');
         }
-      }).checkForm();
-      if (isValid) {
-        $button.prop('disabled', false);
-      } else {
-        $button.prop('disabled', 'disabled');
       }
     }
-  })
+  )
 </script>
