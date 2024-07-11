@@ -162,3 +162,25 @@ class LoginView(TemplateView):
 
     def get(self, request: HttpRequest, *args, **kwargs):
         return self.render_to_response(self.get_context_data(form=LoginForm()))
+
+    def post(self, request):
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            email: str = request.POST["email"]
+            password: str = request.POST["password"]
+            user = authenticate(email=email, password=password, is_superuser=True)
+            if user:
+                login(request, user)
+                messages.success(request, "User logged in successfully")
+                return redirect("site_main")
+            else:
+                messages.error(request, "Incorrect email or password")
+        context = {"form": form}
+        return self.render_to_response(context=context)
+
+
+class LogoutView(View):
+    @staticmethod
+    def post(request):
+        logout(request)
+        return redirect("site_authentication_login")

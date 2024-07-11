@@ -112,13 +112,21 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "uk"
 
 TIME_ZONE = "UTC"
 
 USE_I18N = True
+USE_L10N = True
 
 USE_TZ = True
+
+LANGUAGES = [
+    ('en', 'English'),
+    ('uk', 'Українська'),
+]
+
+LOCALE_PATHS = [str(BASE_DIR / "locale")]
 
 STATIC_ROOT = str(BASE_DIR / "staticfiles")
 

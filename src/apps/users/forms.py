@@ -17,9 +17,9 @@ class RegisterForm(forms.ModelForm):
     )
 
     password2 = forms.CharField(
-        label="Password",
+        label="Repeat Password",
         required=True,
-        widget=widgets.Input(attrs={"class": "form-control", "placeholder": "Enter password", "type": "password"}),
+        widget=widgets.Input(attrs={"class": "form-control", "placeholder": "Repeat password", "type": "password"}),
         min_length=6,
         max_length=30,
     )

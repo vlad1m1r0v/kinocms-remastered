@@ -25,7 +25,8 @@
         <span class="fw-light"> | Login</span>
       </p>
     </div>
-    <form>
+    <form method="post">
+      {% csrf_token %}
       <div class="mb-2">
         <label for="{{ form.email.auto_id }}">{{ form.email.label }}</label>
         {{ form.email }}
@@ -62,7 +63,7 @@
   $(function () {
     const Toast = Swal.mixin({
       toast: true,
-      position: 'top-end',
+      position: 'bottom-start',
       showConfirmButton: false,
       timer: 3000
     });
