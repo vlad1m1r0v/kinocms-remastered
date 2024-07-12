@@ -21,7 +21,7 @@ from apps.pages.views import AdminPagesView, AdminMainPageView, AdminCreatePageV
     AdminDeletePageView, AdminDeletePageImageView, AdminContactsView, AdminDeleteContactLogoView
 from apps.mailing.views import AdminMailingView, AdminUploadTemplateView, AdminDeleteTemplateView, \
     AdminMailingDatatableView, admin_send_emails_view
-from core.views import MainPageView
+from core.views import MainPageView, change_language_view
 
 adminlte = [
     path("authentication/login/", AdminLoginView.as_view(), name="adminlte_authentication_login"),
@@ -97,7 +97,8 @@ site = [
     path("authentication/register/", RegisterView.as_view(), name="site_authentication_register"),
     path("authentication/login/", LoginView.as_view(), name="site_authentication_login"),
     path("authentication/logout/", LogoutView.as_view(), name="site_authentication_logout"),
-    path("main/", MainPageView.as_view(), name="site_main")
+    path("main/", MainPageView.as_view(), name="site_main"),
+    path('change-language/', change_language_view, name='site_change_language'),
 ]
 
 urlpatterns = [

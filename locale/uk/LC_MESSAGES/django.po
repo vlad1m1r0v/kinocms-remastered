@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-12 02:02+0300\n"
+"POT-Creation-Date: 2024-07-12 11:26+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,6 +20,93 @@ msgstr ""
 "11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
 "100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
 "(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
+
+#: src/apps/users/forms.py:12 src/apps/users/forms.py:41
+#: src/apps/users/forms.py:82
+msgid "Password"
+msgstr "Пароль"
+
+#: src/apps/users/forms.py:14 src/apps/users/forms.py:53
+msgid "Enter Password"
+msgstr "Введіть пароль"
+
+#: src/apps/users/forms.py:20 src/apps/users/forms.py:22
+#: src/apps/users/forms.py:42
+msgid "Repeat Password"
+msgstr "Повторіть пароль"
+
+#: src/apps/users/forms.py:38
+msgid "First Name"
+msgstr "Ім'я"
+
+#: src/apps/users/forms.py:39
+msgid "Last Name"
+msgstr "Прізвище"
+
+#: src/apps/users/forms.py:40
+msgid "E-Mail"
+msgstr "Електронна пошта"
+
+#: src/apps/users/forms.py:47
+msgid "Enter first name"
+msgstr "Введіть ім'я"
+
+#: src/apps/users/forms.py:50
+msgid "Enter last name"
+msgstr "Введіть прізвище"
+
+#: src/apps/users/forms.py:51
+msgid "Enter email address"
+msgstr "Введіть електронну адресу"
+
+#: src/apps/users/forms.py:63
+msgid "Passwords don't match"
+msgstr "Паролі не збігаються"
+
+#: src/apps/users/forms.py:77
+msgid "Email"
+msgstr "Електронна пошта"
+
+#: src/apps/users/forms.py:79
+msgid "Enter email"
+msgstr "Введіть електронну пошту"
+
+#: src/apps/users/forms.py:84
+msgid "Enter password"
+msgstr "Введіть пароль"
+
+#: src/apps/users/views.py:154
+msgid "User registered successfully"
+msgstr "Користувач успішно зареєстрований"
+
+#: src/apps/users/views.py:174
+msgid "User logged in successfully"
+msgstr "Користувач успішно увійшов у систему"
+
+#: src/apps/users/views.py:177
+msgid "Incorrect email or password"
+msgstr "Невірна електронна пошта або пароль"
+
+#: templates/site/authentication/login.html:17
+#: templates/site/authentication/login.html:26
+#: templates/site/authentication/login.html:42 templates/site/base.html:74
+msgid "Login"
+msgstr "Увійти"
+
+#: templates/site/authentication/login.html:45
+msgid "Don't have an account? Register"
+msgstr "Не маєте облікового запису? Зареєструйтесь"
+
+#: templates/site/authentication/register.html:17
+#: templates/site/authentication/register.html:26
+#: templates/site/authentication/register.html:56 templates/site/base.html:76
+msgid "Register"
+msgstr "Зареєструватись"
+
+#: templates/site/authentication/register.html:59
+msgid "Already have an account? Login"
+msgstr "Вже маєте обліковий запис? Увійдіть"
+
 #: templates/site/base.html:41
 msgid "Billboard"
 msgstr "Афіша"
@@ -56,10 +143,6 @@ msgstr "Про кінотеатр"
 msgid "Logout"
 msgstr "Вийти"
 
-#: templates/site/base.html:74
-msgid "Login"
-msgstr "Увійти"
-
-#: templates/site/base.html:76
-msgid "Register"
-msgstr "Зареєструватись"
+#: templates/site/main.html:4
+msgid "Main Page"
+msgstr "Головна Сторінка"

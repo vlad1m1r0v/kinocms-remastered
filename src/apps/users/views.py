@@ -6,7 +6,7 @@ from django.http import HttpRequest
 from django.shortcuts import redirect
 from django.views.generic import View, TemplateView
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
-
+from django.utils.translation import gettext as _
 from core.utilities.guards import admin_only
 from .forms import LoginForm, RegisterForm, UserForm, ChangePasswordForm
 from .models import CustomUser
@@ -151,7 +151,7 @@ class RegisterView(TemplateView):
         form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, "User registered successfully")
+            messages.success(request, _("User registered successfully"))
             return redirect('site_authentication_login')
         else:
             return self.render_to_response(self.get_context_data(form=form))
@@ -171,10 +171,10 @@ class LoginView(TemplateView):
             user = authenticate(email=email, password=password, is_superuser=True)
             if user:
                 login(request, user)
-                messages.success(request, "User logged in successfully")
+                messages.success(request, _("User logged in successfully"))
                 return redirect("site_main")
             else:
-                messages.error(request, "Incorrect email or password")
+                messages.error(request, _("Incorrect email or password"))
         context = {"form": form}
         return self.render_to_response(context=context)
 

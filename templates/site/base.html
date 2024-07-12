@@ -1,5 +1,6 @@
 {% load static %}
 {% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -58,8 +59,26 @@
             <li><a class="dropdown-item">Mobile Applications</a></li>
           </ul>
         </li>
+        <li class="nav-item">
+          <select id="language-select" class="form-select mx-2" aria-label="Language select">
+            <option
+              value="en"
+              {% if LANGUAGE_CODE == "en" %}
+              selected
+              {% endif %}
+            >EN
+            </option>
+            <option
+              value="uk"
+              {% if LANGUAGE_CODE == "uk" %}
+              selected
+              {% endif %}
+            >UK
+            </option>
+          </select>
+        </li>
       </ul>
-      <div class="d-flex">
+      <div class="d-flex mx-2">
         {% if request.user.is_authenticated %}
           <span class="nav-link" style="padding-left: 4px !important;">
           <i class="nav-icon fas fa-user"></i>
@@ -129,6 +148,25 @@
         })
       {% endfor %}
     {% endif %}
+  })
+
+
+  $('#language-select').change(function () {
+    const selectedLanguage = $(this).val();
+
+    $.ajax({
+      url: '{% url "site_change_language" %}',
+      type: 'POST',
+      data: {
+        'language': selectedLanguage,
+        'csrfmiddlewaretoken': '{{ csrf_token }}'
+      },
+      success: function (response) {
+        if (response.status === 'success') {
+          location.reload();
+        }
+      }
+    })
   })
 </script>
 {% block script %}

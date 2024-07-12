@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -13,7 +14,7 @@
   <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
   <!--SweetAlert2 Bootstrap theme-->
   <link rel="stylesheet" href="{% static 'plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css' %}">
-  <title>Register</title>
+  <title>{% trans 'Register' %}</title>
 </head>
 <body style="background-color:#f4f6f9">
 <!-- Form -->
@@ -22,7 +23,7 @@
     <div class="d-flex flex-row justify-content-center">
       <p class="h4">
         <i class="fas fa-film"></i><b>Kino</b>
-        <span class="fw-light"> | Register</span>
+        <span class="fw-light"> | {% trans 'Register' %}</span>
       </p>
     </div>
     <form method="post">
@@ -52,10 +53,10 @@
       <div class="d-grid gap-2">
         <button type="submit" class="btn btn-primary">
           <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
-          Register
+          {% trans 'Register' %}
         </button>
-        <a class="text-decoration-none text-center" href="{% url 'site_authentication_login' %}">Already have an
-          account? Login</a>
+        <a class="text-decoration-none text-center"
+           href="{% url 'site_authentication_login' %}">{% trans 'Already have an account? Login' %}</a>
       </div>
     </form>
   </div>

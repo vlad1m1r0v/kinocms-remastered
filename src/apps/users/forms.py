@@ -3,23 +3,23 @@ from django import forms
 from django.forms import widgets
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.password_validation import validate_password
-
+from django.utils.translation import gettext as _
 from apps.users.models import CustomUser
 
 
 class RegisterForm(forms.ModelForm):
     password = forms.CharField(
-        label="Password",
+        label=_("Password"),
         required=True,
-        widget=widgets.Input(attrs={"class": "form-control", "placeholder": "Enter password", "type": "password"}),
+        widget=widgets.Input(attrs={"class": "form-control", "placeholder": _("Enter Password"), "type": "password"}),
         min_length=6,
         max_length=30,
     )
 
     password2 = forms.CharField(
-        label="Repeat Password",
+        label=_("Repeat Password"),
         required=True,
-        widget=widgets.Input(attrs={"class": "form-control", "placeholder": "Repeat password", "type": "password"}),
+        widget=widgets.Input(attrs={"class": "form-control", "placeholder": _("Repeat Password"), "type": "password"}),
         min_length=6,
         max_length=30,
     )
@@ -33,14 +33,24 @@ class RegisterForm(forms.ModelForm):
             "password",
             "password2"
         ]
+
+        labels = {
+            "first_name": _("First Name"),
+            "last_name": _("Last Name"),
+            "email": _("E-Mail"),
+            "password": _("Password"),
+            "password2": _("Repeat Password")
+        }
+
         widgets = {
             "first_name": forms.TextInput(
-                attrs={"class": "form-control", "placeholder": "Enter first name", "minlength": 2, "required": True}),
+                attrs={"class": "form-control", "placeholder": _("Enter first name"), "minlength": 2,
+                       "required": True}),
             "last_name": forms.TextInput(
-                attrs={"class": "form-control", "placeholder": "Enter last name", "minlength": 2, "required": True}),
-            "email": forms.EmailInput(attrs={"class": "form-control", "placeholder": "Enter email address"}),
+                attrs={"class": "form-control", "placeholder": _("Enter last name"), "minlength": 2, "required": True}),
+            "email": forms.EmailInput(attrs={"class": "form-control", "placeholder": _("Enter email address")}),
             "password": forms.PasswordInput(
-                attrs={"class": "form-control", "placeholder": "Enter password", "type": "password"}, ),
+                attrs={"class": "form-control", "placeholder": _("Enter Password"), "type": "password"}, ),
         }
 
     def clean(self):
@@ -50,7 +60,7 @@ class RegisterForm(forms.ModelForm):
 
         if password and password2:
             if password != password2:
-                raise forms.ValidationError("Passwords don't match")
+                raise forms.ValidationError(_("Passwords don't match"))
 
         return cleaned_data
 
@@ -64,14 +74,14 @@ class RegisterForm(forms.ModelForm):
 
 class LoginForm(forms.Form):
     email = forms.EmailField(
-        label="Email",
+        label=_("Email"),
         required=True,
-        widget=widgets.Input(attrs={"class": "form-control", "placeholder": "Enter email", "type": "email"}),
+        widget=widgets.Input(attrs={"class": "form-control", "placeholder": _("Enter email"), "type": "email"}),
     )
     password = forms.CharField(
-        label="Password",
+        label=_("Password"),
         required=True,
-        widget=widgets.Input(attrs={"class": "form-control", "placeholder": "Enter password", "type": "password"}),
+        widget=widgets.Input(attrs={"class": "form-control", "placeholder": _("Enter password"), "type": "password"}),
         min_length=6,
         max_length=30,
     )
