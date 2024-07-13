@@ -78,12 +78,12 @@
           </select>
         </li>
       </ul>
-      <div class="d-flex mx-2">
+      <div class="d-flex mx-2 align-items-center">
         {% if request.user.is_authenticated %}
-          <span class="nav-link" style="padding-left: 4px !important;">
-          <i class="nav-icon fas fa-user"></i>
+          <p class="nav-link text-truncate mb-0" style="padding-left: 4px; max-width: 150px;">
+            <i class="nav-icon fas fa-user"></i>
             {{ request.user.email }}
-          </span>
+          </p>
           <form method="post" action="{% url 'site_authentication_logout' %}">
             {% csrf_token %}
             <button type="submit" class="btn btn-outline-primary btn-block">{% translate 'Logout' %}</button>
