@@ -51,7 +51,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "core.utilities.middlewares.LanguageMiddleware"
+    "core.utilities.middlewares.LanguageMiddleware",
 ]
 
 ROOT_URLCONF = "core.urls"
@@ -113,14 +113,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = "uk"
-
 TIME_ZONE = "UTC"
 
 USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+LANGUAGE_CODE = 'uk'
 
 LANGUAGES = [
     ('en', 'English'),

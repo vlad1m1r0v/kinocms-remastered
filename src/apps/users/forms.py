@@ -3,7 +3,7 @@ from django import forms
 from django.forms import widgets
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.password_validation import validate_password
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from apps.users.models import CustomUser
 
 
