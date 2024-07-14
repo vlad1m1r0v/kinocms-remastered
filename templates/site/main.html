@@ -68,7 +68,7 @@
   <!--Advertisement Banners-->
   <div id="advertisementBannerCarousel" class="carousel slide"
        data-bs-ride="carousel"
-       data-bs-interval="{{ banner_settings.banner_rotation|mul:1000 }}">
+       data-bs-interval="{{ banner_settings.advertisement_rotation|mul:1000 }}">
     <div class="carousel-indicators">
       {% for banner in advertisement_banners %}
         <button type="button"
