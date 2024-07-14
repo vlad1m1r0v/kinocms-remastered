@@ -50,6 +50,7 @@
   {% endblock head %}
 </head>
 <body style="background-color:#f4f6f9">
+<!--Navbar-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
   <div class="container">
 
@@ -118,6 +119,7 @@
     </div>
   </div>
 </nav>
+<!--Header-->
 <header class="py-3 border-bottom">
   <div class="container d-flex flex-wrap justify-content-center">
     <a href="{% url 'site_main' %}"
@@ -139,12 +141,14 @@
     </form>
   </div>
 </header>
+<!--Content Container--->
 <div id="content-container">
-  <div class="container border-left border-right bg-light" style="z-index: 1000;">
+  <div class="container bg-white px-0" style="z-index: 1000;">
     {% block content %}
     {% endblock content %}
   </div>
 </div>
+<!--Footer-->
 </body>
 </html>
 <!--Bootstrap5 JS Bundle-->

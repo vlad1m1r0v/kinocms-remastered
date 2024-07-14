@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     "apps.pages.apps.PagesConfig",
     "apps.mailing.apps.MailingConfig",
     "ajax_datatable",
-    "channels"
+    "channels",
+    "mathfilters"
 ]
 
 MIDDLEWARE = [

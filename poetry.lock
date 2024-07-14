@@ -493,6 +493,17 @@ docs = ["furo (>=2021.8.17b43,<2021.9.dev0)", "sphinx (>=3.5.0)", "sphinx-notfou
 testing = ["coverage[toml] (>=5.0a4)", "pytest (>=4.6.11)"]
 
 [[package]]
+name = "django-mathfilters"
+version = "1.0.0"
+description = "A set of simple math filters for Django"
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-mathfilters-1.0.0.tar.gz", hash = "sha256:c9b892ef6dfc893683e75cfd0279c187a601ca68f4684c38f9da44657fb64b07"},
+    {file = "django_mathfilters-1.0.0-py3-none-any.whl", hash = "sha256:64200a21bb249fbf27be601d4bbb788779e09c6e063170c097cd82c4d18ebb83"},
+]
+
+[[package]]
 name = "filelock"
 version = "3.14.0"
 description = "A platform independent file lock."
@@ -1240,4 +1251,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "eb1774c7063f3382edd13c3ec07d6ebd2602b8b0345a35a6bb4d992a9092c339"
+content-hash = "39c9cdcc220452f9241040f1bd6751edf1561833d26165ae09c794434b98c631"
