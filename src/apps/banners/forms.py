@@ -40,10 +40,11 @@ class TopBannerSettingsForm(ModelForm):
         }
 
     def save(self, commit=True):
-        banner_settings = BannerSettings.objects.get(pk=1)
+        banner_settings = BannerSettings.load()
         banner_settings.banner_rotation = self.cleaned_data.get('banner_rotation')
         banner_settings.are_banners_active = self.cleaned_data.get('are_banners_active')
         banner_settings.save()
+
 
 class BannerSettingsForm(ModelForm):
     class Meta:
@@ -111,3 +112,8 @@ class AdvertisementBannerSettingsForm(ModelForm):
             'are_advertisements_active': CheckboxInput(attrs={'class': 'form-control custom-control-input'})
         }
 
+    def save(self, commit=True):
+        banner_settings = BannerSettings.load()
+        banner_settings.advertisement_rotation = self.cleaned_data.get('advertisement_rotation')
+        banner_settings.are_advertisements_active = self.cleaned_data.get('are_advertisements_active')
+        banner_settings.save()

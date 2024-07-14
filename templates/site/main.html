@@ -21,86 +21,90 @@
 
     #seo-text {
       text-align: justify;
-      padding: 1rem;
+      font-size: 14px;
       margin-bottom: 0;
     }
   </style>
 {% endblock head %}
 {% block content %}
   <!--Top Banners-->
-  <div id="topBannerCarousel" class="carousel slide"
-       data-bs-ride="carousel"
-       data-bs-interval="{{ banner_settings.banner_rotation|mul:1000 }}">
-    <div class="carousel-indicators">
-      {% for banner in top_banners %}
-        <button type="button"
-                data-bs-target="#topBannerCarousel"
-                data-bs-slide-to="{{ forloop.counter0 }}"
-                aria-label="Slide {{ forloop.counter0 }}"
-                aria-current="true"
-                {% if forloop.counter0 == 0 %}class="active"{% endif %}></button>
-      {% endfor %}
-    </div>
-    <div class="carousel-inner">
-      {% for banner in top_banners %}
-        <div
-          style="cursor: pointer;" onclick="window.location='{{ banner.url }}'"
-          class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}">
-          <div class="banner-container">
-            <img src="{{ banner.image.url }}" alt="Banner Image">
-          </div>
+  {% if banner_settings.are_banners_active %}
+    <div id="topBannerCarousel" class="carousel slide"
+         data-bs-ride="carousel"
+         data-bs-interval="{{ banner_settings.banner_rotation|mul:1000 }}">
+      <div class="carousel-indicators">
+        {% for banner in top_banners %}
+          <button type="button"
+                  data-bs-target="#topBannerCarousel"
+                  data-bs-slide-to="{{ forloop.counter0 }}"
+                  aria-label="Slide {{ forloop.counter0 }}"
+                  aria-current="true"
+                  {% if forloop.counter0 == 0 %}class="active"{% endif %}></button>
+        {% endfor %}
+      </div>
+      <div class="carousel-inner">
+        {% for banner in top_banners %}
+          <div
+            style="cursor: pointer;" onclick="window.location='{{ banner.url }}'"
+            class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}">
+            <div class="banner-container">
+              <img src="{{ banner.image.url }}" alt="Banner Image">
+            </div>
 
-          <div class="carousel-caption d-none d-md-block">
-            <h5>{{ banner.description }}</h5>
+            <div class="carousel-caption d-none d-md-block">
+              <h5>{{ banner.description }}</h5>
+            </div>
           </div>
-        </div>
-      {% endfor %}
+        {% endfor %}
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#topBannerCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#topBannerCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#topBannerCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#topBannerCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
+  {% endif %}
   <!--Advertisement Banners-->
-  <div id="advertisementBannerCarousel" class="carousel slide"
-       data-bs-ride="carousel"
-       data-bs-interval="{{ banner_settings.advertisement_rotation|mul:1000 }}">
-    <div class="carousel-indicators">
-      {% for banner in advertisement_banners %}
-        <button type="button"
-                data-bs-target="#advertisementBannerCarousel"
-                data-bs-slide-to="{{ forloop.counter0 }}"
-                aria-label="Slide {{ forloop.counter0 }}"
-                aria-current="true"
-                {% if forloop.counter0 == 0 %}class="active"{% endif %}></button>
-      {% endfor %}
-    </div>
-    <div class="carousel-inner">
-      {% for banner in advertisement_banners %}
-        <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}">
-          <div class="banner-container">
-            <img src="{{ banner.image.url }}" alt="Banner Image">
+  {% if banner_settings.are_advertisements_active %}
+    <div id="advertisementBannerCarousel" class="carousel slide"
+         data-bs-ride="carousel"
+         data-bs-interval="{{ banner_settings.advertisement_rotation|mul:1000 }}">
+      <div class="carousel-indicators">
+        {% for banner in advertisement_banners %}
+          <button type="button"
+                  data-bs-target="#advertisementBannerCarousel"
+                  data-bs-slide-to="{{ forloop.counter0 }}"
+                  aria-label="Slide {{ forloop.counter0 }}"
+                  aria-current="true"
+                  {% if forloop.counter0 == 0 %}class="active"{% endif %}></button>
+        {% endfor %}
+      </div>
+      <div class="carousel-inner">
+        {% for banner in advertisement_banners %}
+          <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}">
+            <div class="banner-container">
+              <img src="{{ banner.image.url }}" alt="Banner Image">
+            </div>
           </div>
-        </div>
-      {% endfor %}
+        {% endfor %}
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#advertisementBannerCarousel"
+              data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#advertisementBannerCarousel"
+              data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#advertisementBannerCarousel"
-            data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#advertisementBannerCarousel"
-            data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
+  {% endif %}
   <!--SEO Text-->
-  <p id="seo-text" class="fw-light">
+  <p id="seo-text" class="fw-light p-5">
     {% if LANGUAGE_CODE == 'en' %}
       {{ main_page_info.seo_text_en }}
     {% else %}

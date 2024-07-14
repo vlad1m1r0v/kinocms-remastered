@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-14 16:09+0300\n"
+"POT-Creation-Date: 2024-07-15 00:18+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,7 +90,7 @@ msgstr "Мову успішно змінено"
 
 #: templates/site/authentication/login.html:16
 #: templates/site/authentication/login.html:25
-#: templates/site/authentication/login.html:41 templates/site/base.html:113
+#: templates/site/authentication/login.html:41 templates/site/base.html:115
 msgid "Login"
 msgstr "Вхід"
 
@@ -100,7 +100,7 @@ msgstr "Немає облікового запису? Зареєструйтес
 
 #: templates/site/authentication/register.html:17
 #: templates/site/authentication/register.html:26
-#: templates/site/authentication/register.html:56 templates/site/base.html:115
+#: templates/site/authentication/register.html:56 templates/site/base.html:117
 msgid "Register"
 msgstr "Реєстрація"
 
@@ -108,46 +108,54 @@ msgstr "Реєстрація"
 msgid "Already have an account? Login"
 msgstr "Вже є обліковий запис? Ввійти"
 
-#: templates/site/base.html:62
+#: templates/site/base.html:63 templates/site/base.html:173
 msgid "Billboard"
 msgstr "Афіша"
 
-#: templates/site/base.html:63
+#: templates/site/base.html:64 templates/site/base.html:175
 msgid "Schedule"
 msgstr "Розклад"
 
-#: templates/site/base.html:64
+#: templates/site/base.html:65 templates/site/base.html:176
 msgid "Soon"
 msgstr "Скоро"
 
-#: templates/site/base.html:65
+#: templates/site/base.html:66 templates/site/base.html:177
 msgid "Contacts"
 msgstr "Контакти"
 
-#: templates/site/base.html:66
+#: templates/site/base.html:67 templates/site/base.html:178
 msgid "Cinemas"
 msgstr "Кінотеатри"
 
-#: templates/site/base.html:67
+#: templates/site/base.html:68 templates/site/base.html:179
 msgid "News"
 msgstr "Новини"
 
-#: templates/site/base.html:68
+#: templates/site/base.html:69 templates/site/base.html:180
 msgid "Promotions"
 msgstr "Акції"
 
-#: templates/site/base.html:72
+#: templates/site/base.html:73 templates/site/base.html:185
 msgid "About Cinema"
 msgstr "Про кінотеатр"
 
-#: templates/site/base.html:109
+#: templates/site/base.html:111
 msgid "Logout"
 msgstr "Вийти"
 
-#: templates/site/base.html:138
+#: templates/site/base.html:149
 msgid "Search"
 msgstr "Шукати"
 
-#: templates/site/main.html:4
+#: templates/site/base.html:171
+msgid "Menu"
+msgstr "Меню"
+
+#: templates/site/base.html:197
+msgid "Social medias"
+msgstr "Соціальні мережі"
+
+#: templates/site/main.html:6
 msgid "Main Page"
 msgstr "Головна сторінка"

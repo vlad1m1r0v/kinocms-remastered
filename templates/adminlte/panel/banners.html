@@ -171,6 +171,24 @@
         action="{% url 'adminlte_banners_advertisement_banners_settings' %}" method="post"
         enctype="multipart/form-data">
         {% csrf_token %}
+        {% with advertisement_banner_settings_form as settings %}
+          <div class="form-group d-flex flex-row align-items-center mb-0">
+            <div class="d-sm-block d-none">
+              Size: 1000 × 190
+            </div>
+            <div class="ml-auto">
+              {{ settings.advertisement_rotation}}
+              <label for="id_advertisement_rotation" class="font-weight-normal ml-1 pt-2">Rotation</label>
+            </div>
+            <div class="custom-control custom-switch ml-2">
+              {{ settings.are_advertisements_active }}
+              <label class="custom-control-label form-check-label"
+                     for="id_advertisement_banner_settings-are_advertisements_active">
+                Enabled / Disabled
+              </label>
+            </div>
+          </div>
+        {% endwith %}
         {% with advertisement_banner_formset as formset %}
           <div class="scrolling-wrapper">
             <div class="mt-3">
@@ -234,7 +252,7 @@
 {% block script %}
   <script>
     $(document).ready(function () {
-      const $rotationSelector = $('#id_top_banner_settings-banner_rotation');
+      const $rotationSelector = $('#id_top_banner_settings-banner_rotation, #id_advertisement_banner_settings-advertisement_rotation');
       $rotationSelector.select2(
         {
           width: '70px',
@@ -348,27 +366,27 @@
       const $image = $(`<img src=${src} alt="preview">`);
       $previewContainer.append($image);
     });
-      $("#delete-background-button").click(function () {
-        const $button = $(this);
-        $.ajax({
-          url: "{% url 'adminlte_banners_background_settings_banner_delete' %}",
-          method: "DELETE",
-          success: function (data) {
-            if (data.status === 409) {
-              toastr.error("Background doesn\'t exist");
-            }
-            if (data.status === 202) {
-              toastr.success("Background was deleted successfully");
-              const $cardBody = $button.closest('.card-body');
-              const $preview = $cardBody.find('.preview-poster');
-              $preview.remove();
-              const $skeleton = $('<div></div>');
-              $skeleton.addClass('skeleton rounded preview-poster');
-              $cardBody.prepend($skeleton);
-              $button.addClass("disabled");
-            }
+    $("#delete-background-button").click(function () {
+      const $button = $(this);
+      $.ajax({
+        url: "{% url 'adminlte_banners_background_settings_banner_delete' %}",
+        method: "DELETE",
+        success: function (data) {
+          if (data.status === 409) {
+            toastr.error("Background doesn\'t exist");
           }
-        });
-      })
+          if (data.status === 202) {
+            toastr.success("Background was deleted successfully");
+            const $cardBody = $button.closest('.card-body');
+            const $preview = $cardBody.find('.preview-poster');
+            $preview.remove();
+            const $skeleton = $('<div></div>');
+            $skeleton.addClass('skeleton rounded preview-poster');
+            $cardBody.prepend($skeleton);
+            $button.addClass("disabled");
+          }
+        }
+      });
+    })
   </script>
 {% endblock %}

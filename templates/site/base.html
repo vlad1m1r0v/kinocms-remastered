@@ -30,7 +30,7 @@
       font-size: min(2vh, 16px);
     }
 
-    #social-medias > img {
+    #social-medias img {
       width: 35px;
       aspect-ratio: 1;
       margin-left: 5px;
@@ -72,6 +72,7 @@
              aria-expanded="false">
             {% translate 'About Cinema' %}
           </a>
+          <!--Hardcoded-->
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item">Cafe-Bars</a></li>
             <li><a class="dropdown-item">VIP Halls</a></li>
@@ -122,20 +123,28 @@
 <!--Header-->
 <header class="py-3 border-bottom">
   <div class="container d-flex flex-wrap justify-content-center">
-    <a href="{% url 'site_main' %}"
-       class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
-      <span class="fs-4"> <i class="fas fa-film"></i>Kino&emsp;</span>
+    <div
+      class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto">
+      <a href="{% url 'site_main' %}" class="text-dark text-decoration-none">
+        <span class="fs-4"> <i class="fas fa-film"></i>Kino&emsp;</span>
+      </a>
       <div class="d-flex flex-column">
         <span class="phone-contact">{{ main_page_info.first_phone }}</span>
         <span class="phone-contact">{{ main_page_info.second_phone }}</span>
       </div>
       <span class="fs-4">&emsp;</span>
       <div class="d-flex flex-row flex-nowrap" id="social-medias">
-        <img src="{% static 'custom/images/instagram.svg' %}" alt="instagram">
-        <img src="{% static 'custom/images/linkedin.svg' %}" alt="linkedin">
-        <img src="{% static 'custom/images/facebook.svg' %}" alt="facebook">
+        <a href="https://www.instagram.com/">
+          <img src="{% static 'custom/images/instagram.svg' %}" alt="instagram">
+        </a>
+        <a href="https://www.linkedin.com/feed/">
+          <img src="{% static 'custom/images/linkedin.svg' %}" alt="linkedin">
+        </a>
+        <a href="https://uk-ua.facebook.com/">
+          <img src="{% static 'custom/images/facebook.svg' %}" alt="facebook">
+        </a>
       </div>
-    </a>
+    </div>
     <form class="col-12 col-lg-auto d-flex align-items-center" role="search">
       <input type="search" class="form-control" placeholder="{% trans 'Search' %}..." aria-label="Search">
     </form>
@@ -143,12 +152,63 @@
 </header>
 <!--Content Container--->
 <div id="content-container">
-  <div class="container bg-white px-0" style="z-index: 1000;">
+  <div class="container bg-light px-0" style="z-index: 1000;">
     {% block content %}
     {% endblock content %}
   </div>
 </div>
 <!--Footer-->
+<div class="container border-top">
+  <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5">
+    <div class="col mb-3">
+      <a href="https://avada-media.ua/ua/" class="d-flex align-items-center mb-3 text-decoration-none">
+        <span class="d-flex flex-nowrap text-muted">©2024 Avada Media</span>
+      </a>
+    </div>
+    <div class="col mb-3"></div>
+    <div class="col mb-3">
+      <!--Menu-->
+      <h5>{% trans 'Menu' %}</h5>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2"><a class="nav-link text-muted p-0" aria-current="page">{% translate 'Billboard' %}</a>
+        </li>
+        <li class="nav-item mb-2"><a class="nav-link text-muted p-0">{% translate 'Schedule' %}</a></li>
+        <li class="nav-item mb-2"><a class="nav-link text-muted p-0">{% translate 'Soon' %}</a></li>
+        <li class="nav-item mb-2"><a class="nav-link text-muted p-0">{% translate 'Contacts' %}</a></li>
+        <li class="nav-item mb-2"><a class="nav-link text-muted p-0">{% translate 'Cinemas' %}</a></li>
+        <li class="nav-item mb-2"><a class="nav-link text-muted p-0">{% translate 'News' %}</a></li>
+        <li class="nav-item mb-2"><a class="nav-link text-muted p-0">{% translate 'Promotions' %}</a></li>
+      </ul>
+    </div>
+    <!--About Cinema-->
+    <div class="col mb-3">
+      <h5>{% translate 'About Cinema' %}</h5>
+      <ul class="nav flex-column">
+        <!--Hardcoded-->
+        <li class="nav-item mb-2"><a class="nav-link p-0 text-muted">Cafe-Bars</a></li>
+        <li class="nav-item mb-2"><a class="nav-link p-0 text-muted">VIP Halls</a></li>
+        <li class="nav-item mb-2"><a class="nav-link p-0 text-muted">Child Rooms</a></li>
+        <li class="nav-item mb-2"><a class="nav-link p-0 text-muted">For Advertisers</a></li>
+        <li class="nav-item mb-2"><a class="nav-link p-0 text-muted">Mobile Applications</a></li>
+      </ul>
+    </div>
+    <!--Social Medias-->
+    <div class="col mb-3">
+      <h5>{% trans "Social medias" %}</h5>
+      <div class="d-flex flex-row flex-nowrap" id="social-medias">
+        <a href="https://www.instagram.com/">
+          <img src="{% static 'custom/images/instagram.svg' %}" alt="instagram">
+        </a>
+        <a href="https://www.linkedin.com/feed/">
+          <img src="{% static 'custom/images/linkedin.svg' %}" alt="linkedin">
+        </a>
+        <a href="https://uk-ua.facebook.com/">
+          <img src="{% static 'custom/images/facebook.svg' %}" alt="facebook">
+        </a>
+      </div>
+    </div>
+  </footer>
+</div>
 </body>
 </html>
 <!--Bootstrap5 JS Bundle-->
