@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-12 11:26+0300\n"
+"POT-Creation-Date: 2024-07-14 16:09+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,10 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != "
-"11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
-"100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
-"(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/apps/users/forms.py:12 src/apps/users/forms.py:41
 #: src/apps/users/forms.py:82
@@ -61,7 +58,7 @@ msgstr "Введіть електронну адресу"
 
 #: src/apps/users/forms.py:63
 msgid "Passwords don't match"
-msgstr "Паролі не збігаються"
+msgstr "Паролі не співпадають"
 
 #: src/apps/users/forms.py:77
 msgid "Email"
@@ -81,68 +78,76 @@ msgstr "Користувач успішно зареєстрований"
 
 #: src/apps/users/views.py:174
 msgid "User logged in successfully"
-msgstr "Користувач успішно увійшов у систему"
+msgstr "Користувач успішно увійшов"
 
 #: src/apps/users/views.py:177
 msgid "Incorrect email or password"
-msgstr "Невірна електронна пошта або пароль"
+msgstr "Неправильна електронна пошта або пароль"
 
-#: templates/site/authentication/login.html:17
-#: templates/site/authentication/login.html:26
-#: templates/site/authentication/login.html:42 templates/site/base.html:74
+#: src/core/views.py:25
+msgid "Language was changed successfully"
+msgstr "Мову успішно змінено"
+
+#: templates/site/authentication/login.html:16
+#: templates/site/authentication/login.html:25
+#: templates/site/authentication/login.html:41 templates/site/base.html:113
 msgid "Login"
-msgstr "Увійти"
+msgstr "Вхід"
 
-#: templates/site/authentication/login.html:45
+#: templates/site/authentication/login.html:44
 msgid "Don't have an account? Register"
-msgstr "Не маєте облікового запису? Зареєструйтесь"
+msgstr "Немає облікового запису? Зареєструйтеся"
 
 #: templates/site/authentication/register.html:17
 #: templates/site/authentication/register.html:26
-#: templates/site/authentication/register.html:56 templates/site/base.html:76
+#: templates/site/authentication/register.html:56 templates/site/base.html:115
 msgid "Register"
-msgstr "Зареєструватись"
+msgstr "Реєстрація"
 
 #: templates/site/authentication/register.html:59
 msgid "Already have an account? Login"
-msgstr "Вже маєте обліковий запис? Увійдіть"
+msgstr "Вже є обліковий запис? Ввійти"
 
-#: templates/site/base.html:41
+#: templates/site/base.html:62
 msgid "Billboard"
 msgstr "Афіша"
 
-#: templates/site/base.html:42
+#: templates/site/base.html:63
 msgid "Schedule"
 msgstr "Розклад"
 
-#: templates/site/base.html:43
+#: templates/site/base.html:64
 msgid "Soon"
 msgstr "Скоро"
 
-#: templates/site/base.html:44
+#: templates/site/base.html:65
 msgid "Contacts"
 msgstr "Контакти"
 
-#: templates/site/base.html:45
+#: templates/site/base.html:66
 msgid "Cinemas"
 msgstr "Кінотеатри"
 
-#: templates/site/base.html:46
+#: templates/site/base.html:67
 msgid "News"
 msgstr "Новини"
 
-#: templates/site/base.html:47
+#: templates/site/base.html:68
 msgid "Promotions"
 msgstr "Акції"
 
-#: templates/site/base.html:51
+#: templates/site/base.html:72
 msgid "About Cinema"
 msgstr "Про кінотеатр"
 
-#: templates/site/base.html:70
+#: templates/site/base.html:109
 msgid "Logout"
 msgstr "Вийти"
 
+#: templates/site/base.html:138
+msgid "Search"
+msgstr "Шукати"
+
 #: templates/site/main.html:4
 msgid "Main Page"
-msgstr "Головна Сторінка"
+msgstr "Головна сторінка"

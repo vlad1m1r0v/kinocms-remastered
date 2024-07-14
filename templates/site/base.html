@@ -26,9 +26,19 @@
       }
     }
 
+    .phone-contact {
+      font-size: min(2vh, 16px);
+    }
+
+    #social-medias > img {
+      width: 35px;
+      aspect-ratio: 1;
+      margin-left: 5px;
+    }
+
     #content-container {
-    {% if background_settings.background_image %}
-      background-image: url("{{ background_settings.background_image.url }}");
+    {% if banner_settings.is_background_image %}
+      background-image: url("{{ banner_settings.background_image.url }}");
     {% else %}
       background-color: #8EC5FC;
       background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
@@ -70,7 +80,7 @@
           </ul>
         </li>
         <li class="nav-item">
-          <select id="language-select" class="form-select mx-2" aria-label="Language select">
+          <select id="language-select" class="form-select" aria-label="Language select">
             <option
               value="en"
               {% if LANGUAGE_CODE == "en" %}
@@ -112,10 +122,20 @@
   <div class="container d-flex flex-wrap justify-content-center">
     <a href="{% url 'site_main' %}"
        class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
-      <span class="fs-4"> <i class="fas fa-film"></i>Kino</span>
+      <span class="fs-4"> <i class="fas fa-film"></i>Kino&emsp;</span>
+      <div class="d-flex flex-column">
+        <span class="phone-contact">{{ main_page_info.first_phone }}</span>
+        <span class="phone-contact">{{ main_page_info.second_phone }}</span>
+      </div>
+      <span class="fs-4">&emsp;</span>
+      <div class="d-flex flex-row flex-nowrap" id="social-medias">
+        <img src="{% static 'custom/images/instagram.svg' %}" alt="instagram">
+        <img src="{% static 'custom/images/linkedin.svg' %}" alt="linkedin">
+        <img src="{% static 'custom/images/facebook.svg' %}" alt="facebook">
+      </div>
     </a>
-    <form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search">
-      <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+    <form class="col-12 col-lg-auto d-flex align-items-center" role="search">
+      <input type="search" class="form-control" placeholder="{% trans 'Search' %}..." aria-label="Search">
     </form>
   </div>
 </header>
@@ -175,10 +195,8 @@
         'language': selectedLanguage,
         'csrfmiddlewaretoken': '{{ csrf_token }}'
       },
-      success: function (response) {
-        if (response.status === 'success') {
-          location.reload();
-        }
+      success: function () {
+        location.reload()
       }
     })
   })

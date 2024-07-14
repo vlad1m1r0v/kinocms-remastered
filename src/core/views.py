@@ -1,17 +1,12 @@
 from django.http import JsonResponse
+from django.contrib import messages
+from django.utils.translation import activate
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
-from apps.banners.models import BannerSettings, TopBanner, AdvertisementBanner
 
 
 class MainPageView(TemplateView):
     template_name = "site/main.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["background_settings"] = BannerSettings.load()
-        context["top_banners"] = TopBanner.objects.all()
-        context["advertisement_banners"] = AdvertisementBanner.objects.all()
-        return context
 
 
 def change_language_view(request):
@@ -24,4 +19,9 @@ def change_language_view(request):
 
     response = JsonResponse({'status': 'success'})
     response.set_cookie('language', language, max_age=365 * 24 * 60 * 60)
+
+    activate(language.lower())
+
+    messages.success(request, _('Language was changed successfully'))
+
     return response
