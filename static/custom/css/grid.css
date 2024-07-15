@@ -4,6 +4,6 @@
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
 }
 
-.grid-container .card {
+.grid-container > div {
   margin-bottom: 0;
 }
