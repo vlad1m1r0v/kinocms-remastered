@@ -18,10 +18,10 @@ from apps.news.views import AdminNewsView, AdminCreateNewsView, AdminUpdateNewsV
 from apps.promotions.views import AdminPromotionsView, AdminPromotionsDataTableView, AdminCreatePromotionView, \
     AdminUpdatePromotionView, AdminDeletePromotionView, AdminDeletePromotionImageView
 from apps.pages.views import AdminPagesView, AdminMainPageView, AdminCreatePageView, AdminUpdatePageView, \
-    AdminDeletePageView, AdminDeletePageImageView, AdminContactsView, AdminDeleteContactLogoView
+    AdminDeletePageView, AdminDeletePageImageView, AdminContactsView, AdminDeleteContactLogoView, MainPageView
 from apps.mailing.views import AdminMailingView, AdminUploadTemplateView, AdminDeleteTemplateView, \
     AdminMailingDatatableView, admin_send_emails_view
-from core.views import MainPageView, change_language_view
+from core.views import change_language_view
 
 adminlte = [
     path("authentication/login/", AdminLoginView.as_view(), name="adminlte_authentication_login"),

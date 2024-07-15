@@ -164,3 +164,7 @@ class AdminDeleteContactLogoView(View):
         contact_id: int = kwargs.get('contact_id')
         Contact.objects.get(pk=contact_id).logo.delete()
         return JsonResponse({"status": 202})
+
+
+class MainPageView(TemplateView):
+    template_name = "site/main.html"

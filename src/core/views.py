@@ -2,11 +2,6 @@ from django.http import JsonResponse
 from django.contrib import messages
 from django.utils.translation import activate
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import TemplateView
-
-
-class MainPageView(TemplateView):
-    template_name = "site/main.html"
 
 
 def change_language_view(request):
