@@ -6,25 +6,6 @@
   {% trans "Main Page" %}
 {% endblock %}
 {% block head %}
-  <style>
-    .banner-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      aspect-ratio: 4/1;
-    }
-
-    .banner-container > img {
-      width: 100%;
-    }
-
-    #seo-text {
-      text-align: justify;
-      font-size: 14px;
-      margin-bottom: 0;
-    }
-  </style>
 {% endblock head %}
 {% block content %}
   <!--Top Banners-->
@@ -45,10 +26,11 @@
       <div class="carousel-inner">
         {% for banner in top_banners %}
           <div
-            style="cursor: pointer;" onclick="window.location='{{ banner.url }}'"
             class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}">
-            <div class="banner-container">
-              <img src="{{ banner.image.url }}" alt="Banner Image">
+            <div class="d-flex align-items-center justify-content-center overflow-hidden ratio ratio-4x1">
+              <a class="w-100" href="{{ banner.url }}">
+                <img class="w-100" src="{{ banner.image.url }}" alt="Banner Image">
+              </a>
             </div>
 
             <div class="carousel-caption d-none d-md-block">
@@ -85,8 +67,8 @@
       <div class="carousel-inner">
         {% for banner in advertisement_banners %}
           <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}">
-            <div class="banner-container">
-              <img src="{{ banner.image.url }}" alt="Banner Image">
+            <div class="d-flex align-items-center justify-content-center overflow-hidden ratio ratio-4x1">
+              <img class="w-100" src="{{ banner.image.url }}" alt="Banner Image">
             </div>
           </div>
         {% endfor %}
@@ -104,7 +86,7 @@
     </div>
   {% endif %}
   <!--SEO Text-->
-  <p id="seo-text" class="fw-light p-5">
+  <p class="fw-light py-3 px-5 text-align-justify">
     {% if LANGUAGE_CODE == 'en' %}
       {{ main_page_info.seo_text_en }}
     {% else %}

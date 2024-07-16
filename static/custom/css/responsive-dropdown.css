@@ -1,0 +1,5 @@
+@media (min-width: 992px) {
+  .dropdown {
+    padding: 0 !important;
+  }
+}

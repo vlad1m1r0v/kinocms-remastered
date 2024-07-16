@@ -19,31 +19,20 @@
   <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
   <!--SweetAlert2 Bootstrap theme-->
   <link rel="stylesheet" href="{% static 'plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css' %}">
+  <link rel="stylesheet" href="{% static 'custom/css/responsive-dropdown.css' %}">
+  <link rel="stylesheet" href="{% static 'custom/css/text-align.css' %}">
+  <link rel="stylesheet" href="{% static 'custom/css/ratio.css' %}">
+  <link rel="stylesheet" href="{% static 'custom/css/svg-icons.css' %}">
   <style>
-    @media (min-width: 992px) {
-      .dropdown {
-        padding: 0 !important;
-      }
-    }
-
-    .phone-contact {
-      font-size: min(2vh, 16px);
-    }
-
-    #social-medias img {
-      width: 35px;
-      aspect-ratio: 1;
-      margin-left: 5px;
-    }
-
     #content-container {
-    {% if banner_settings.is_background_image %}
-      background-image: url("{{ banner_settings.background_image.url }}");
-    {% else %}
       background-color: #8EC5FC;
-      background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
-    {% endif %}
       background-size: cover;
+      background-image:
+      {% if banner_settings.is_background_image %}
+        url("{{ banner_settings.background_image.url }}")
+      {% else %}
+        linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
+      {% endif %}
     }
   </style>
   {% block head %}
@@ -133,15 +122,15 @@
         <span class="phone-contact">{{ main_page_info.second_phone }}</span>
       </div>
       <span class="fs-4">&emsp;</span>
-      <div class="d-flex flex-row flex-nowrap" id="social-medias">
+      <div class="d-flex flex-row flex-nowrap">
         <a href="https://www.instagram.com/">
-          <img src="{% static 'custom/images/instagram.svg' %}" alt="instagram">
+          <img class="svg-icon" src="{% static 'custom/images/instagram.svg' %}" alt="instagram">
         </a>
         <a href="https://www.linkedin.com/feed/">
-          <img src="{% static 'custom/images/linkedin.svg' %}" alt="linkedin">
+          <img class="svg-icon" src="{% static 'custom/images/linkedin.svg' %}" alt="linkedin">
         </a>
         <a href="https://uk-ua.facebook.com/">
-          <img src="{% static 'custom/images/facebook.svg' %}" alt="facebook">
+          <img class="svg-icon" src="{% static 'custom/images/facebook.svg' %}" alt="facebook">
         </a>
       </div>
     </div>
@@ -152,7 +141,7 @@
 </header>
 <!--Content Container--->
 <div id="content-container">
-  <div class="container bg-light px-0" style="z-index: 1000;">
+  <div class="container bg-light px-0">
     {% block content %}
     {% endblock content %}
   </div>
@@ -196,15 +185,15 @@
     <!--Social Medias-->
     <div class="col mb-3">
       <h5>{% trans "Social medias" %}</h5>
-      <div class="d-flex flex-row flex-nowrap" id="social-medias">
+      <div class="d-flex flex-row flex-nowrap">
         <a href="https://www.instagram.com/">
-          <img src="{% static 'custom/images/instagram.svg' %}" alt="instagram">
+          <img class="svg-icon" src="{% static 'custom/images/instagram.svg' %}" alt="instagram">
         </a>
         <a href="https://www.linkedin.com/feed/">
-          <img src="{% static 'custom/images/linkedin.svg' %}" alt="linkedin">
+          <img class="svg-icon" src="{% static 'custom/images/linkedin.svg' %}" alt="linkedin">
         </a>
         <a href="https://uk-ua.facebook.com/">
-          <img src="{% static 'custom/images/facebook.svg' %}" alt="facebook">
+          <img class="svg-icon" src="{% static 'custom/images/facebook.svg' %}" alt="facebook">
         </a>
       </div>
     </div>
