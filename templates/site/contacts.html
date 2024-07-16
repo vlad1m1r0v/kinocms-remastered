@@ -1,18 +1,17 @@
 {% extends "site/base.html" %}
 {% load static %}
 {% load i18n %}
+{% load l10n %}
 {% get_current_language as LANGUAGE_CODE %}
 {% block title %}
   {% trans "Contacts" %}
 {% endblock %}
 {% block head %}
-  <style>
-  </style>
 {% endblock head %}
 {% block content %}
   <div class="d-flex flex-column justify-content-center px-5 py-3">
     {% for contact in contacts %}
-      <div class="w-100 border mb-2">
+      <div class="w-100 border shadow-sm mb-2">
         {% if LANGUAGE_CODE == "uk" %}
           <div class="fs-4 fw-light pt-1 px-2 pb-2">{{ contact.name_uk }}</div>
         {% else %}
@@ -28,7 +27,7 @@
             <div class="col-sm">
               <div class="ratio ratio-1x1">
                 <iframe
-                  src="https://maps.google.com/maps?q={{ contact.lon }},{{ contact.lat }}&hl=uk&z=14&amp;output=embed"
+                  src="https://maps.google.com/maps?q={{ contact.lon|unlocalize }},{{ contact.lat|unlocalize }}&z=14&amp;output=embed"
                   referrerpolicy="no-referrer-when-downgrade" class="w-100 h-100">
                 </iframe>
               </div>
