@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-15 00:18+0300\n"
+"POT-Creation-Date: 2024-07-19 23:40+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,8 +16,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != "
+"11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
+"100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
+"(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 #: src/apps/users/forms.py:12 src/apps/users/forms.py:41
 #: src/apps/users/forms.py:82
 msgid "Password"
@@ -32,29 +34,29 @@ msgstr "Введіть пароль"
 msgid "Repeat Password"
 msgstr "Повторіть пароль"
 
-#: src/apps/users/forms.py:38
+#: src/apps/users/forms.py:38 src/apps/users/forms.py:118
 msgid "First Name"
 msgstr "Ім'я"
 
-#: src/apps/users/forms.py:39
+#: src/apps/users/forms.py:39 src/apps/users/forms.py:119
 msgid "Last Name"
 msgstr "Прізвище"
 
-#: src/apps/users/forms.py:40
+#: src/apps/users/forms.py:40 src/apps/users/forms.py:121
 msgid "E-Mail"
 msgstr "Електронна пошта"
 
-#: src/apps/users/forms.py:47
+#: src/apps/users/forms.py:47 src/apps/users/forms.py:132
 msgid "Enter first name"
 msgstr "Введіть ім'я"
 
-#: src/apps/users/forms.py:50
+#: src/apps/users/forms.py:50 src/apps/users/forms.py:133
 msgid "Enter last name"
 msgstr "Введіть прізвище"
 
-#: src/apps/users/forms.py:51
+#: src/apps/users/forms.py:51 src/apps/users/forms.py:135
 msgid "Enter email address"
-msgstr "Введіть електронну адресу"
+msgstr "Введіть адресу електронної пошти"
 
 #: src/apps/users/forms.py:63
 msgid "Passwords don't match"
@@ -72,6 +74,118 @@ msgstr "Введіть електронну пошту"
 msgid "Enter password"
 msgstr "Введіть пароль"
 
+#: src/apps/users/forms.py:120
+msgid "Nick Name"
+msgstr "Псевдонім"
+
+#: src/apps/users/forms.py:122
+msgid "Address"
+msgstr "Адреса"
+
+#: src/apps/users/forms.py:123
+msgid "Card Number"
+msgstr "Номер картки"
+
+#: src/apps/users/forms.py:124
+msgid "Language"
+msgstr "Мова"
+
+#: src/apps/users/forms.py:125
+msgid "Sex"
+msgstr "Стать"
+
+#: src/apps/users/forms.py:126
+msgid "Phone"
+msgstr "Телефон"
+
+#: src/apps/users/forms.py:127
+msgid "Birth date"
+msgstr "Дата народження"
+
+#: src/apps/users/forms.py:128
+msgid "City"
+msgstr "Місто"
+
+#: src/apps/users/forms.py:134
+msgid "Enter nickname"
+msgstr "Введіть псевдонім"
+
+#: src/apps/users/forms.py:136
+msgid "Enter address"
+msgstr "Введіть адресу"
+
+#: src/apps/users/forms.py:138
+msgid "Enter credit card number"
+msgstr "Введіть номер кредитної картки"
+
+#: src/apps/users/forms.py:139
+msgid "Select language"
+msgstr "Виберіть мову"
+
+#: src/apps/users/forms.py:140
+msgid "Select sex"
+msgstr "Виберіть стать"
+
+#: src/apps/users/forms.py:141
+msgid "Enter phone number"
+msgstr "Введіть номер телефону"
+
+#: src/apps/users/forms.py:143
+msgid "Select date of birth"
+msgstr "Виберіть дату народження"
+
+#: src/apps/users/forms.py:144
+msgid "Enter city"
+msgstr "Введіть місто"
+
+#: src/apps/users/forms.py:150
+msgid "Old password"
+msgstr "Старий пароль"
+
+#: src/apps/users/forms.py:152
+msgid "Enter old password"
+msgstr "Введіть старий пароль"
+
+#: src/apps/users/forms.py:156
+msgid "New password"
+msgstr "Новий пароль"
+
+#: src/apps/users/forms.py:158
+msgid "Enter new password"
+msgstr "Введіть новий пароль"
+
+#: src/apps/users/forms.py:163 src/apps/users/forms.py:165
+msgid "Confirm new password"
+msgstr "Підтвердьте новий пароль"
+
+#: src/apps/users/forms.py:184
+msgid "You must enter both old and new password fields"
+msgstr "Ви повинні ввести і старий, і новий паролі"
+
+#: src/apps/users/forms.py:190
+msgid "Old password is incorrect"
+msgstr "Старий пароль невірний"
+
+#: src/apps/users/forms.py:194
+msgid "The two password fields didn't match"
+msgstr "Обидва поля для пароля не співпадають"
+
+#: src/apps/users/models.py:21
+msgid "Ukrainian"
+msgstr "Українська"
+
+#: src/apps/users/models.py:22
+msgid "English"
+msgstr "Англійська"
+
+#: src/apps/users/models.py:27
+msgid "Male"
+msgstr "Чоловіча"
+
+#: src/apps/users/models.py:28
+msgid "Female"
+msgstr "Жіноча"
+
 #: src/apps/users/views.py:154
 msgid "User registered successfully"
 msgstr "Користувач успішно зареєстрований"
@@ -82,80 +196,100 @@ msgstr "Користувач успішно увійшов"
 
 #: src/apps/users/views.py:177
 msgid "Incorrect email or password"
-msgstr "Неправильна електронна пошта або пароль"
+msgstr "Невірна електронна пошта або пароль"
 
-#: src/core/views.py:25
+#: src/apps/users/views.py:205
+msgid "User information was updated successfully"
+msgstr "Інформація про користувача успішно оновлена"
+
+#: src/apps/users/views.py:211
+msgid "Some errors occurred while updating user information"
+msgstr "Під час оновлення інформації про користувача сталися деякі помилки"
+
+#: src/core/views.py:20
 msgid "Language was changed successfully"
-msgstr "Мову успішно змінено"
+msgstr "Мова успішно змінена"
 
 #: templates/site/authentication/login.html:16
 #: templates/site/authentication/login.html:25
-#: templates/site/authentication/login.html:41 templates/site/base.html:115
+#: templates/site/authentication/login.html:41 templates/site/base.html:105
 msgid "Login"
-msgstr "Вхід"
+msgstr "Увійти"
 
 #: templates/site/authentication/login.html:44
 msgid "Don't have an account? Register"
-msgstr "Немає облікового запису? Зареєструйтеся"
+msgstr "Немає облікового запису? Зареєструватися"
 
 #: templates/site/authentication/register.html:17
 #: templates/site/authentication/register.html:26
-#: templates/site/authentication/register.html:56 templates/site/base.html:117
+#: templates/site/authentication/register.html:56 templates/site/base.html:107
 msgid "Register"
-msgstr "Реєстрація"
+msgstr "Зареєструватися"
 
 #: templates/site/authentication/register.html:59
 msgid "Already have an account? Login"
-msgstr "Вже є обліковий запис? Ввійти"
+msgstr "Вже є обліковий запис? Увійти"
 
-#: templates/site/base.html:63 templates/site/base.html:173
+#: templates/site/base.html:52 templates/site/base.html:163
 msgid "Billboard"
 msgstr "Афіша"
 
-#: templates/site/base.html:64 templates/site/base.html:175
+#: templates/site/base.html:53 templates/site/base.html:165
 msgid "Schedule"
 msgstr "Розклад"
 
-#: templates/site/base.html:65 templates/site/base.html:176
+#: templates/site/base.html:54 templates/site/base.html:166
 msgid "Soon"
 msgstr "Скоро"
 
-#: templates/site/base.html:66 templates/site/base.html:177
+#: templates/site/base.html:56 templates/site/base.html:168
 msgid "Contacts"
 msgstr "Контакти"
 
-#: templates/site/base.html:67 templates/site/base.html:178
+#: templates/site/base.html:57 templates/site/base.html:169
 msgid "Cinemas"
 msgstr "Кінотеатри"
 
-#: templates/site/base.html:68 templates/site/base.html:179
+#: templates/site/base.html:58 templates/site/base.html:170
 msgid "News"
 msgstr "Новини"
 
-#: templates/site/base.html:69 templates/site/base.html:180
+#: templates/site/base.html:59 templates/site/base.html:171
 msgid "Promotions"
 msgstr "Акції"
 
-#: templates/site/base.html:73 templates/site/base.html:185
+#: templates/site/base.html:63 templates/site/base.html:176
 msgid "About Cinema"
 msgstr "Про кінотеатр"
 
-#: templates/site/base.html:111
+#: templates/site/base.html:101
 msgid "Logout"
 msgstr "Вийти"
 
-#: templates/site/base.html:149
+#: templates/site/base.html:139
 msgid "Search"
-msgstr "Шукати"
+msgstr "Пошук"
 
-#: templates/site/base.html:171
+#: templates/site/base.html:161
 msgid "Menu"
 msgstr "Меню"
 
-#: templates/site/base.html:197
+#: templates/site/base.html:188
 msgid "Social medias"
 msgstr "Соціальні мережі"
 
-#: templates/site/main.html:6
-msgid "Main Page"
-msgstr "Головна сторінка"
+#: templates/site/profile.html:4
+msgid "Profile"
+msgstr "Профіль"
+
+#: templates/site/profile.html:19
+msgid "General Information"
+msgstr "Загальна інформація"
+
+#: templates/site/profile.html:25
+msgid "Change Password"
+msgstr "Змінити пароль"
+
+#: templates/site/profile.html:34
+msgid "Save"
+msgstr "Зберегти"

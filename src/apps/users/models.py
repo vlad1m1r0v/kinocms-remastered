@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 from .managers import CustomUserManager
 
 
@@ -17,14 +18,14 @@ class CustomUser(AbstractUser):
     birth_date = models.DateField(null=True, blank=True)
 
     language_choices = [
-        ("UK", "Ukrainian"),
-        ("EN", "English")
+        ("UK", _("Ukrainian")),
+        ("EN", _("English"))
     ]
     language = models.CharField(choices=language_choices, default='EN')
 
     sex_choices = [
-        ("MALE", "Male"),
-        ("FEMALE", "Female")
+        ("MALE", _("Male")),
+        ("FEMALE", _("Female"))
     ]
     sex = models.CharField(choices=sex_choices, default='MALE')
     created_at = models.DateField(auto_now_add=True)

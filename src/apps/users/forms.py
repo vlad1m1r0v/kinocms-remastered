@@ -113,40 +113,56 @@ class UserForm(forms.ModelForm):
             "birth_date",
             "city",
         ]
+
+        labels = {
+            "first_name": _('First Name'),
+            "last_name": _('Last Name'),
+            "nick_name": _('Nick Name'),
+            "email": _('E-Mail'),
+            "address": _('Address'),
+            "card_number": _('Card Number'),
+            "language": _('Language'),
+            "sex": _('Sex'),
+            "phone": _('Phone'),
+            "birth_date": _('Birth date'),
+            "city": _('City'),
+        }
+
         widgets = {
-            "first_name": forms.TextInput(attrs={"class": "form-control", "placeholder": "Enter first name"}),
-            "last_name": forms.TextInput(attrs={"class": "form-control", "placeholder": "Enter last name"}),
-            "nick_name": forms.TextInput(attrs={"class": "form-control", "placeholder": "Enter nickname"}),
-            "email": forms.EmailInput(attrs={"class": "form-control", "placeholder": "Enter email address"}),
-            "address": forms.Textarea(attrs={"class": "form-control", "placeholder": "Enter address", "rows": 2}),
-            "card_number": forms.TextInput(attrs={"class": "form-control", "placeholder": "Enter credit card number"}),
-            "language": forms.Select(attrs={"class": "form-control", "placeholder": "Select language"}),
-            "sex": forms.Select(attrs={"class": "form-control", "placeholder": "Select sex"}),
-            "phone": forms.TextInput(attrs={"class": "form-control phone", "placeholder": "Enter phone number"}),
+            "first_name": forms.TextInput(attrs={"class": "form-control", "placeholder": _("Enter first name")}),
+            "last_name": forms.TextInput(attrs={"class": "form-control", "placeholder": _("Enter last name")}),
+            "nick_name": forms.TextInput(attrs={"class": "form-control", "placeholder": _("Enter nickname")}),
+            "email": forms.EmailInput(attrs={"class": "form-control", "placeholder": _("Enter email address")}),
+            "address": forms.Textarea(attrs={"class": "form-control", "placeholder": _("Enter address"), "rows": 2}),
+            "card_number": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": _("Enter credit card number")}),
+            "language": forms.Select(attrs={"class": "form-control", "placeholder": _("Select language")}),
+            "sex": forms.Select(attrs={"class": "form-control", "placeholder": _("Select sex")}),
+            "phone": forms.TextInput(attrs={"class": "form-control phone", "placeholder": _("Enter phone number")}),
             "birth_date": forms.DateInput(
-                attrs={"class": "form-control datepicker", "placeholder": "Select date of birth"}),
-            "city": forms.TextInput(attrs={"class": "form-control", "placeholder": "Enter city"}),
+                attrs={"class": "form-control datepicker", "placeholder": _("Select date of birth")}),
+            "city": forms.TextInput(attrs={"class": "form-control", "placeholder": _("Enter city")}),
         }
 
 
 class ChangePasswordForm(forms.Form):
     old_password = forms.CharField(
-        label="Old password",
+        label=_("Old password"),
         strip=False,
-        widget=forms.PasswordInput(attrs={"class": 'form-control', "placeholder": "Enter old password"}),
+        widget=forms.PasswordInput(attrs={"class": 'form-control', "placeholder": _("Enter old password")}),
         required=False
     )
     new_password1 = forms.CharField(
-        label="New password",
+        label=_("New password"),
         strip=False,
-        widget=forms.PasswordInput(attrs={"class": 'form-control', "placeholder": "Enter new password"}),
+        widget=forms.PasswordInput(attrs={"class": 'form-control', "placeholder": _("Enter new password")}),
         required=False
     )
 
     new_password2 = forms.CharField(
-        label="Confirm new password",
+        label=_("Confirm new password"),
         strip=False,
-        widget=forms.PasswordInput(attrs={"class": 'form-control', "placeholder": "Confirm new password"}),
+        widget=forms.PasswordInput(attrs={"class": 'form-control', "placeholder": _("Confirm new password")}),
         required=False
     )
 
@@ -165,17 +181,17 @@ class ChangePasswordForm(forms.Form):
 
         if not new_password1 or not new_password2:
             raise forms.ValidationError(
-                "You must enter both old and new password fields",
+                _("You must enter both old and new password fields"),
                 code='password_mismatch'
             )
 
         if new_password1 and new_password2:
             if not check_password(old_password, self.user.password):
-                raise forms.ValidationError("Old password is incorrect", code='invalid_old_password')
+                raise forms.ValidationError(_("Old password is incorrect"), code='invalid_old_password')
 
             if new_password1 != new_password2:
                 raise forms.ValidationError(
-                    "The two password fields didn't match",
+                    _("The two password fields didn't match"),
                     code='password_mismatch'
                 )
 

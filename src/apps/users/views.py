@@ -184,3 +184,29 @@ class LogoutView(View):
     def post(request):
         logout(request)
         return redirect("site_authentication_login")
+
+
+class ProfileView(TemplateView):
+    template_name = 'site/profile.html'
+
+    def get(self, request: HttpRequest, *args, **kwargs):
+        form = UserForm(instance=request.user, prefix='form')
+        reset_password = ChangePasswordForm(user=request.user, prefix='reset-password')
+        return self.render_to_response(self.get_context_data(form=form, reset_password=reset_password))
+
+    def post(self, request: HttpRequest, *args, **kwargs):
+        form = UserForm(request.POST, instance=request.user, prefix='form')
+        reset_password = ChangePasswordForm(request.POST, prefix='reset-password', user=request.user)
+
+        if form.is_valid() and reset_password.is_valid():
+            form.save()
+            user = reset_password.save()
+
+            messages.success(request, _("User information was updated successfully"))
+
+            update_session_auth_hash(request, user)
+
+            return redirect(request.path_info)
+
+        messages.error(request, _("Some errors occurred while updating user information"))
+        return self.render_to_response(self.get_context_data(form=form, reset_password=reset_password))

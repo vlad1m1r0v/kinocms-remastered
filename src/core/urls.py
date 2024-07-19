@@ -6,7 +6,7 @@ from django.urls import path, include
 from apps.films.views import AdminFilmsView, AdminCreateFilmView, AdminUpdateFilmView, AdminDeleteFilmImageView, \
     AdminDeleteFilmView
 from apps.users.views import AdminLoginView, AdminLogoutView, AdminUsersView, AdminUsersDatatableView, \
-    AdminUpdateUserView, AdminDeleteUserView, LoginView, RegisterView, LogoutView
+    AdminUpdateUserView, AdminDeleteUserView, LoginView, RegisterView, LogoutView, ProfileView
 from apps.banners.views import AdminBannersView, AdminBackgroundSettingsView, AdminTopBannersView, \
     AdminAdvertisementBannersView, AdminDeleteBackgroundView
 from apps.cinemas.views import AdminCinemasView, AdminCreateCinemaView, AdminUpdateCinemaView, \
@@ -100,7 +100,8 @@ site = [
     path("authentication/login/", LoginView.as_view(), name="site_authentication_login"),
     path("authentication/logout/", LogoutView.as_view(), name="site_authentication_logout"),
     path("main/", MainPageView.as_view(), name="site_main"),
-    path("contacts/", ContactsPageView.as_view(), name="site_contacts")
+    path("contacts/", ContactsPageView.as_view(), name="site_contacts"),
+    path("profile/", ProfileView.as_view(), name="site_profile")
 ]
 
 urlpatterns = [
