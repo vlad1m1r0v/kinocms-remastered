@@ -5,10 +5,18 @@ from .models import MainPage, Page, PageImage, Contact, Contacts
 
 
 class MainPageForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(MainPageForm, self).__init__(*args, **kwargs)
+        self.fields['is_active'] = forms.BooleanField(
+            initial=self.instance.is_active,
+            widget=forms.CheckboxInput(attrs={'class': 'form-check custom-control-input', 'disabled': 'disabled'}),
+            required=False,
+        )
+
     class Meta:
         model = MainPage
         fields = [
-            "is_active",
             "first_phone",
             "second_phone",
             "seo_text_uk",
@@ -19,7 +27,6 @@ class MainPageForm(forms.ModelForm):
             "seo_description",
         ]
         widgets = {
-            "is_active": forms.CheckboxInput(attrs={'class': 'form-control custom-control-input'}),
             "first_phone": forms.TextInput(attrs={
                 "class": "form-control phone",
                 "placeholder": "Enter first phone number"
@@ -133,17 +140,23 @@ PageImageFormSet = inlineformset_factory(
 
 
 class ContactsForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ContactsForm, self).__init__(*args, **kwargs)
+        self.fields['is_active'] = forms.BooleanField(
+            initial=self.instance.is_active,
+            widget=forms.CheckboxInput(attrs={'class': 'form-check custom-control-input', 'disabled': 'disabled'}),
+            required=False,
+        )
+
     class Meta:
         model = Contacts
         fields = [
-            "is_active",
             "seo_url",
             "seo_title",
             "seo_keywords",
             "seo_description"
         ]
         widgets = {
-            "is_active": forms.CheckboxInput(attrs={'class': 'form-control custom-control-input'}),
             "seo_url": forms.URLInput(attrs={
                 "class": "form-control",
                 "placeholder": "Enter SEO URL"

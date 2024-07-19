@@ -3,9 +3,11 @@
 {% get_current_language as LANGUAGE_CODE %}
 {% load mathfilters %}
 {% block title %}
-  {% trans "Main Page" %}
+  {{ main_page.seo_title }}
 {% endblock %}
 {% block head %}
+  <meta name="description" content="{{ main_page.seo_description }}">
+  <meta name="keywords" content="{{ main_page.seo_keywords }}">
 {% endblock head %}
 {% block content %}
   <!--Top Banners-->
@@ -27,9 +29,10 @@
         {% for banner in top_banners %}
           <div
             class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}">
-            <div class="d-flex align-items-center justify-content-center overflow-hidden ratio ratio-4x1">
-              <a class="w-100" href="{{ banner.url }}">
-                <img class="w-100" src="{{ banner.image.url }}" alt="Banner Image">
+            <div class="ratio ratio-4x1">
+              <a href="{{ banner.url }}">
+                <img class="w-100 object-fit-cover position-absolute top-50 start-50 translate-middle"
+                     src="{{ banner.image.url }}" alt="Banner Image">
               </a>
             </div>
 
@@ -67,9 +70,11 @@
       <div class="carousel-inner">
         {% for banner in advertisement_banners %}
           <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}">
-            <div class="d-flex align-items-center justify-content-center overflow-hidden ratio ratio-4x1">
-              <img class="w-100" src="{{ banner.image.url }}" alt="Banner Image">
-            </div>
+            <div class="ratio ratio-4x1">
+              <a>
+                <img class="w-100 object-fit-cover position-absolute top-50 start-50 translate-middle"
+                     src="{{ banner.image.url }}" alt="Banner Image">
+              </a></div>
           </div>
         {% endfor %}
       </div>
@@ -86,11 +91,11 @@
     </div>
   {% endif %}
   <!--SEO Text-->
-  <p class="fw-light py-3 px-5 text-align-justify">
+  <p class="fw-light py-3 px-5 mb-0 text-align-justify">
     {% if LANGUAGE_CODE == 'en' %}
-      {{ main_page_info.seo_text_en }}
+      {{ main_page.seo_text_en }}
     {% else %}
-      {{ main_page_info.seo_text_uk }}
+      {{ main_page.seo_text_uk }}
     {% endif %}
   </p>
 {% endblock content %}

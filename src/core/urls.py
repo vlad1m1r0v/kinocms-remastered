@@ -95,12 +95,12 @@ adminlte = [
 ]
 
 site = [
+    path('change-language/', change_language_view, name='site_change_language'),
     path("authentication/register/", RegisterView.as_view(), name="site_authentication_register"),
     path("authentication/login/", LoginView.as_view(), name="site_authentication_login"),
     path("authentication/logout/", LogoutView.as_view(), name="site_authentication_logout"),
     path("main/", MainPageView.as_view(), name="site_main"),
-    path("contacts/", ContactsPageView.as_view(), name="site_contacts"),
-    path('change-language/', change_language_view, name='site_change_language'),
+    path("contacts/", ContactsPageView.as_view(), name="site_contacts")
 ]
 
 urlpatterns = [

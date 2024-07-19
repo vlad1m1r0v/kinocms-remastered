@@ -175,5 +175,6 @@ class ContactsPageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['contact_page'] = Contacts.load()
         context["contacts"] = Contact.objects.filter(is_active=True)
         return context

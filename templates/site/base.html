@@ -52,7 +52,8 @@
         <li class="nav-item"><a class="nav-link link-dark px-2" aria-current="page">{% translate 'Billboard' %}</a></li>
         <li class="nav-item"><a class="nav-link link-dark px-2">{% translate 'Schedule' %}</a></li>
         <li class="nav-item"><a class="nav-link link-dark px-2">{% translate 'Soon' %}</a></li>
-        <li class="nav-item"><a class="nav-link link-dark px-2">{% translate 'Contacts' %}</a></li>
+        <li class="nav-item"><a href="{% url 'site_contacts' %}"
+                                class="nav-link link-dark px-2">{% translate 'Contacts' %}</a></li>
         <li class="nav-item"><a class="nav-link link-dark px-2">{% translate 'Cinemas' %}</a></li>
         <li class="nav-item"><a class="nav-link link-dark px-2">{% translate 'News' %}</a></li>
         <li class="nav-item"><a class="nav-link link-dark px-2">{% translate 'Promotions' %}</a></li>
@@ -118,8 +119,8 @@
         <span class="fs-4"> <i class="fas fa-film"></i>Kino&emsp;</span>
       </a>
       <div class="d-flex flex-column">
-        <span class="phone-contact">{{ main_page_info.first_phone }}</span>
-        <span class="phone-contact">{{ main_page_info.second_phone }}</span>
+        <span><small>{{ main_page.first_phone }}</small></span>
+        <span><small>{{ main_page.second_phone }}</small></span>
       </div>
       <span class="fs-4">&emsp;</span>
       <div class="d-flex flex-row flex-nowrap">

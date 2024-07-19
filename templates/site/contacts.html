@@ -4,9 +4,11 @@
 {% load l10n %}
 {% get_current_language as LANGUAGE_CODE %}
 {% block title %}
-  {% trans "Contacts" %}
+  {{ contact_page.seo_title }}
 {% endblock %}
 {% block head %}
+  <meta name="description" content="{{ contact_page.seo_description }}">
+  <meta name="keywords" content="{{ contact_page.seo_keywords }}">
 {% endblock head %}
 {% block content %}
   <div class="d-flex flex-column justify-content-center px-5 py-3">

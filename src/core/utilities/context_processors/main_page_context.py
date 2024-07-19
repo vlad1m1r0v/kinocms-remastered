@@ -8,8 +8,8 @@ def main_page_context(_: HttpRequest):
     banner_settings = BannerSettings.load()
     top_banners = TopBanner.objects.all()
     advertisement_banners = AdvertisementBanner.objects.all()
-    main_page_info = MainPage.load()
+    main_page = MainPage.load()
     return {"banner_settings": banner_settings,
             "top_banners": top_banners,
             "advertisement_banners": advertisement_banners,
-            "main_page_info": main_page_info}
+            "main_page": main_page}
