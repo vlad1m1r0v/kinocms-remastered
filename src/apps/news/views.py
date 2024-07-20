@@ -4,7 +4,7 @@ from django.http import HttpRequest, JsonResponse
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import TemplateView, View
+from django.views.generic import TemplateView, View, ListView
 
 from apps.news.forms import NewsForm, NewsImageFormSet
 from apps.news.models import News
@@ -136,3 +136,9 @@ class AdminDeleteNewsView(View):
         News.objects.get(pk=news_id).delete()
         messages.success(request, "News were deleted successfully")
         return redirect("adminlte_news")
+
+
+class NewsView(ListView):
+    template_name = 'site/news.html'
+    paginate_by = 1
+    queryset = News.objects.filter(is_active=True)

@@ -1,0 +1,73 @@
+{% extends "site/base.html" %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% block title %}
+  {% trans 'News' %}
+{% endblock %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+  <div class="px-sm-5 px-2 py-3">
+    <div class="row">
+      <!--News Cards-->
+      {% for news in object_list %}
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <div class="card rounded-0 shadow-sm mb-2" style="width: 100%;">
+            <div class="ratio ratio-16x9">
+              <div class="d-inline-block overflow-hidden">
+                <img class="w-100 object-fit-cover position-absolute top-50 start-50 translate-middle"
+                     src="{{ news.image.url }}" alt="News Image">
+              </div>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title text-truncate">
+                {% if LANGUAGE_CODE == "en" %}
+                  {{ news.name_en }}
+                {% else %}
+                  {{ news.name_uk }}
+                {% endif %}
+              </h5>
+              <h6 class="card-subtitle mb-2 text-muted">
+                {{ news.publication_date }}
+              </h6>
+              <div class="card-text text-align-justify fw-light text-overflow-multiline-ellipsis">
+                {% if LANGUAGE_CODE == "en" %}
+                  {{ news.description_en }}
+                {% else %}
+                  {{ news.description_uk }}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <!--Pagination Block-->
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center mb-0">
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+          </a>
+        </li>
+        {% for page_number in page_obj.paginator.page_range %}
+          <li class="page-item {% if page_number == page_obj.number %}active{% endif %}">
+            <a class="page-link"
+               href="{% url 'site_news' %}?page={{ page_number }}">{{ page_number }}</a>
+          </li>
+        {% endfor %}
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+{% endblock content %}
+{% block script %}
+  <script>
+  </script>
+{% endblock script %}
