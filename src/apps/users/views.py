@@ -2,7 +2,7 @@ from ajax_datatable import AjaxDatatableView
 from django.contrib import messages
 from django.db.models import Value
 from django.db.models.functions import Concat
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest
 from django.shortcuts import redirect
 from django.views.generic import View, TemplateView
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
