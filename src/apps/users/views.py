@@ -2,11 +2,11 @@ from ajax_datatable import AjaxDatatableView
 from django.contrib import messages
 from django.db.models import Value
 from django.db.models.functions import Concat
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect
 from django.views.generic import View, TemplateView
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext as _, activate
 from core.utilities.guards import admin_only
 from .forms import LoginForm, RegisterForm, UserForm, ChangePasswordForm
 from .models import CustomUser
@@ -202,9 +202,12 @@ class ProfileView(TemplateView):
             form.save()
             user = reset_password.save()
 
-            messages.success(request, _("User information was updated successfully"))
-
             update_session_auth_hash(request, user)
+
+            language: str = request.user.language
+            activate(language)
+
+            messages.success(request, _("User information was updated successfully"))
 
             return redirect(request.path_info)
 

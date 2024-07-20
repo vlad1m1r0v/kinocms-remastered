@@ -9,13 +9,13 @@ def change_language_view(request):
 
     if request.user.is_authenticated:
         user = request.user
-        user.language = language
+        user.language = language.upper()
         user.save()
 
     response = JsonResponse({'status': 'success'})
     response.set_cookie('language', language, max_age=365 * 24 * 60 * 60)
 
-    activate(language.lower())
+    activate(language)
 
     messages.success(request, _('Language was changed successfully'))
 
