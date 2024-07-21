@@ -14,7 +14,7 @@ from apps.cinemas.views import AdminCinemasView, AdminCreateCinemaView, AdminUpd
 from apps.halls.views import AdminHallsDataTableView, AdminCreateHallView, AdminUpdateHallView, \
     AdminDeleteHallSchemeView, AdminDeleteHallBannerView, AdminDeleteHallView
 from apps.news.views import AdminNewsView, AdminCreateNewsView, AdminUpdateNewsView, AdminDeleteNewsImageView, \
-    AdminNewsDataTableView, AdminDeleteNewsView, NewsView
+    AdminNewsDataTableView, AdminDeleteNewsView, NewsListView, NewsDetailView
 from apps.promotions.views import AdminPromotionsView, AdminPromotionsDataTableView, AdminCreatePromotionView, \
     AdminUpdatePromotionView, AdminDeletePromotionView, AdminDeletePromotionImageView
 from apps.pages.views import AdminPagesView, AdminMainPageView, AdminCreatePageView, AdminUpdatePageView, \
@@ -102,7 +102,8 @@ site = [
     path("main/", MainPageView.as_view(), name="site_main"),
     path("contacts/", ContactsPageView.as_view(), name="site_contacts"),
     path("profile/", ProfileView.as_view(), name="site_profile"),
-    path("news/", NewsView.as_view(), name="site_news")
+    path("news/", NewsListView.as_view(), name="site_news"),
+    path("news/<int:pk>", NewsDetailView.as_view(), name="site_news_detail")
 ]
 
 urlpatterns = [

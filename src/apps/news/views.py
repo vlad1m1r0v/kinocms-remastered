@@ -4,10 +4,10 @@ from django.http import HttpRequest, JsonResponse
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import TemplateView, View, ListView
+from django.views.generic import TemplateView, View, ListView, DetailView
 
 from apps.news.forms import NewsForm, NewsImageFormSet
-from apps.news.models import News
+from apps.news.models import News, NewsImage
 from core.utilities.guards import admin_only
 
 
@@ -138,7 +138,18 @@ class AdminDeleteNewsView(View):
         return redirect("adminlte_news")
 
 
-class NewsView(ListView):
-    template_name = 'site/news.html'
-    paginate_by = 1
+class NewsListView(ListView):
+    template_name = 'site/news/news_list.html'
+    paginate_by = 10
     queryset = News.objects.filter(is_active=True)
+
+
+class NewsDetailView(DetailView):
+    template_name = 'site/news/news_detail.html'
+    model = News
+    context_object_name = 'news'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['images'] = NewsImage.objects.filter(news=self.object)
+        return context

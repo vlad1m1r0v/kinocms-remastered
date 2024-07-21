@@ -8,37 +8,39 @@
 {% endblock head %}
 {% block content %}
   <div class="px-sm-5 px-2 py-3">
-    <div class="row">
+    <div class="row g-2">
       <!--News Cards-->
       {% for news in object_list %}
         <div class="col-sm-12 col-md-6 col-lg-4">
-          <div class="card rounded-0 shadow-sm mb-2" style="width: 100%;">
-            <div class="ratio ratio-16x9">
-              <div class="d-inline-block overflow-hidden">
-                <img class="w-100 object-fit-cover position-absolute top-50 start-50 translate-middle"
-                     src="{{ news.image.url }}" alt="News Image">
+          <a class="text-decoration-none text-dark" href="{% url 'site_news_detail' pk=news.id %}">
+            <div class="card rounded-0 shadow-sm mb-2" style="width: 100%;">
+              <div class="ratio ratio-16x9">
+                <div class="d-inline-block overflow-hidden">
+                  <img class="w-100 object-fit-cover position-absolute top-50 start-50 translate-middle"
+                       src="{{ news.image.url }}" alt="News Image">
+                </div>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title text-truncate">
+                  {% if LANGUAGE_CODE == "en" %}
+                    {{ news.name_en }}
+                  {% else %}
+                    {{ news.name_uk }}
+                  {% endif %}
+                </h5>
+                <h6 class="card-subtitle mb-2 text-muted">
+                  {{ news.publication_date }}
+                </h6>
+                <div class="card-text text-align-justify fw-light text-overflow-multiline-ellipsis">
+                  {% if LANGUAGE_CODE == "en" %}
+                    {{ news.description_en }}
+                  {% else %}
+                    {{ news.description_uk }}
+                  {% endif %}
+                </div>
               </div>
             </div>
-            <div class="card-body">
-              <h5 class="card-title text-truncate">
-                {% if LANGUAGE_CODE == "en" %}
-                  {{ news.name_en }}
-                {% else %}
-                  {{ news.name_uk }}
-                {% endif %}
-              </h5>
-              <h6 class="card-subtitle mb-2 text-muted">
-                {{ news.publication_date }}
-              </h6>
-              <div class="card-text text-align-justify fw-light text-overflow-multiline-ellipsis">
-                {% if LANGUAGE_CODE == "en" %}
-                  {{ news.description_en }}
-                {% else %}
-                  {{ news.description_uk }}
-                {% endif %}
-              </div>
-            </div>
-          </div>
+          </a>
         </div>
       {% endfor %}
     </div>
@@ -48,7 +50,8 @@
         <!--Previous Page Button-->
         {% if page_obj.has_previous %}
           <li class="page-item">
-            <a class="page-link" href="{% url 'site_news' %}?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+            <a class="page-link" href="{% url 'site_news' %}?page={{ page_obj.previous_page_number }}"
+               aria-label="Previous">
               <span aria-hidden="true">&laquo;</span>
               <span class="sr-only">Previous</span>
             </a>
@@ -61,6 +64,7 @@
           </li>
         {% endfor %}
         {% if page_obj.has_next %}
+          <!--Next Page Button-->
           <li class="page-item">
             <a class="page-link" href="{% url 'site_news' %}?page={{ page_obj.next_page_number }}" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
@@ -68,7 +72,6 @@
             </a>
           </li>
         {% endif %}
-        <!--Next Page Button-->
       </ul>
     </nav>
   </div>
