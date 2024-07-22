@@ -1,0 +1,88 @@
+{% extends "site/base.html" %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% block title %}
+  {{ promotion.seo_title }}
+{% endblock %}
+{% block head %}
+  <meta name="description" content="{{ promotion.seo_description }}">
+  <meta name="keywords" content="{{ promotion.seo_keywords }}">
+{% endblock head %}
+{% block content %}
+  <!--Promotion Main Image-->
+  <div class="ratio ratio-5x2">
+    <div class="inline-block overflow-hidden">
+      <img class="w-100 object-fit-cover position-absolute top-50 start-50 translate-middle"
+           src="{{ promotion.image.url }}"
+           alt="Promotion Main Image">
+    </div>
+  </div>
+  <div class="px-sm-5 px-3 py-3">
+    <!--Promotion Publication Date-->
+    <h6 class="card-subtitle text-muted">
+      {{ promotion.publication_date }}
+    </h6>
+    <!--Promotion Title-->
+    <h4 class="text-align-justify my-2">
+      {% if LANGUAGE_CODE == "en" %}
+        {{ promotion.name_en }}
+      {% else %}
+        {{ promotion.name_uk }}
+      {% endif %}
+    </h4>
+    <!--Promotion description-->
+    <div class="fs-6 fw-light text-align-justify">
+      {% if LANGUAGE_CODE == "en" %}
+        {{ promotion.description_en }}
+      {% else %}
+        {{ promotion.description_uk }}
+      {% endif %}
+    </div>
+    <!--Promotion Video-->
+    <div class="ratio ratio-16x9 my-2">
+      <iframe id="ytplayer" type="text/html" width="100%" height="100%"
+              src="http://www.youtube.com/embed/{{ promotion.video_id }}?autoplay=1&origin=http://example.com"
+              frameborder="0"></iframe>
+    </div>
+  </div>
+  <!--Image Gallery-->
+  <div id="PromotionImageGalleryCarousel" class="carousel slide"
+       data-bs-ride="carousel"
+       data-bs-interval="3000">
+    <div class="carousel-indicators">
+      {% for image in images %}
+        <button type="button"
+                data-bs-target="#PromotionImageGalleryCarousel"
+                data-bs-slide-to="{{ forloop.counter0 }}"
+                aria-label="Slide {{ forloop.counter0 }}"
+                aria-current="true"
+                {% if forloop.counter0 == 0 %}class="active"{% endif %}></button>
+      {% endfor %}
+    </div>
+    <div class="carousel-inner">
+      {% for image in images %}
+        <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}">
+          <div class="ratio ratio-4x1">
+            <a>
+              <img class="w-100 object-fit-cover position-absolute top-50 start-50 translate-middle"
+                   src="{{ image.image.url }}" alt="Promotion Image">
+            </a></div>
+        </div>
+      {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#PromotionImageGalleryCarousel"
+            data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#PromotionImageGalleryCarousel"
+            data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+{% endblock content %}
+{% block script %}
+  <script>
+  </script>
+{% endblock script %}

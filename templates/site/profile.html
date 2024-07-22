@@ -19,6 +19,7 @@
       <h5 class="ml-2">{% trans 'General Information' %}</h5>
       {% for field in form %}
         <div class="mb-2">
+          {{ field.label }}
           {{ field }}
         </div>
       {% endfor %}

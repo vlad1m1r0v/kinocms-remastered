@@ -89,6 +89,7 @@ class LoginForm(forms.Form):
 
 class UserForm(forms.ModelForm):
     birth_date = forms.DateField(
+        label=_('Birth Date'),
         input_formats=['%d/%m/%Y'],
         widget=forms.DateInput(
             attrs={'class': 'form-control',
@@ -123,8 +124,6 @@ class UserForm(forms.ModelForm):
             "card_number": _('Card Number'),
             "language": _('Language'),
             "sex": _('Sex'),
-            "phone": _('Phone'),
-            "birth_date": _('Birth date'),
             "city": _('City'),
         }
 

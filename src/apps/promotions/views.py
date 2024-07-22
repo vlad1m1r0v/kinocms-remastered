@@ -4,10 +4,10 @@ from django.http import HttpRequest, JsonResponse
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import TemplateView, View
+from django.views.generic import TemplateView, View, ListView, DetailView
 
 from apps.promotions.forms import PromotionsForm, PromotionsImageFormSet
-from apps.promotions.models import Promotions
+from apps.promotions.models import Promotions, PromotionsImage
 from core.utilities.guards import admin_only
 
 
@@ -133,3 +133,20 @@ class AdminDeletePromotionView(View):
         Promotions.objects.get(pk=promotion_id).delete()
         messages.success(request, "Promotion was deleted successfully")
         return redirect("adminlte_promotions")
+
+
+class PromotionsListView(ListView):
+    template_name = 'site/promotions/promotions_list.html'
+    paginate_by = 1
+    queryset = Promotions.objects.filter(is_active=True)
+
+
+class PromotionsDetailView(DetailView):
+    template_name = 'site/promotions/promotions_detail.html'
+    model = Promotions
+    context_object_name = 'promotion'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['images'] = PromotionsImage.objects.filter(promotion=self.object)
+        return context

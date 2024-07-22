@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-19 23:40+0300\n"
+"POT-Creation-Date: 2024-07-22 15:07+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,6 +20,7 @@ msgstr ""
 "11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
 "100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
 "(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
+
 #: src/apps/users/forms.py:12 src/apps/users/forms.py:41
 #: src/apps/users/forms.py:82
 msgid "Password"
@@ -34,27 +35,27 @@ msgstr "Введіть пароль"
 msgid "Repeat Password"
 msgstr "Повторіть пароль"
 
-#: src/apps/users/forms.py:38 src/apps/users/forms.py:118
+#: src/apps/users/forms.py:38 src/apps/users/forms.py:119
 msgid "First Name"
 msgstr "Ім'я"
 
-#: src/apps/users/forms.py:39 src/apps/users/forms.py:119
+#: src/apps/users/forms.py:39 src/apps/users/forms.py:120
 msgid "Last Name"
 msgstr "Прізвище"
 
-#: src/apps/users/forms.py:40 src/apps/users/forms.py:121
+#: src/apps/users/forms.py:40 src/apps/users/forms.py:122
 msgid "E-Mail"
 msgstr "Електронна пошта"
 
-#: src/apps/users/forms.py:47 src/apps/users/forms.py:132
+#: src/apps/users/forms.py:47 src/apps/users/forms.py:133
 msgid "Enter first name"
 msgstr "Введіть ім'я"
 
-#: src/apps/users/forms.py:50 src/apps/users/forms.py:133
+#: src/apps/users/forms.py:50 src/apps/users/forms.py:134
 msgid "Enter last name"
 msgstr "Введіть прізвище"
 
-#: src/apps/users/forms.py:51 src/apps/users/forms.py:135
+#: src/apps/users/forms.py:51 src/apps/users/forms.py:136
 msgid "Enter email address"
 msgstr "Введіть адресу електронної пошти"
 
@@ -74,99 +75,101 @@ msgstr "Введіть електронну пошту"
 msgid "Enter password"
 msgstr "Введіть пароль"
 
-#: src/apps/users/forms.py:120
+#: src/apps/users/forms.py:92 src/apps/users/forms.py:128
+#, fuzzy
+#| msgid "Birth date"
+msgid "Birth Date"
+msgstr "Дата народження"
+
+#: src/apps/users/forms.py:121
 msgid "Nick Name"
 msgstr "Псевдонім"
 
-#: src/apps/users/forms.py:122
+#: src/apps/users/forms.py:123
 msgid "Address"
 msgstr "Адреса"
 
-#: src/apps/users/forms.py:123
+#: src/apps/users/forms.py:124
 msgid "Card Number"
 msgstr "Номер картки"
 
-#: src/apps/users/forms.py:124
+#: src/apps/users/forms.py:125
 msgid "Language"
 msgstr "Мова"
 
-#: src/apps/users/forms.py:125
+#: src/apps/users/forms.py:126
 msgid "Sex"
 msgstr "Стать"
 
-#: src/apps/users/forms.py:126
+#: src/apps/users/forms.py:127
 msgid "Phone"
 msgstr "Телефон"
 
-#: src/apps/users/forms.py:127
-msgid "Birth date"
-msgstr "Дата народження"
-
-#: src/apps/users/forms.py:128
+#: src/apps/users/forms.py:129
 msgid "City"
 msgstr "Місто"
 
-#: src/apps/users/forms.py:134
+#: src/apps/users/forms.py:135
 msgid "Enter nickname"
 msgstr "Введіть псевдонім"
 
-#: src/apps/users/forms.py:136
+#: src/apps/users/forms.py:137
 msgid "Enter address"
 msgstr "Введіть адресу"
 
-#: src/apps/users/forms.py:138
+#: src/apps/users/forms.py:139
 msgid "Enter credit card number"
 msgstr "Введіть номер кредитної картки"
 
-#: src/apps/users/forms.py:139
+#: src/apps/users/forms.py:140
 msgid "Select language"
 msgstr "Виберіть мову"
 
-#: src/apps/users/forms.py:140
+#: src/apps/users/forms.py:141
 msgid "Select sex"
 msgstr "Виберіть стать"
 
-#: src/apps/users/forms.py:141
+#: src/apps/users/forms.py:142
 msgid "Enter phone number"
 msgstr "Введіть номер телефону"
 
-#: src/apps/users/forms.py:143
+#: src/apps/users/forms.py:144
 msgid "Select date of birth"
 msgstr "Виберіть дату народження"
 
-#: src/apps/users/forms.py:144
+#: src/apps/users/forms.py:145
 msgid "Enter city"
 msgstr "Введіть місто"
 
-#: src/apps/users/forms.py:150
+#: src/apps/users/forms.py:151
 msgid "Old password"
 msgstr "Старий пароль"
 
-#: src/apps/users/forms.py:152
+#: src/apps/users/forms.py:153
 msgid "Enter old password"
 msgstr "Введіть старий пароль"
 
-#: src/apps/users/forms.py:156
+#: src/apps/users/forms.py:157
 msgid "New password"
 msgstr "Новий пароль"
 
-#: src/apps/users/forms.py:158
+#: src/apps/users/forms.py:159
 msgid "Enter new password"
 msgstr "Введіть новий пароль"
 
-#: src/apps/users/forms.py:163 src/apps/users/forms.py:165
+#: src/apps/users/forms.py:164 src/apps/users/forms.py:166
 msgid "Confirm new password"
 msgstr "Підтвердьте новий пароль"
 
-#: src/apps/users/forms.py:184
+#: src/apps/users/forms.py:185
 msgid "You must enter both old and new password fields"
 msgstr "Ви повинні ввести і старий, і новий паролі"
 
-#: src/apps/users/forms.py:190
+#: src/apps/users/forms.py:191
 msgid "Old password is incorrect"
 msgstr "Старий пароль невірний"
 
-#: src/apps/users/forms.py:194
+#: src/apps/users/forms.py:195
 msgid "The two password fields didn't match"
 msgstr "Обидва поля для пароля не співпадають"
 
@@ -198,11 +201,11 @@ msgstr "Користувач успішно увійшов"
 msgid "Incorrect email or password"
 msgstr "Невірна електронна пошта або пароль"
 
-#: src/apps/users/views.py:205
+#: src/apps/users/views.py:210
 msgid "User information was updated successfully"
 msgstr "Інформація про користувача успішно оновлена"
 
-#: src/apps/users/views.py:211
+#: src/apps/users/views.py:214
 msgid "Some errors occurred while updating user information"
 msgstr "Під час оновлення інформації про користувача сталися деякі помилки"
 
@@ -212,7 +215,7 @@ msgstr "Мова успішно змінена"
 
 #: templates/site/authentication/login.html:16
 #: templates/site/authentication/login.html:25
-#: templates/site/authentication/login.html:41 templates/site/base.html:105
+#: templates/site/authentication/login.html:41 templates/site/base.html:108
 msgid "Login"
 msgstr "Увійти"
 
@@ -222,7 +225,7 @@ msgstr "Немає облікового запису? Зареєструвати
 
 #: templates/site/authentication/register.html:17
 #: templates/site/authentication/register.html:26
-#: templates/site/authentication/register.html:56 templates/site/base.html:107
+#: templates/site/authentication/register.html:56 templates/site/base.html:110
 msgid "Register"
 msgstr "Зареєструватися"
 
@@ -230,51 +233,53 @@ msgstr "Зареєструватися"
 msgid "Already have an account? Login"
 msgstr "Вже є обліковий запис? Увійти"
 
-#: templates/site/base.html:52 templates/site/base.html:163
+#: templates/site/base.html:53 templates/site/base.html:166
 msgid "Billboard"
 msgstr "Афіша"
 
-#: templates/site/base.html:53 templates/site/base.html:165
+#: templates/site/base.html:54 templates/site/base.html:168
 msgid "Schedule"
 msgstr "Розклад"
 
-#: templates/site/base.html:54 templates/site/base.html:166
+#: templates/site/base.html:55 templates/site/base.html:169
 msgid "Soon"
 msgstr "Скоро"
 
-#: templates/site/base.html:56 templates/site/base.html:168
+#: templates/site/base.html:57 templates/site/base.html:171
 msgid "Contacts"
 msgstr "Контакти"
 
-#: templates/site/base.html:57 templates/site/base.html:169
+#: templates/site/base.html:58 templates/site/base.html:172
 msgid "Cinemas"
 msgstr "Кінотеатри"
 
-#: templates/site/base.html:58 templates/site/base.html:170
+#: templates/site/base.html:60 templates/site/base.html:174
+#: templates/site/news/news_list.html:5
 msgid "News"
 msgstr "Новини"
 
-#: templates/site/base.html:59 templates/site/base.html:171
+#: templates/site/base.html:62 templates/site/base.html:176
+#: templates/site/promotions/promotions_list.html:5
 msgid "Promotions"
 msgstr "Акції"
 
-#: templates/site/base.html:63 templates/site/base.html:176
+#: templates/site/base.html:66 templates/site/base.html:181
 msgid "About Cinema"
 msgstr "Про кінотеатр"
 
-#: templates/site/base.html:101
+#: templates/site/base.html:104
 msgid "Logout"
 msgstr "Вийти"
 
-#: templates/site/base.html:139
+#: templates/site/base.html:142
 msgid "Search"
 msgstr "Пошук"
 
-#: templates/site/base.html:161
+#: templates/site/base.html:164
 msgid "Menu"
 msgstr "Меню"
 
-#: templates/site/base.html:188
+#: templates/site/base.html:193
 msgid "Social medias"
 msgstr "Соціальні мережі"
 
@@ -286,10 +291,10 @@ msgstr "Профіль"
 msgid "General Information"
 msgstr "Загальна інформація"
 
-#: templates/site/profile.html:25
+#: templates/site/profile.html:26
 msgid "Change Password"
 msgstr "Змінити пароль"
 
-#: templates/site/profile.html:34
+#: templates/site/profile.html:35
 msgid "Save"
 msgstr "Зберегти"

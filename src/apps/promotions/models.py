@@ -1,3 +1,5 @@
+import urllib.parse
+
 from django.db import models
 
 from core.utilities.models import SEOModel, get_upload_path
@@ -12,6 +14,11 @@ class Promotions(SEOModel):
     description_en = models.TextField()
     image = models.ImageField(upload_to=get_upload_path)
     video_url = models.URLField()
+
+    @property
+    def video_id(self):
+        params = urllib.parse.parse_qs(urllib.parse.urlparse(self.video_url).query)
+        return params['v'][0]
 
 
 class PromotionsImage(models.Model):
