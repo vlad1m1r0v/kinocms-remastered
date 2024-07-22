@@ -25,7 +25,7 @@ class Page(SEOModel):
 
 class PageImage(models.Model):
     image = models.ImageField(upload_to=get_upload_path)
-    page = models.ForeignKey(Page, on_delete=models.CASCADE)
+    page = models.ForeignKey(Page, on_delete=models.CASCADE,  related_name='images')
 
 
 class Contacts(SEOModel, Singleton):
