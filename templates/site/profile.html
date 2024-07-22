@@ -26,6 +26,7 @@
       <h5 class="ml-2">{% trans 'Change Password' %}</h5>
       {% for field in reset_password %}
         <div class="mb-2">
+          {{ field.label }}
           {{ field }}
         </div>
       {% endfor %}
