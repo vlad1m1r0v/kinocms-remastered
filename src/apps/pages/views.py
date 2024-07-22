@@ -3,10 +3,11 @@ from django.http import HttpRequest, JsonResponse
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import TemplateView, View
+from django.views.generic import TemplateView, View, DetailView
 
+from apps.banners.models import TopBanner, AdvertisementBanner
 from apps.pages.forms import MainPageForm, PageForm, PageImageFormSet, ContactsForm, ContactFormSet
-from apps.pages.models import MainPage, Page, Contacts, Contact
+from apps.pages.models import MainPage, Page, Contacts, Contact, PageImage
 from core.utilities.guards import admin_only
 
 
@@ -169,6 +170,12 @@ class AdminDeleteContactLogoView(View):
 class MainPageView(TemplateView):
     template_name = "site/main.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['top_banners'] = TopBanner.objects.all()
+        context["advertisement_banners"] = AdvertisementBanner.objects.all()
+        return context
+
 
 class ContactsPageView(TemplateView):
     template_name = "site/contacts.html"
@@ -178,3 +185,15 @@ class ContactsPageView(TemplateView):
         context['contact_page'] = Contacts.load()
         context["contacts"] = Contact.objects.filter(is_active=True)
         return context
+
+
+class PageView(DetailView):
+    template_name = 'site/page.html'
+    model = Page
+    context_object_name = 'page'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['images'] = PageImage.objects.filter(page=self.object)
+        return context
+

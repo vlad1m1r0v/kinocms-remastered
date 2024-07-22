@@ -20,7 +20,7 @@ from apps.promotions.views import AdminPromotionsView, AdminPromotionsDataTableV
     PromotionsDetailView
 from apps.pages.views import AdminPagesView, AdminMainPageView, AdminCreatePageView, AdminUpdatePageView, \
     AdminDeletePageView, AdminDeletePageImageView, AdminContactsView, AdminDeleteContactLogoView, MainPageView, \
-    ContactsPageView
+    ContactsPageView, PageView
 from apps.mailing.views import AdminMailingView, AdminUploadTemplateView, AdminDeleteTemplateView, \
     AdminMailingDatatableView, admin_send_emails_view
 from core.views import change_language_view
@@ -106,7 +106,8 @@ site = [
     path("news/", NewsListView.as_view(), name="site_news"),
     path("news/<int:pk>", NewsDetailView.as_view(), name="site_news_detail"),
     path("promotions/", PromotionsListView.as_view(), name="site_promotions"),
-    path("promotions/<int:pk>", PromotionsDetailView.as_view(), name="site_promotions_detail")
+    path("promotions/<int:pk>", PromotionsDetailView.as_view(), name="site_promotions_detail"),
+    path("pages/<int:pk>", PageView.as_view(), name="site_pages_detail"),
 ]
 
 urlpatterns = [

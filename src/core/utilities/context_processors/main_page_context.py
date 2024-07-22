@@ -1,15 +1,14 @@
 from django.http import HttpRequest
 
 from apps.banners.models import BannerSettings, TopBanner, AdvertisementBanner
-from apps.pages.models import MainPage
+from apps.pages.models import MainPage, Page
 
 
 def main_page_context(_: HttpRequest):
     banner_settings = BannerSettings.load()
-    top_banners = TopBanner.objects.all()
-    advertisement_banners = AdvertisementBanner.objects.all()
     main_page = MainPage.load()
+    pages = Page.objects.filter(is_active=True)
+
     return {"banner_settings": banner_settings,
-            "top_banners": top_banners,
-            "advertisement_banners": advertisement_banners,
-            "main_page": main_page}
+            "main_page": main_page,
+            "pages": pages}

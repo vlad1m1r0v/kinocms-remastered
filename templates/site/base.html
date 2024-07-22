@@ -67,11 +67,17 @@
           </a>
           <!--Hardcoded-->
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item">Cafe-Bars</a></li>
-            <li><a class="dropdown-item">VIP Halls</a></li>
-            <li><a class="dropdown-item">Child Rooms</a></li>
-            <li><a class="dropdown-item">For Advertisers</a></li>
-            <li><a class="dropdown-item">Mobile Applications</a></li>
+            {% for page in pages %}
+              <li>
+                <a class="dropdown-item" href="{% url 'site_pages_detail' pk=page.id %}">
+                  {% if LANGUAGE_CODE == "uk" %}
+                    {{ page.name_uk }}
+                  {% else %}
+                    {{ page.name_en }}
+                  {% endif %}
+                </a>
+              </li>
+            {% endfor %}
           </ul>
         </li>
         <li class="nav-item">
@@ -181,11 +187,17 @@
       <h5>{% translate 'About Cinema' %}</h5>
       <ul class="nav flex-column">
         <!--Hardcoded-->
-        <li class="nav-item mb-2"><a class="nav-link p-0 text-muted">Cafe-Bars</a></li>
-        <li class="nav-item mb-2"><a class="nav-link p-0 text-muted">VIP Halls</a></li>
-        <li class="nav-item mb-2"><a class="nav-link p-0 text-muted">Child Rooms</a></li>
-        <li class="nav-item mb-2"><a class="nav-link p-0 text-muted">For Advertisers</a></li>
-        <li class="nav-item mb-2"><a class="nav-link p-0 text-muted">Mobile Applications</a></li>
+        {% for page in pages %}
+          <li class="nav-item mb-2">
+            <a class="nav-link p-0 text-muted" href="{% url 'site_pages_detail' pk=page.id %}">
+              {% if LANGUAGE_CODE == "uk" %}
+                {{ page.name_uk }}
+              {% else %}
+                {{ page.name_en }}
+              {% endif %}
+            </a>
+          </li>
+        {% endfor %}
       </ul>
     </div>
     <!--Social Medias-->
