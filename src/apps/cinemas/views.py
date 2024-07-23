@@ -3,7 +3,7 @@ from django.http import HttpRequest, JsonResponse
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import TemplateView, View
+from django.views.generic import TemplateView, View, ListView
 
 from apps.cinemas.models import Cinema
 from core.utilities.guards import admin_only
@@ -105,3 +105,9 @@ class AdminDeleteCinemaView(View):
         Cinema.objects.get(pk=cinema_id).delete()
         messages.success(request, "Cinema was deleted successfully")
         return redirect('adminlte_cinemas')
+
+
+class CinemaListView(ListView):
+    model = Cinema
+    template_name = 'site/cinemas/cinemas_list.html'
+    paginate_by = 1

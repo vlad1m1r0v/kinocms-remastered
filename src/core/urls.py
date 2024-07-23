@@ -10,7 +10,7 @@ from apps.users.views import AdminLoginView, AdminLogoutView, AdminUsersView, Ad
 from apps.banners.views import AdminBannersView, AdminBackgroundSettingsView, AdminTopBannersView, \
     AdminAdvertisementBannersView, AdminDeleteBackgroundView
 from apps.cinemas.views import AdminCinemasView, AdminCreateCinemaView, AdminUpdateCinemaView, \
-    AdminDeleteCinemaBannerView, AdminDeleteCinemaLogoView, AdminDeleteCinemaView
+    AdminDeleteCinemaBannerView, AdminDeleteCinemaLogoView, AdminDeleteCinemaView, CinemaListView
 from apps.halls.views import AdminHallsDataTableView, AdminCreateHallView, AdminUpdateHallView, \
     AdminDeleteHallSchemeView, AdminDeleteHallBannerView, AdminDeleteHallView
 from apps.news.views import AdminNewsView, AdminCreateNewsView, AdminUpdateNewsView, AdminDeleteNewsImageView, \
@@ -108,6 +108,7 @@ site = [
     path("promotions/", PromotionsListView.as_view(), name="site_promotions"),
     path("promotions/<int:pk>", PromotionsDetailView.as_view(), name="site_promotions_detail"),
     path("pages/<int:pk>", PageView.as_view(), name="site_pages_detail"),
+    path("cinemas/", CinemaListView.as_view(), name="site_cinemas")
 ]
 
 urlpatterns = [
