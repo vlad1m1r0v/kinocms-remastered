@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     "apps.mailing.apps.MailingConfig",
     "ajax_datatable",
     "channels",
-    "mathfilters"
+    "mathfilters",
+    "django_cleanup.apps.CleanupConfig"
 ]
 
 MIDDLEWARE = [
