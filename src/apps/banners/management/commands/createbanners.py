@@ -5,7 +5,7 @@ from django.core.management.base import BaseCommand
 from django.core.files.uploadedfile import UploadedFile
 
 from apps.banners.models import TopBanner, AdvertisementBanner, BannerSettings
-from core import settings
+from django.conf import settings
 
 
 class Command(BaseCommand):
