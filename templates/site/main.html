@@ -71,10 +71,11 @@
         {% for banner in advertisement_banners %}
           <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}">
             <div class="ratio ratio-4x1">
-              <a>
+              <a href="{{ banner.url }}">
                 <img class="w-100 object-fit-cover position-absolute top-50 start-50 translate-middle"
                      src="{{ banner.image.url }}" alt="Banner Image">
-              </a></div>
+              </a>
+            </div>
           </div>
         {% endfor %}
       </div>
