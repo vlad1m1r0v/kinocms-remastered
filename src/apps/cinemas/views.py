@@ -110,4 +110,4 @@ class AdminDeleteCinemaView(View):
 class CinemaListView(ListView):
     model = Cinema
     template_name = 'site/cinemas/cinemas_list.html'
-    paginate_by = 1
+    paginate_by = 10
