@@ -273,9 +273,9 @@
 
       const $hallImageFormMarkup = $emptyHallImageForm.prop('outerHTML');
       const regex = /hallimage_set-(\d+)-/g;
-      const $compiledCinemaImageForm = $hallImageFormMarkup.replace(regex, `hallimage_set-${count}-`);
+      const $compiledHallImageForm = $hallImageFormMarkup.replace(regex, `hallimage_set-${count}-`);
 
-      $wrappers.eq(0).find('.mt-3').append($compiledCinemaImageForm);
+      $wrappers.eq(0).find('.mt-3').append($compiledHallImageForm);
 
       $totalForms.attr('value', count + 1);
 

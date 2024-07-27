@@ -30,7 +30,7 @@ class Hall(SEOModel):
 
 
 class HallImage(models.Model):
-    cinema = models.ForeignKey(Hall, on_delete=models.CASCADE)
+    hall = models.ForeignKey(Hall, on_delete=models.CASCADE)
     image = models.ImageField(upload_to=get_upload_path)
 
 
@@ -38,3 +38,4 @@ class Seat(models.Model):
     hall = models.ForeignKey(Hall, on_delete=models.CASCADE, related_name='seats')
     row = models.SmallIntegerField()
     column = models.SmallIntegerField()
+    code = models.CharField(max_length=3)
