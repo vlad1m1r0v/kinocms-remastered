@@ -140,7 +140,7 @@ class AdminDeleteNewsView(View):
 
 class NewsListView(ListView):
     template_name = 'site/news/news_list.html'
-    paginate_by = 1
+    paginate_by = 10
     queryset = News.objects.filter(is_active=True)
 
 

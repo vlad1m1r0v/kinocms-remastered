@@ -55,7 +55,7 @@ class AdminMailingDatatableView(AjaxDatatableView):
     model = CustomUser
     title = 'Users'
     initial_order = [["id", "asc"], ]
-    length_menu = [[1], [1]]
+    length_menu = [[10], [10]]
     search_values_separator = '+'
 
     column_defs = [

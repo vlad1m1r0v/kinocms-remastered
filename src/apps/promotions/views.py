@@ -137,7 +137,7 @@ class AdminDeletePromotionView(View):
 
 class PromotionsListView(ListView):
     template_name = 'site/promotions/promotions_list.html'
-    paginate_by = 1
+    paginate_by = 10
     queryset = Promotions.objects.filter(is_active=True)
 
 
