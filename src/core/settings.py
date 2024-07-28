@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "apps.promotions.apps.PromotionsConfig",
     "apps.pages.apps.PagesConfig",
     "apps.mailing.apps.MailingConfig",
+    "apps.schedule.apps.ScheduleConfig",
     "ajax_datatable",
     "channels",
     "mathfilters",
