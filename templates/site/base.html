@@ -51,11 +51,13 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item"><a class="nav-link link-dark px-2" aria-current="page">{% translate 'Billboard' %}</a></li>
-        <li class="nav-item"><a class="nav-link link-dark px-2">{% translate 'Schedule' %}</a></li>
+        <li class="nav-item"><a href="{% url 'site_schedule' %}"
+                                class="nav-link link-dark px-2">{% translate 'Schedule' %}</a></li>
         <li class="nav-item"><a class="nav-link link-dark px-2">{% translate 'Soon' %}</a></li>
         <li class="nav-item"><a href="{% url 'site_contacts' %}"
                                 class="nav-link link-dark px-2">{% translate 'Contacts' %}</a></li>
-        <li class="nav-item"><a href="{% url 'site_cinemas' %}" class="nav-link link-dark px-2">{% translate 'Cinemas' %}</a></li>
+        <li class="nav-item"><a href="{% url 'site_cinemas' %}"
+                                class="nav-link link-dark px-2">{% translate 'Cinemas' %}</a></li>
         <li class="nav-item"><a
           href="{% url 'site_news' %}" class="nav-link link-dark px-2">{% translate 'News' %}</a></li>
         <li class=" nav-item"><a class="nav-link link-dark px-2"
@@ -171,11 +173,13 @@
       <ul class="nav flex-column">
         <li class="nav-item mb-2"><a class="nav-link text-muted p-0" aria-current="page">{% translate 'Billboard' %}</a>
         </li>
-        <li class="nav-item mb-2"><a class="nav-link text-muted p-0">{% translate 'Schedule' %}</a></li>
+        <li class="nav-item mb-2"><a href="{% url 'site_schedule' %}"
+                                     class="nav-link text-muted p-0">{% translate 'Schedule' %}</a></li>
         <li class="nav-item mb-2"><a class="nav-link text-muted p-0">{% translate 'Soon' %}</a></li>
         <li class="nav-item mb-2"><a href="{% url 'site_contacts' %}"
                                      class="nav-link text-muted p-0">{% translate 'Contacts' %}</a></li>
-        <li class="nav-item mb-2"><a href="{% url 'site_cinemas' %}" class="nav-link text-muted p-0">{% translate 'Cinemas' %}</a></li>
+        <li class="nav-item mb-2"><a href="{% url 'site_cinemas' %}"
+                                     class="nav-link text-muted p-0">{% translate 'Cinemas' %}</a></li>
         <li class="nav-item mb-2"><a href="{% url 'site_news' %}"
                                      class="nav-link text-muted p-0">{% translate 'News' %}</a></li>
         <li class="nav-item mb-2"><a href="{% url 'site_promotions' %}"
