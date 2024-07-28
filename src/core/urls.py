@@ -24,7 +24,7 @@ from apps.pages.views import AdminPagesView, AdminMainPageView, AdminCreatePageV
 from apps.mailing.views import AdminMailingView, AdminUploadTemplateView, AdminDeleteTemplateView, \
     AdminMailingDatatableView, admin_send_emails_view
 from apps.schedule.views import ScheduleView, schedule_cinemas_view, schedule_dates_view, schedule_films_view, \
-    schedule_halls_view
+    schedule_halls_view, schedule_sessions_view
 from core.views import change_language_view
 
 adminlte = [
@@ -115,7 +115,8 @@ site = [
     path("schedule/cinemas/", schedule_cinemas_view, name="site_schedule_cinemas"),
     path("schedule/dates/", schedule_dates_view, name="site_schedule_showtime"),
     path("schedule/films/", schedule_films_view, name="site_schedule_films"),
-    path("schedule/halls/", schedule_halls_view, name="site_schedule_halls")
+    path("schedule/halls/", schedule_halls_view, name="site_schedule_halls"),
+    path("schedule/sessions/", schedule_sessions_view, name="site_schedule_sessions")
 ]
 
 urlpatterns = [

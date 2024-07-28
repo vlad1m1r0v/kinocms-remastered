@@ -1,5 +1,7 @@
+from django.db.models import Q
 from django.db.models.functions import TruncDate
 from django.http import HttpRequest, JsonResponse
+from django.utils.dateparse import parse_date
 from django.views.generic import TemplateView
 
 from apps.cinemas.models import Cinema
@@ -28,7 +30,7 @@ def schedule_films_view(request: HttpRequest, *args, **kwargs):
     return JsonResponse(data=list(films), safe=False)
 
 
-def schedule_halls_view(request):
+def schedule_halls_view(request, *args, **kwargs):
     cinema_id = request.GET.get('cinema_id')
 
     if cinema_id:
@@ -38,3 +40,45 @@ def schedule_halls_view(request):
 
     halls_list = list(halls.values('id', 'name_en', 'name_uk', 'cinema_id'))
     return JsonResponse(halls_list, safe=False)
+
+
+def schedule_sessions_view(request: HttpRequest, *args, **kwargs):
+    is_3d = request.GET.get('is_3d')
+    is_2d = request.GET.get('is_2d')
+    is_imax = request.GET.get('is_imax')
+    date = request.GET.get('date')
+    film_id = request.GET.get('film_id')
+    hall_id = request.GET.get('hall_id')
+
+    filters = Q()
+
+    if is_3d is not None:
+        filters &= Q(film__is_3d=True)
+    if is_2d is not None:
+        filters &= Q(film__is_2d=True)
+    if is_imax is not None:
+        filters &= Q(film__is_imax=True)
+    if date:
+        date_obj = parse_date(date)
+        if date_obj:
+            filters &= Q(time__date=date_obj)
+    if film_id:
+        filters &= Q(film_id=film_id)
+    if hall_id:
+        filters &= Q(hall_id=hall_id)
+
+    schedules = Schedule.objects.filter(filters).select_related('film', 'hall')
+
+    schedules_list = [{
+        'id': schedule.id,
+        'time': schedule.time,
+        'hall_id': schedule.hall.id,
+        'hall_name_en': schedule.hall.name_en,
+        'hall_name_uk': schedule.hall.name_uk,
+        'film_id': schedule.film.id,
+        'film_name_en': schedule.film.name_en,
+        'film_name_uk': schedule.film.name_uk,
+        'price': schedule.price
+    } for schedule in schedules]
+
+    return JsonResponse(schedules_list, safe=False)
