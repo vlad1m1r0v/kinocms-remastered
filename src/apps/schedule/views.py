@@ -1,8 +1,12 @@
+from itertools import groupby
+from operator import itemgetter
+
 from django.db.models import Q
 from django.db.models.functions import TruncDate
 from django.http import HttpRequest, JsonResponse
 from django.utils.dateparse import parse_date
 from django.views.generic import TemplateView
+from django.template.defaultfilters import date as _date
 
 from apps.cinemas.models import Cinema
 from apps.films.models import Film
@@ -71,7 +75,8 @@ def schedule_sessions_view(request: HttpRequest, *args, **kwargs):
 
     schedules_list = [{
         'id': schedule.id,
-        'time': schedule.time,
+        'date': _date(schedule.time, "d F, l"),
+        'time': schedule.time.strftime("%H:%M"),
         'hall_id': schedule.hall.id,
         'hall_name_en': schedule.hall.name_en,
         'hall_name_uk': schedule.hall.name_uk,
@@ -81,4 +86,6 @@ def schedule_sessions_view(request: HttpRequest, *args, **kwargs):
         'price': schedule.price
     } for schedule in schedules]
 
-    return JsonResponse(schedules_list, safe=False)
+    grouped_by_date = groupby(schedules_list, itemgetter('date'))
+
+    return JsonResponse({title: list(items) for title, items in grouped_by_date}, safe=False)
