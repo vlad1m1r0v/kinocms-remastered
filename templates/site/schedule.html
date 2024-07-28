@@ -14,14 +14,129 @@
 {% endblock head %}
 {% block content %}
   <div class="px-sm-5 px-2 py-3">
+    <div class="container g-0 mb-2">
+      <div class="row align-items-center">
+        <div class="col-lg-3 col-sm-12">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="3D" value="3D">
+            <label class="form-check-label" for="3D">3D</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="2D" value="2D">
+            <label class="form-check-label" for="2D">2D</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="IMax" value="IMax">
+            <label class="form-check-label" for="IMax">IMax</label>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="row">
+            <div class="col">
+              <select id="cinema-select" class="form-select">
+              </select>
+            </div>
+            <div class="col">
+              <select id="date-select" class="form-select">
+              </select>
+            </div>
+            <div class="col">
+              <select id="film-select" class="form-select">
+              </select>
+            </div>
+            <div class="col">
+              <select id="hall-select" class="form-select">
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div id="sessions">
-
     </div>
   </div>
 {% endblock content %}
 {% block script %}
   <script>
     $(document).ready(function () {
+      const $cinemaSelect = $('#cinema-select');
+      const $dateSelect = $('#date-select');
+      const $filmSelect = $('#film-select');
+      const $hallSelect = $('#hall-select');
+
+      $cinemaSelect.select2({
+        theme: 'bootstrap-5',
+        ajax: {
+          url: "{% url 'site_schedule_cinemas'%}",
+          dataType: "json",
+          processResults: data => ({
+            results: data.map(item => ({
+              id: item.id,
+              text: item.name_{{ LANGUAGE_CODE }}
+            }))
+          })
+        }
+      });
+
+      $dateSelect.select2({
+        theme: 'bootstrap-5',
+        ajax: {
+          url: "{% url 'site_schedule_showtime'%}",
+          dataType: "json",
+          processResults: data => ({
+            results: data.map(item => ({
+              id: item,
+              text: item
+            }))
+          })
+        }
+      });
+
+      $filmSelect.select2({
+        theme: 'bootstrap-5',
+        ajax: {
+          url: "{% url 'site_schedule_films'%}",
+          dataType: "json",
+          processResults: data => ({
+            results: data.map(item => ({
+              id: item.id,
+              text: item.name_{{ LANGUAGE_CODE }}
+            }))
+          })
+        }
+      });
+
+      $hallSelect.select2({
+        theme: 'bootstrap-5',
+        ajax: {
+          url: "{% url 'site_schedule_halls'%}",
+          dataType: "json",
+          processResults: data => ({
+            results: data.map(item => ({
+              id: item.id,
+              text: item.name_{{ LANGUAGE_CODE }}
+            }))
+          })
+        }
+      });
+
+      $cinemaSelect.on('select2:select', function () {
+        $hallSelect.empty();
+        $hallSelect.select2({
+          theme: 'bootstrap-5',
+          ajax: {
+            url: `{% url 'site_schedule_halls'%}?cinema_id=${$cinemaSelect.val()}`,
+            dataType: "json",
+            processResults: data => ({
+              results: data.map(item => ({
+                id: item.id,
+                text: item.name_{{ LANGUAGE_CODE }}
+              }))
+            })
+          }
+        })
+      })
+
       $.ajax({
         url: "{% url 'site_schedule_sessions'%}",
         method: "GET",
@@ -55,7 +170,12 @@
                 `<td scope='col'>{% if LANGUAGE_CODE == "uk" %}${session.hall_name_uk}{% else %}
                   ${session.hall_name_en}{% endif %}</td>` +
                 `<td scope='col'>${session.price}</td>` +
-                "<td scope='col'>{% trans 'Book a ticket' %}</td>" +
+                "<td scope='col'>" +
+                "<button class='btn btn-primary'>" +
+                "<i class='fas fa-money-bill'></i>" +
+                " {% trans 'Book a ticket' %}" +
+                "</button>" +
+                "</td>" +
                 "</tr>"
               )
             }
