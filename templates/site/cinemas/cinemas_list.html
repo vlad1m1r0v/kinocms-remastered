@@ -12,24 +12,24 @@
       <!--Cinemas Cards-->
       {% for cinema in object_list %}
         <div class="col-sm-12 col-md-6 col-lg-4">
-          <a class="text-decoration-none text-dark">
-            <div class="card rounded-0 shadow-sm mb-2" style="width: 100%;">
-              <div class="ratio ratio-1x1">
-                <div class="inline-block overflow-hidden">
-                  <img class="h-100 object-fit-cover position-absolute top-50 start-50 translate-middle"
-                       src="{{ cinema.logo.url }}" alt="cinema Image">
-                </div>
-              </div>
-              <div class="card-body">
-                <h5 class="card-title text-center mb-0">
-                  {% if LANGUAGE_CODE == "en" %}
-                    {{ cinema.name_en }}
-                  {% else %}
-                    {{ cinema.name_uk }}
-                  {% endif %}
-                </h5>
+          <a href="{% url 'site_cinemas_detail' pk=cinema.id %}" class="text-decoration-none text-dark">
+          <div class="card rounded-0 shadow-sm mb-2" style="width: 100%;">
+            <div class="ratio ratio-1x1">
+              <div class="inline-block overflow-hidden">
+                <img class="h-100 object-fit-cover position-absolute top-50 start-50 translate-middle"
+                     src="{{ cinema.logo.url }}" alt="cinema Image">
               </div>
             </div>
+            <div class="card-body">
+              <h5 class="card-title text-center mb-0">
+                {% if LANGUAGE_CODE == "en" %}
+                  {{ cinema.name_en }}
+                {% else %}
+                  {{ cinema.name_uk }}
+                {% endif %}
+              </h5>
+            </div>
+          </div>
           </a>
         </div>
       {% endfor %}

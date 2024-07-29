@@ -28,5 +28,5 @@ class Cinema(SEOModel):
 
 
 class CinemaImage(models.Model):
-    cinema = models.ForeignKey(Cinema, on_delete=models.CASCADE)
+    cinema = models.ForeignKey(Cinema, on_delete=models.CASCADE, related_name="images")
     image = models.ImageField(upload_to=get_upload_path)

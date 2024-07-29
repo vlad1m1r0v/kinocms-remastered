@@ -1,13 +1,16 @@
 from django.contrib import messages
+from django.db.models import Prefetch
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import TemplateView, View, ListView
+from django.views.generic import TemplateView, View, ListView, DetailView
 
-from apps.cinemas.models import Cinema
+from apps.cinemas.models import Cinema, CinemaImage
 from core.utilities.guards import admin_only
 from .forms import CinemaForm, CinemaImageFormSet
+from ..halls.models import Hall
+from ..schedule.models import Schedule
 
 
 @admin_only
@@ -111,3 +114,20 @@ class CinemaListView(ListView):
     model = Cinema
     template_name = 'site/cinemas/cinemas_list.html'
     paginate_by = 10
+
+
+class CinemaDetailView(DetailView):
+    model = Cinema
+    template_name = 'site/cinemas/cinema_detail.html'
+    context_object_name = 'cinema'
+
+    def get_queryset(self):
+        return Cinema.objects.prefetch_related(
+            Prefetch(
+                'halls',
+                queryset=Hall.objects.prefetch_related(
+                    Prefetch('sessions', queryset=Schedule.objects.only('id'))
+                ).only('id', 'name_en', 'name_uk')
+            ),
+            Prefetch('images', queryset=CinemaImage.objects.only('id', 'image')),
+        )

@@ -30,7 +30,7 @@ class Hall(SEOModel):
 
 
 class HallImage(models.Model):
-    hall = models.ForeignKey(Hall, on_delete=models.CASCADE)
+    hall = models.ForeignKey(Hall, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to=get_upload_path)
 
 
