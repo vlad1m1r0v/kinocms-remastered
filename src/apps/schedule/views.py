@@ -1,7 +1,7 @@
 from itertools import groupby
 from operator import itemgetter
 
-from django.db.models import Q
+from django.db.models import Q, Prefetch
 from django.db.models.functions import TruncDate
 from django.http import HttpRequest, JsonResponse
 from django.utils.dateparse import parse_date
@@ -24,7 +24,11 @@ def schedule_cinemas_view(request: HttpRequest, *args, **kwargs):
 
 
 def schedule_dates_view(request: HttpRequest, *args, **kwargs):
-    distinct_dates = Schedule.objects.annotate(date=TruncDate('time')).values_list('date', flat=True).distinct()
+    distinct_dates = (Schedule.objects
+                      .annotate(date=TruncDate('time'))
+                      .values_list('date', flat=True)
+                      .distinct()
+                      .order_by('date'))
     dates_list = list(distinct_dates)
     return JsonResponse(dates_list, safe=False)
 
@@ -50,6 +54,7 @@ def schedule_sessions_view(request: HttpRequest, *args, **kwargs):
     is_3d = request.GET.get('is_3d')
     is_2d = request.GET.get('is_2d')
     is_imax = request.GET.get('is_imax')
+    cinema_id = request.GET.get('cinema_id')
     date = request.GET.get('date')
     film_id = request.GET.get('film_id')
     hall_id = request.GET.get('hall_id')
@@ -62,6 +67,8 @@ def schedule_sessions_view(request: HttpRequest, *args, **kwargs):
         filters &= Q(film__is_2d=True)
     if is_imax is not None:
         filters &= Q(film__is_imax=True)
+    if cinema_id:
+        filters &= Q(hall__cinema_id=cinema_id)
     if date:
         date_obj = parse_date(date)
         if date_obj:
@@ -71,7 +78,8 @@ def schedule_sessions_view(request: HttpRequest, *args, **kwargs):
     if hall_id:
         filters &= Q(hall_id=hall_id)
 
-    schedules = Schedule.objects.filter(filters).select_related('film', 'hall')
+    cinema_prefetch = Prefetch('hall__cinema')
+    schedules = Schedule.objects.filter(filters).select_related('film', 'hall').prefetch_related(cinema_prefetch)
 
     schedules_list = [{
         'id': schedule.id,
