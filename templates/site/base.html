@@ -24,6 +24,7 @@
   <link rel="stylesheet" href="{% static 'custom/css/ratio.css' %}">
   <link rel="stylesheet" href="{% static 'custom/css/svg-icons.css' %}">
   <link rel="stylesheet" href="{% static 'custom/css/text-overflow.css' %}">
+  <link rel="stylesheet" href="{% static 'custom/css/loading.css' %}">
   <style>
     #content-container {
       background-color: #8EC5FC;
@@ -40,6 +41,8 @@
   {% endblock head %}
 </head>
 <body style="background-color:#f4f6f9">
+<!--Loader-->
+<div class="loading">Loading&#8230;</div>
 <!--Navbar-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
   <div class="container">
@@ -235,6 +238,10 @@
 <script src="{% static 'plugins/select2/js/select2.js' %}"></script>
 <!--Toast alert if retrieved message or got form with errors-->
 <script>
+  $(document).ready(function () {
+    $('.loading').fadeOut()
+  });
+
   $(function () {
     const Toast = Swal.mixin({
       toast: true,
