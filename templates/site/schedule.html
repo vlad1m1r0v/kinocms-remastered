@@ -188,10 +188,14 @@
         $.ajax({
           url: `{% url 'site_schedule_sessions'%}?${querystring}`,
           method: "GET",
+          beforeSend: function () {
+            $('.loading').show();
+          },
           success: function (response) {
             const $sessions = $('#sessions');
 
             $sessions.empty();
+            $('.loading').fadeOut();
 
             Object.entries(response).forEach(([key, sessions]) => {
               $sessions.append(`<h5>${key}</h5>`);
