@@ -1,0 +1,47 @@
+{% extends "site/base.html" %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% block title %}
+{% endblock %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+  <!--Hall Upper Banner-->
+  <div class="ratio ratio-5x2">
+    <div class="inline-block overflow-hidden">
+      <img class="w-100 object-fit-cover position-absolute top-50 start-50 translate-middle"
+           src="{{ hall.upper_banner.url }}"
+           alt="Hall Upper Banner">
+    </div>
+  </div>
+  <div class="container my-2">
+    <div class="row">
+      <div class="col-3">
+        <!--Logo-->
+        <div class="ratio ratio-9x16 mb-3">
+          <div class="inline-block overflow-hidden rounded">
+            <img class="h-100 object-fit-cover position-absolute top-50 start-50 translate-middle"
+                 src="{{ film.image.url }}" alt="Cinema Logo">
+          </div>
+        </div>
+      </div>
+      <div class="col-9">
+        <!--Film Name-->
+        <h5 class="text-align-justify my-2">
+          {% if LANGUAGE_CODE == "en" %}
+            {{ film.name_en }}
+          {% else %}
+            {{ film.name_uk }}
+          {% endif %}
+        </h5>
+        <h6 class="text-align-justify text-muted my-2">
+          {{ schedule.time }}, {% trans 'Hall' %} {{ hall.id }}
+        </h6>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+{% block script %}
+  <script>
+  </script>
+{% endblock script %}

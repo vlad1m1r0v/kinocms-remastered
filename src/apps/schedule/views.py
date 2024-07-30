@@ -1,21 +1,21 @@
 from itertools import groupby
 from operator import itemgetter
 
-from django.db.models import Q, Prefetch
+from django.db.models import Q, Prefetch, Subquery, OuterRef, Exists
 from django.db.models.functions import TruncDate
 from django.http import HttpRequest, JsonResponse
 from django.utils.dateparse import parse_date
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, DetailView
 from django.template.defaultfilters import date as _date
 
 from apps.cinemas.models import Cinema
 from apps.films.models import Film
-from apps.halls.models import Hall
-from apps.schedule.models import Schedule
+from apps.halls.models import Hall, Seat
+from apps.schedule.models import Schedule, Ticket
 
 
 class ScheduleView(TemplateView):
-    template_name = "site/schedule.html"
+    template_name = "site/schedule/schedule_list.html"
 
 
 def schedule_cinemas_view(request: HttpRequest, *args, **kwargs):
@@ -97,3 +97,23 @@ def schedule_sessions_view(request: HttpRequest, *args, **kwargs):
     grouped_by_date = groupby(schedules_list, itemgetter('date'))
 
     return JsonResponse({title: list(items) for title, items in grouped_by_date}, safe=False)
+
+
+class ScheduleDetailView(DetailView):
+    model = Schedule
+    template_name = 'site/schedule/schedule_detail.html'
+    context_object_name = 'schedule'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        schedule = self.object
+        hall = schedule.hall
+        film = schedule.film
+        seats = hall.seats.all().order_by('row', 'column').annotate(
+            is_free=Exists(Ticket.objects.filter(session=schedule, seat=OuterRef('pk')))
+        )
+
+        context['hall'] = hall
+        context['film'] = film
+        context['seats'] = seats
+        return context

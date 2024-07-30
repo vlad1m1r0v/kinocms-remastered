@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.db.models import Prefetch
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import redirect
+from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View, DetailView
@@ -156,7 +157,9 @@ class HallDetailView(DetailView):
     context_object_name = 'hall'
 
     def get_queryset(self):
+        today = timezone.now().date()
+
         return Hall.objects.prefetch_related(
-            Prefetch('sessions', queryset=Schedule.objects.only('id')),
+            Prefetch('sessions', queryset=Schedule.objects.filter(time__date=today).only('id')),
             Prefetch('images', queryset=HallImage.objects.only('id', 'image')),
         )

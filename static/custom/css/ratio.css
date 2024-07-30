@@ -1,7 +1,11 @@
 .ratio-4x1 {
-   --bs-aspect-ratio: 25%;
+  --bs-aspect-ratio: 25%;
 }
 
 .ratio-5x2 {
-   --bs-aspect-ratio: 40%;
+  --bs-aspect-ratio: 40%;
+}
+
+.ratio-9x16 {
+  --bs-aspect-ratio: 178%;
 }

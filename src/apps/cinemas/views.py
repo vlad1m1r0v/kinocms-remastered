@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.db.models import Prefetch
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import redirect
+from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View, ListView, DetailView
@@ -122,11 +123,13 @@ class CinemaDetailView(DetailView):
     context_object_name = 'cinema'
 
     def get_queryset(self):
+        today = timezone.now().date()
+
         return Cinema.objects.prefetch_related(
             Prefetch(
                 'halls',
                 queryset=Hall.objects.prefetch_related(
-                    Prefetch('sessions', queryset=Schedule.objects.only('id'))
+                    Prefetch('sessions', queryset=Schedule.objects.filter(time__date=today).only('id'))
                 ).only('id', 'name_en', 'name_uk')
             ),
             Prefetch('images', queryset=CinemaImage.objects.only('id', 'image')),
