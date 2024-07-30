@@ -12,7 +12,7 @@ from apps.banners.views import AdminBannersView, AdminBackgroundSettingsView, Ad
 from apps.cinemas.views import AdminCinemasView, AdminCreateCinemaView, AdminUpdateCinemaView, \
     AdminDeleteCinemaBannerView, AdminDeleteCinemaLogoView, AdminDeleteCinemaView, CinemaListView, CinemaDetailView
 from apps.halls.views import AdminHallsDataTableView, AdminCreateHallView, AdminUpdateHallView, \
-    AdminDeleteHallSchemeView, AdminDeleteHallBannerView, AdminDeleteHallView
+    AdminDeleteHallSchemeView, AdminDeleteHallBannerView, AdminDeleteHallView, HallDetailView
 from apps.news.views import AdminNewsView, AdminCreateNewsView, AdminUpdateNewsView, AdminDeleteNewsImageView, \
     AdminNewsDataTableView, AdminDeleteNewsView, NewsListView, NewsDetailView
 from apps.promotions.views import AdminPromotionsView, AdminPromotionsDataTableView, AdminCreatePromotionView, \
@@ -112,6 +112,7 @@ site = [
     path("pages/<int:pk>", PageView.as_view(), name="site_pages_detail"),
     path("cinemas/", CinemaListView.as_view(), name="site_cinemas"),
     path("cinemas/<int:pk>", CinemaDetailView.as_view(), name="site_cinemas_detail"),
+    path("halls/<int:pk>", HallDetailView.as_view(), name="site_halls_detail"),
     path("schedule/", ScheduleView.as_view(), name="site_schedule"),
     path("schedule/cinemas/", schedule_cinemas_view, name="site_schedule_cinemas"),
     path("schedule/dates/", schedule_dates_view, name="site_schedule_showtime"),

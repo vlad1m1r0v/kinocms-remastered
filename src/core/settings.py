@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "apps.pages.apps.PagesConfig",
     "apps.mailing.apps.MailingConfig",
     "apps.schedule.apps.ScheduleConfig",
+    "apps.booking.apps.BookingConfig",
     "ajax_datatable",
     "channels",
     "mathfilters",

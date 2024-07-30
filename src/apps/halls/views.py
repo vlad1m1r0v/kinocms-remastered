@@ -1,15 +1,17 @@
 from ajax_datatable.views import AjaxDatatableView
 from django.contrib import messages
+from django.db.models import Prefetch
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import TemplateView, View
+from django.views.generic import TemplateView, View, DetailView
 
 from core.utilities.guards import admin_only
 from .forms import HallForm, HallImageFormSet
-from .models import Hall
+from .models import Hall, HallImage
 from apps.cinemas.models import Cinema
+from ..schedule.models import Schedule
 
 
 class AdminHallsDataTableView(AjaxDatatableView):
@@ -146,3 +148,15 @@ class AdminDeleteHallView(View):
         Hall.objects.get(pk=hall_id).delete()
         messages.success(request, "Hall was deleted successfully")
         return redirect("adminlte_cinemas_update_cinema", cinema_id=cinema_id)
+
+
+class HallDetailView(DetailView):
+    model = Hall
+    template_name = 'site/hall.html'
+    context_object_name = 'hall'
+
+    def get_queryset(self):
+        return Hall.objects.prefetch_related(
+            Prefetch('sessions', queryset=Schedule.objects.only('id')),
+            Prefetch('images', queryset=HallImage.objects.only('id', 'image')),
+        )
