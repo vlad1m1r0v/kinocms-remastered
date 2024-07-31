@@ -3,7 +3,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-from apps.dashboard.views import admin_daily_revenue_view, AdminDashboardView
+from apps.dashboard.views import admin_daily_revenue_view, admin_popular_cinemas_view, AdminDashboardView
 from apps.films.views import AdminFilmsView, AdminCreateFilmView, AdminUpdateFilmView, AdminDeleteFilmImageView, \
     AdminDeleteFilmView
 from apps.users.views import AdminLoginView, AdminLogoutView, AdminUsersView, AdminUsersDatatableView, \
@@ -33,6 +33,7 @@ adminlte = [
     path("authentication/logout/", AdminLogoutView.as_view(), name="adminlte_authentication_logout"),
     path("dashboard/", AdminDashboardView.as_view(), name="adminlte_dashboard"),
     path("dashboard/daily-revenue/", admin_daily_revenue_view, name="adminlte_dashboard_daily_revenue"),
+    path("dashboard/popular-cinemas/", admin_popular_cinemas_view, name="adminlte_dashboard_popular_cinemas"),
     path("banners/", AdminBannersView.as_view(), name="adminlte_banners"),
     path("banners/background-settings/", AdminBackgroundSettingsView.as_view(),
          name="adminlte_banners_background_settings"),
