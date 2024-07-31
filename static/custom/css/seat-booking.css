@@ -1,4 +1,7 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+
 .movie-container {
+  font-family: "Montserrat", sans-serif;
   margin: 20px 0;
   display: flex;
   justify-content: center;
@@ -14,34 +17,34 @@
   align-items: center;
 }
 
-.seat {
+.movie-container .seat {
   background-color: #444451;
   width: min(3vw, 16px);
-  aspect-ratio: 1.5;
+  aspect-ratio: 1.25;
   margin: min(0.5vw, 5px);
   border-top-left-radius: 2.5vw;
   border-top-right-radius: 2.5vw;
 }
 
-.selected {
+.movie-container .selected {
   background-color: #0081cb;
 }
 
-.occupied {
+.movie-container .occupied {
   background-color: #fff;
 }
 
-.seat:not(.occupied):hover {
+.movie-container .seat:not(.occupied):hover {
   cursor: pointer;
   transform: scale(1.2);
 }
 
-.showcase .seat:not(.occupied):hover {
+.movie-container .showcase .seat:not(.occupied):hover {
   cursor: default;
   transform: scale(1);
 }
 
-.showcase {
+.movie-container .showcase {
   display: flex;
   justify-content: space-between;
   list-style-type: none;
@@ -51,14 +54,14 @@
   color: #777;
 }
 
-.showcase li {
+.movie-container .showcase li {
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 10px;
 }
 
-.showcase li small {
+ .movie-container .showcase li small {
   margin-left: 2px;
 }
 
@@ -68,7 +71,7 @@
   justify-content: center;
 }
 
-.screen {
+.movie-container .screen {
   background: #fff;
   height: 70px;
   width: 70%;
@@ -76,11 +79,11 @@
   transform: rotateX(-45deg);
 }
 
-p.text {
-  margin: 40px 0;
+.movie-container p.text {
+  margin: 20px 0;
 }
 
-p.text span {
+.movie-container p.text span {
   color: #0081cb;
   font-weight: 600;
   box-sizing: content-box;

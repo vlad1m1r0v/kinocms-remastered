@@ -27,7 +27,7 @@
           <div class="list-group" style="max-height: 100vh; overflow-y: scroll">
             {% for session in hall.sessions.all %}
               <a href="{% url 'site_schedule_detail' pk=session.id %}" class="list-group-item list-group-item-action">
-                {% trans 'Session' %}&nbsp;{{ session.id }}
+                {% trans 'Session' %} №{{ session.id }}
               </a>
             {% endfor %}
           </div>

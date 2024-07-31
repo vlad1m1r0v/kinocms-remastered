@@ -24,7 +24,7 @@ from apps.pages.views import AdminPagesView, AdminMainPageView, AdminCreatePageV
 from apps.mailing.views import AdminMailingView, AdminUploadTemplateView, AdminDeleteTemplateView, \
     AdminMailingDatatableView, admin_send_emails_view
 from apps.schedule.views import ScheduleView, schedule_cinemas_view, schedule_dates_view, schedule_films_view, \
-    schedule_halls_view, schedule_sessions_view, ScheduleDetailView
+    schedule_halls_view, schedule_sessions_view, ScheduleDetailView, tickets_view
 from core.views import change_language_view
 
 adminlte = [
@@ -115,6 +115,7 @@ site = [
     path("halls/<int:pk>", HallDetailView.as_view(), name="site_halls_detail"),
     path("schedule/", ScheduleView.as_view(), name="site_schedule"),
     path("schedule/<int:pk>", ScheduleDetailView.as_view(), name="site_schedule_detail"),
+    path("schedule/<int:session_id>/tickets", tickets_view, name="site_schedule_tickets"),
     path("schedule/cinemas/", schedule_cinemas_view, name="site_schedule_cinemas"),
     path("schedule/dates/", schedule_dates_view, name="site_schedule_showtime"),
     path("schedule/films/", schedule_films_view, name="site_schedule_films"),

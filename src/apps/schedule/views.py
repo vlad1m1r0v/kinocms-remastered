@@ -1,12 +1,14 @@
+import json
 from itertools import groupby
 from operator import itemgetter, attrgetter
 
-from django.db.models import Q, Prefetch, Subquery, OuterRef, Exists
+from django.db.models import Q, Prefetch, OuterRef, Exists
 from django.db.models.functions import TruncDate
 from django.http import HttpRequest, JsonResponse
 from django.utils.dateparse import parse_date
 from django.views.generic import TemplateView, DetailView
 from django.template.defaultfilters import date as _date
+from django.utils.translation import gettext as _
 
 from apps.cinemas.models import Cinema
 from apps.films.models import Film
@@ -110,7 +112,7 @@ class ScheduleDetailView(DetailView):
         hall = schedule.hall
         film = schedule.film
         seats = hall.seats.all().order_by('row', 'column').annotate(
-            is_free=Exists(Ticket.objects.filter(session=schedule, seat=OuterRef('pk')))
+            is_free=~Exists(Ticket.objects.filter(session=schedule, seat=OuterRef('pk')))
         )
 
         seats_by_row = {row: list(group) for row, group in groupby(seats, key=attrgetter('row'))}
@@ -119,3 +121,27 @@ class ScheduleDetailView(DetailView):
         context['film'] = film
         context['seats'] = seats_by_row
         return context
+
+
+def tickets_view(request: HttpRequest, **kwargs):
+    data = json.loads(request.body)
+    session_id = kwargs.get('session_id')
+    seats_ids = data.get('seats')
+    print(seats_ids)
+    session = Schedule.objects.get(id=session_id)
+    seats = Seat.objects.filter(id__in=seats_ids)
+
+    tickets = []
+
+    for seat in seats:
+        ticket = Ticket(
+            session=session,
+            customer=request.user,
+            seat=seat
+        )
+        tickets.append(ticket)
+
+    Ticket.objects.bulk_create(tickets)
+
+    return JsonResponse({'success': True, 'message': _('Tickets were bought successfully')})
+

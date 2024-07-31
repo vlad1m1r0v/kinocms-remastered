@@ -17,7 +17,7 @@
            alt="Hall Upper Banner">
     </div>
   </div>
-  <div class="container my-2">
+  <div class="container py-2">
     <div class="row">
       <div class="col-3 d-none d-lg-block">
         <!--Logo-->
@@ -39,8 +39,16 @@
         </h5>
         <!--Schedule Time-->
         <h6 class="text-align-justify text-muted my-2">
-          {{ schedule.time }}, {% trans 'Hall' %} {{ hall.id }}
+          {{ schedule.time }}, {% if LANGUAGE_CODE == 'en' %}{{ hall.name_en }}{% else %}{{ hall.name_uk }}{% endif %}
         </h6>
+        <!--Price-->
+        <div class="d-flex justify-content-between align-items-center">
+          <h5>Price <span class="badge bg-info"><span id="price">{{ schedule.price }}</span> {% trans 'UAH' %}</span>
+          </h5>
+          <button class="btn btn-primary" id="buy">
+            <i class="fas fa-money-bill"></i> Book tickets
+          </button>
+        </div>
         <!--Seat Booking-->
         <div class="movie-container">
           <ul class="showcase">
@@ -57,16 +65,22 @@
               <small>{% trans 'Occupied' %}</small>
             </li>
           </ul>
-
+          <!--Order Information-->
+          <p class="text text-align-justify">
+            {% trans 'You have selected' %} <span id="count">0</span> {% trans 'seats for the total price of' %} <span
+            id="total">0</span> {% trans 'UAH' %}</p>
           <div class="container">
             <div class="screen border"></div>
-            {% for row, group in seats.items %}
-              <div class="row">
-                {% for seat in group %}
-                  <div class="seat {% if not seat.is_free %}selected{% endif %}"></div>
-                {% endfor %}
-              </div>
-            {% endfor %}
+            <div id="seats">
+              {% for row, group in seats.items %}
+                <div class="row">
+                  {% for seat in group %}
+                    <div id="{{ seat.id }}" data-code="{{ seat.code }}"
+                         class="seat border {% if not seat.is_free %}occupied{% endif %}"></div>
+                  {% endfor %}
+                </div>
+              {% endfor %}
+            </div>
           </div>
         </div>
       </div>
@@ -75,5 +89,46 @@
 {% endblock content %}
 {% block script %}
   <script>
+    $(document).ready(function () {
+      const $container = $('#seats');
+      const $count = $('#count');
+      const $total = $('#total');
+      const $priceSpan = $('#price');
+      const $buyButton = $('#buy');
+
+      const ticketPrice = parseFloat($priceSpan.text());
+
+      function updateSelectedCount() {
+        const $selectedSeats = $('#seats .seat.selected');
+        const selectedSeatsCount = $selectedSeats.length;
+        $count.text(selectedSeatsCount);
+        $total.text(selectedSeatsCount * ticketPrice);
+      }
+
+      $container.on('click', '.seat:not(.occupied)', function (event) {
+        event.stopPropagation();
+        $(this).toggleClass('selected');
+        updateSelectedCount();
+      });
+
+      $buyButton.click(function () {
+        const $selectedSeats = $('#seats .row .seat.selected');
+        const selectedSeatIds = $selectedSeats.map(function () {
+          return $(this).prop('id');
+        }).get();
+
+        $.ajax({
+          url: "{% url 'site_schedule_tickets' session_id=schedule.id %}",
+          method: 'POST',
+          headers: {'X-CSRFToken': "{{ csrf_token }}"},
+          dataType: 'json',
+          contentType: 'application/json',
+          data: JSON.stringify({seats: selectedSeatIds}),
+          success: function (response) {
+            console.log('success');
+          },
+        });
+      });
+    });
   </script>
 {% endblock script %}
