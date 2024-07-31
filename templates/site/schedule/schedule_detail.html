@@ -117,6 +117,13 @@
           return $(this).prop('id');
         }).get();
 
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'bottom-start',
+          showConfirmButton: false,
+          timer: 3000
+        });
+
         $.ajax({
           url: "{% url 'site_schedule_tickets' session_id=schedule.id %}",
           method: 'POST',
@@ -124,8 +131,16 @@
           dataType: 'json',
           contentType: 'application/json',
           data: JSON.stringify({seats: selectedSeatIds}),
+          beforeSend: function () {
+            $('.loading').show();
+          },
           success: function (response) {
-            console.log('success');
+            $('.loading').fadeOut();
+            $('.seat.selected').toggleClass('selected occupied');
+            Toast.fire({
+              icon: "success",
+              title: response.message
+            })
           },
         });
       });
