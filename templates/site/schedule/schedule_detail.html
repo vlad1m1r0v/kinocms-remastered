@@ -136,7 +136,11 @@
           },
           success: function (response) {
             $('.loading').fadeOut();
+            
             $('.seat.selected').toggleClass('selected occupied');
+            $count.text(0);
+            $total.text(0);
+            
             Toast.fire({
               icon: "success",
               title: response.message
