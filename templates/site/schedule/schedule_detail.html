@@ -1,9 +1,12 @@
 {% extends "site/base.html" %}
+{% load static %}
 {% load i18n %}
 {% get_current_language as LANGUAGE_CODE %}
 {% block title %}
+  {% trans 'Ticket Booking' %}
 {% endblock %}
 {% block head %}
+  <link rel="stylesheet" href="{% static 'custom/css/seat-booking.css' %}">
 {% endblock head %}
 {% block content %}
   <!--Hall Upper Banner-->
@@ -16,7 +19,7 @@
   </div>
   <div class="container my-2">
     <div class="row">
-      <div class="col-3">
+      <div class="col-3 d-none d-lg-block">
         <!--Logo-->
         <div class="ratio ratio-9x16 mb-3">
           <div class="inline-block overflow-hidden rounded">
@@ -25,7 +28,7 @@
           </div>
         </div>
       </div>
-      <div class="col-9">
+      <div class="col">
         <!--Film Name-->
         <h5 class="text-align-justify my-2">
           {% if LANGUAGE_CODE == "en" %}
@@ -34,9 +37,38 @@
             {{ film.name_uk }}
           {% endif %}
         </h5>
+        <!--Schedule Time-->
         <h6 class="text-align-justify text-muted my-2">
           {{ schedule.time }}, {% trans 'Hall' %} {{ hall.id }}
         </h6>
+        <!--Seat Booking-->
+        <div class="movie-container">
+          <ul class="showcase">
+            <li>
+              <div class="seat"></div>
+              <small>{% trans 'N/A' %}</small>
+            </li>
+            <li>
+              <div class="seat selected"></div>
+              <small>{% trans 'Selected' %}</small>
+            </li>
+            <li>
+              <div class="seat occupied"></div>
+              <small>{% trans 'Occupied' %}</small>
+            </li>
+          </ul>
+
+          <div class="container">
+            <div class="screen border"></div>
+            {% for row, group in seats.items %}
+              <div class="row">
+                {% for seat in group %}
+                  <div class="seat {% if not seat.is_free %}selected{% endif %}"></div>
+                {% endfor %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
       </div>
     </div>
   </div>

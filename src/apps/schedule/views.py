@@ -1,5 +1,5 @@
 from itertools import groupby
-from operator import itemgetter
+from operator import itemgetter, attrgetter
 
 from django.db.models import Q, Prefetch, Subquery, OuterRef, Exists
 from django.db.models.functions import TruncDate
@@ -113,7 +113,9 @@ class ScheduleDetailView(DetailView):
             is_free=Exists(Ticket.objects.filter(session=schedule, seat=OuterRef('pk')))
         )
 
+        seats_by_row = {row: list(group) for row, group in groupby(seats, key=attrgetter('row'))}
+
         context['hall'] = hall
         context['film'] = film
-        context['seats'] = seats
+        context['seats'] = seats_by_row
         return context

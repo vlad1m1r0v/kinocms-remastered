@@ -1,0 +1,92 @@
+.movie-container {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column
+}
+
+.movie-container .container {
+  perspective: 1000px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.seat {
+  background-color: #444451;
+  width: min(3vw, 16px);
+  aspect-ratio: 1.5;
+  margin: min(0.5vw, 5px);
+  border-top-left-radius: 2.5vw;
+  border-top-right-radius: 2.5vw;
+}
+
+.selected {
+  background-color: #0081cb;
+}
+
+.occupied {
+  background-color: #fff;
+}
+
+.seat:not(.occupied):hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
+.showcase .seat:not(.occupied):hover {
+  cursor: default;
+  transform: scale(1);
+}
+
+.showcase {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  background: rgba(0, 0, 0, 0.1);
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #777;
+}
+
+.showcase li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+}
+
+.showcase li small {
+  margin-left: 2px;
+}
+
+.movie-container .row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.screen {
+  background: #fff;
+  height: 70px;
+  width: 70%;
+  margin: 15px 0;
+  transform: rotateX(-45deg);
+}
+
+p.text {
+  margin: 40px 0;
+}
+
+p.text span {
+  color: #0081cb;
+  font-weight: 600;
+  box-sizing: content-box;
+}
+
+.credits a {
+  color: #fff;
+}
+
