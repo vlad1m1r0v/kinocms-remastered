@@ -4,85 +4,178 @@
   Dashboard
 {% endblock %}
 {% block head %}
-  <style>
-  </style>
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 {% endblock head %}
 <script src="{% static 'plugins/chart.js/Chart.bundle.js' %}"></script>
 {% block content %}
-  <div class="card card-primary">
-    <div class="card-header">
-      <h3 class="card-title">Daily Revenue</h3>
-      <div class="card-tools">
-        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-          <i class="fas fa-minus"></i>
-        </button>
-        <button type="button" class="btn btn-tool" data-card-widget="remove">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-    </div>
-    <div class="card-body">
-      <div class="chart">
-        <div class="chartjs-size-monitor">
-          <div class="chartjs-size-monitor-expand">
-            <div class=""></div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-3 col-6">
+        <div class="small-box bg-warning">
+          <div class="inner">
+            <h3 id="users-count">0</h3>
+            <p>User Registrations</p>
           </div>
-          <div class="chartjs-size-monitor-shrink">
-            <div class=""></div>
+          <div class="icon">
+            <i class="ion ion-person-add"></i>
           </div>
+          <a href="{% url 'adminlte_users' %}" class="small-box-footer">More info <i
+            class="fas fa-arrow-circle-right"></i></a>
         </div>
-        <canvas id="daily-revenue">
-
-        </canvas>
       </div>
-    </div>
-
-  </div>
-  <div class="card card-primary">
-    <div class="card-header">
-      <h3 class="card-title">Popular Cinemas</h3>
-      <div class="card-tools">
-        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-          <i class="fas fa-minus"></i>
-        </button>
-        <button type="button" class="btn btn-tool" data-card-widget="remove">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-    </div>
-    <div class="card-body">
-      <div class="chart">
-        <div class="chartjs-size-monitor">
-          <div class="chartjs-size-monitor-expand">
-            <div class=""></div>
+      <div class="col-lg-3 col-6">
+        <div class="small-box bg-info">
+          <div class="inner">
+            <h3 id="cinemas-count">0</h3>
+            <p>Cinemas created</p>
           </div>
-          <div class="chartjs-size-monitor-shrink">
-            <div class=""></div>
+          <div class="icon">
+            <i class="fas fa-building"></i>
           </div>
+          <a href="{% url 'adminlte_cinemas' %}" class="small-box-footer">More info <i
+            class="fas fa-arrow-circle-right"></i></a>
         </div>
-        <canvas id="popular-cinemas">
-
-        </canvas>
+      </div>
+      <div class="col-lg-3 col-6">
+        <div class="small-box bg-success">
+          <div class="inner">
+            <h3 id="tickets-count">0</h3>
+            <p>Tickets sold</p>
+          </div>
+          <div class="icon">
+            <i class="fas fa-money-bill"></i>
+          </div>
+          <a href="{% url 'adminlte_dashboard' %}" class="small-box-footer">More info <i
+            class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-6">
+        <div class="small-box bg-primary">
+          <div class="inner">
+            <h3 id="sessions-count">0</h3>
+            <p>Active sessions</p>
+          </div>
+          <div class="icon">
+            <i class="fas fa-film"></i>
+          </div>
+          <a href="{% url 'adminlte_dashboard' %}" class="small-box-footer">More info <i
+            class="fas fa-arrow-circle-right"></i></a>
+        </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Daily Revenue</h3>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart">
+              <div class="chartjs-size-monitor">
+                <div class="chartjs-size-monitor-expand">
+                  <div class=""></div>
+                </div>
+                <div class="chartjs-size-monitor-shrink">
+                  <div class=""></div>
+                </div>
+              </div>
+              <canvas id="daily-revenue">
 
+              </canvas>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Popular Cinemas</h3>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart">
+              <div class="chartjs-size-monitor">
+                <div class="chartjs-size-monitor-expand">
+                  <div class=""></div>
+                </div>
+                <div class="chartjs-size-monitor-shrink">
+                  <div class=""></div>
+                </div>
+              </div>
+              <canvas id="popular-cinemas">
+
+              </canvas>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Popular Films</h3>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart">
+              <div class="chartjs-size-monitor">
+                <div class="chartjs-size-monitor-expand">
+                  <div class=""></div>
+                </div>
+                <div class="chartjs-size-monitor-shrink">
+                  <div class=""></div>
+                </div>
+              </div>
+              <canvas id="popular-films">
+
+              </canvas>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
   </div>
 {% endblock %}
 {% block script %}
   <script>
     $(document).ready(function () {
       $.ajax({
-        url: "{% url 'adminlte_dashboard_daily_revenue' %}",
+        url: "{% url 'adminlte_dashboard_statistics' %}",
         method: 'GET',
         success: function (response) {
           const $dailyRevenue = $('#daily-revenue');
+          const dailyRevenues = response.daily_revenues;
           new Chart($dailyRevenue, {
             type: 'line',
             data: {
-              labels: Object.entries(response).map(([key, _]) => key),
+              labels: Object.entries(dailyRevenues).map(([key, _]) => key),
               datasets: [{
                 label: 'Date',
-                data: Object.entries(response).map(([_, value]) => value),
+                data: Object.entries(dailyRevenues).map(([_, value]) => value),
                 borderColor: 'rgb(75, 192, 192)',
                 fill: false,
                 borderWidth: 1,
@@ -109,21 +202,16 @@
               }
             }
           });
-        }
-      })
 
-      $.ajax({
-        url: "{% url 'adminlte_dashboard_popular_cinemas' %}",
-        method: 'GET',
-        success: function (response) {
-          const $dailyRevenue = $('#popular-cinemas');
-          new Chart($dailyRevenue, {
+          const $popularCinemas = $('#popular-cinemas');
+          const popularCinemas = response.popular_cinemas;
+          new Chart($popularCinemas, {
             type: 'bar',
             data: {
-              labels: Object.entries(response).map(([key, _]) => key),
+              labels: Object.entries(popularCinemas).map(([key, _]) => key),
               datasets: [{
                 label: 'Cinema',
-                data: Object.entries(response).map(([_, value]) => value),
+                data: Object.entries(popularCinemas).map(([_, value]) => value),
                 backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
                   'rgba(255, 159, 64, 0.2)',
@@ -160,6 +248,49 @@
               }
             }
           });
+
+          const $popularFilms = $('#popular-films');
+          const popularFilms = response.popular_films;
+          new Chart($popularFilms, {
+            type: 'doughnut',
+            data: {
+              labels: Object.entries(popularFilms).map(([key, _]) => key),
+              datasets: [{
+                label: 'Cinema',
+                data: Object.entries(popularFilms).map(([_, value]) => value),
+                backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(255, 159, 64, 0.2)',
+                  'rgba(255, 205, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(201, 203, 207, 0.2)'
+                ],
+                borderColor: [
+                  'rgb(255, 99, 132)',
+                  'rgb(255, 159, 64)',
+                  'rgb(255, 205, 86)',
+                  'rgb(75, 192, 192)',
+                  'rgb(54, 162, 235)',
+                  'rgb(153, 102, 255)',
+                  'rgb(201, 203, 207)'
+                ],
+              }]
+            },
+          });
+
+          const usersCount = response.users_count;
+          $('#users-count').text(usersCount);
+
+          const cinemaCount = response.cinemas_count;
+          $('#cinemas-count').text(cinemaCount);
+
+          const ticketsCount = response.tickets_count;
+          $('#tickets-count').text(ticketsCount);
+
+          const sessionsCount = response.sessions_count;
+          $('#sessions-count').text(sessionsCount);
         }
       })
     })

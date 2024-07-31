@@ -127,7 +127,6 @@ def tickets_view(request: HttpRequest, **kwargs):
     data = json.loads(request.body)
     session_id = kwargs.get('session_id')
     seats_ids = data.get('seats')
-    print(seats_ids)
     session = Schedule.objects.get(id=session_id)
     seats = Seat.objects.filter(id__in=seats_ids)
 
