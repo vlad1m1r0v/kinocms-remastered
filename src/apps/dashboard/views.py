@@ -15,7 +15,9 @@ class AdminDashboardView(TemplateView):
 
 
 def admin_dashboard_statistics_view(request: HttpRequest):
-    daily_revenue = Ticket.objects.values('session__time__date').annotate(total_revenue=Sum('session__price'))
+    daily_revenue = (Ticket.objects.values('session__time__date')
+                     .annotate(total_revenue=Sum('session__price'))
+                     .order_by("session__time__date"))
 
     daily_revenues = {
         item['session__time__date'].strftime('%Y-%m-%d'): item['total_revenue']
