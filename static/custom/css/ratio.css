@@ -9,3 +9,7 @@
 .ratio-9x16 {
   --bs-aspect-ratio: 178%;
 }
+
+.ratio-2x3 {
+  --bs-aspect-ratio: 150%;
+}

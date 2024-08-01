@@ -1,13 +1,17 @@
+from datetime import timedelta
+
 from django.contrib import messages
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import redirect
+from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View, DetailView
 
 from apps.banners.models import TopBanner, AdvertisementBanner
 from apps.pages.forms import MainPageForm, PageForm, PageImageFormSet, ContactsForm, ContactFormSet
-from apps.pages.models import MainPage, Page, Contacts, Contact, PageImage
+from apps.pages.models import MainPage, Page, Contacts, Contact
+from apps.schedule.models import Schedule
 from core.utilities.guards import admin_only
 
 
@@ -174,6 +178,21 @@ class MainPageView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['top_banners'] = TopBanner.objects.all()
         context["advertisement_banners"] = AdvertisementBanner.objects.all()
+
+        today = timezone.now().date()
+        three_days_later = today + timedelta(days=3)
+
+        today_sessions = Schedule.objects.filter(time__date=today) \
+            .select_related('film') \
+            .values('id', 'film__name_en', 'film__name_uk', 'film__image')
+
+        upcoming_sessions = Schedule.objects.filter(time__date__range=[today + timedelta(days=1), three_days_later]) \
+            .select_related('film') \
+            .values('time__date', 'film__name_en', 'film__name_uk', 'film__image').order_by('time__date')
+
+        context['today_sessions'] = today_sessions
+        context['upcoming_sessions'] = upcoming_sessions
+
         return context
 
 
@@ -191,4 +210,3 @@ class PageView(DetailView):
     template_name = 'site/page.html'
     model = Page
     context_object_name = 'page'
-

@@ -1,5 +1,6 @@
 {% extends "site/base.html" %}
 {% load i18n %}
+{% load static %}
 {% get_current_language as LANGUAGE_CODE %}
 {% load mathfilters %}
 {% block title %}
@@ -52,6 +53,67 @@
       </button>
     </div>
   {% endif %}
+  <div class="px-sm-5 px-2 py-3">
+    <!--Today Sessions-->
+    <h4 class="px-3">{% trans 'See Today' %}</h4>
+    <div class="container-fluid">
+      <div class="row g-2">
+        {% for session in today_sessions %}
+          <div class="col-sm-12 col-md-6 col-lg-3">
+            <div class="card rounded-0 shadow-sm mb-2" style="width: 100%;">
+              <div class="ratio ratio-2x3">
+                <div class="d-inline-block overflow-hidden">
+                  <img class="w-100 h-100"
+                       src="{% get_media_prefix %}{{ session.film__image }}" alt="Film Image">
+                </div>
+              </div>
+              <div class="card-body d-flex flex-column align-items-center">
+                <h5 class="card-title text-truncate">
+                  {% if LANGUAGE_CODE == 'en' %}
+                    {{ session.film__name_en }}
+                  {% else %}
+                    {{ session.film__name_uk }}
+                  {% endif %}
+                </h5>
+                <a href="{% url 'site_schedule_detail' pk=session.id %}" class="btn w-100 btn-success">
+                  <i class="fas fa-money-bill"></i>
+                  {% trans 'Buy a ticket' %}
+                </a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <!--See soon-->
+    <h4 class="px-3 py-2">{% trans 'See Soon' %}</h4>
+    <div class="container-fluid">
+      <div class="row g-2">
+        {% for session in upcoming_sessions %}
+          <div class="col-sm-12 col-md-6 col-lg-3">
+            <div class="card rounded-0 shadow-sm mb-2" style="width: 100%;">
+              <div class="ratio ratio-2x3">
+                <div class="d-inline-block overflow-hidden">
+                  <img class="w-100 h-100"
+                       src="{% get_media_prefix %}{{ session.film__image }}" alt="Film Image">
+                </div>
+              </div>
+              <div class="card-body d-flex flex-column align-items-center">
+                <h5 class="card-title text-truncate">
+                  {% if LANGUAGE_CODE == 'en' %}
+                    {{ session.film__name_en }}
+                  {% else %}
+                    {{ session.film__name_uk }}
+                  {% endif %}
+                </h5>
+                <h6 class="text-muted">{{ session.time__date|date:'j E' }}</h6>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
   <!--Advertisement Banners-->
   {% if banner_settings.are_advertisements_active %}
     <div id="advertisementBannerCarousel" class="carousel slide"
