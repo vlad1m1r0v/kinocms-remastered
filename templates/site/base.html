@@ -53,10 +53,12 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item"><a href="{% url 'site_billboard' %}" class="nav-link link-dark px-2" aria-current="page">{% translate 'Billboard' %}</a></li>
+        <li class="nav-item"><a href="{% url 'site_billboard' %}" class="nav-link link-dark px-2"
+                                aria-current="page">{% translate 'Billboard' %}</a></li>
         <li class="nav-item"><a href="{% url 'site_schedule' %}"
                                 class="nav-link link-dark px-2">{% translate 'Schedule' %}</a></li>
-        <li class="nav-item"><a href="{% url 'site_soon' %}" class="nav-link link-dark px-2">{% translate 'Soon' %}</a></li>
+        <li class="nav-item"><a href="{% url 'site_soon' %}" class="nav-link link-dark px-2">{% translate 'Soon' %}</a>
+        </li>
         <li class="nav-item"><a href="{% url 'site_contacts' %}"
                                 class="nav-link link-dark px-2">{% translate 'Contacts' %}</a></li>
         <li class="nav-item"><a href="{% url 'site_cinemas' %}"
@@ -150,7 +152,10 @@
       </div>
     </div>
     <form class="col-12 col-lg-auto d-flex align-items-center" role="search">
-      <input type="search" class="form-control" placeholder="{% trans 'Search' %}..." aria-label="Search">
+      <input type="search" class="form-control" placeholder="{% trans 'Search' %}..." aria-label="Search"
+             id="search" data-bs-toggle="dropdown">
+      <ul class="dropdown-menu" aria-labelledby="search" id="search-result">
+      </ul>
     </form>
   </div>
 </header>
@@ -174,11 +179,13 @@
       <!--Menu-->
       <h5>{% trans 'Menu' %}</h5>
       <ul class="nav flex-column">
-        <li class="nav-item mb-2"><a href="{% url 'site_billboard' %}" class="nav-link text-muted p-0" aria-current="page">{% translate 'Billboard' %}</a>
+        <li class="nav-item mb-2"><a href="{% url 'site_billboard' %}" class="nav-link text-muted p-0"
+                                     aria-current="page">{% translate 'Billboard' %}</a>
         </li>
         <li class="nav-item mb-2"><a href="{% url 'site_schedule' %}"
                                      class="nav-link text-muted p-0">{% translate 'Schedule' %}</a></li>
-        <li class="nav-item mb-2"><a href="{% url 'site_soon' %}" class="nav-link text-muted p-0">{% translate 'Soon' %}</a></li>
+        <li class="nav-item mb-2"><a href="{% url 'site_soon' %}"
+                                     class="nav-link text-muted p-0">{% translate 'Soon' %}</a></li>
         <li class="nav-item mb-2"><a href="{% url 'site_contacts' %}"
                                      class="nav-link text-muted p-0">{% translate 'Contacts' %}</a></li>
         <li class="nav-item mb-2"><a href="{% url 'site_cinemas' %}"
@@ -285,6 +292,23 @@
       }
     })
   })
+
+  const $searchInput = $('#search');
+  const $searchResult = $('#search-result');
+
+  $searchInput.on('input', function () {
+    $.ajax({
+      url: `{% url "site_films_search" %}?search=${$(this).val()}`,
+      type: 'GET',
+      success: function (results) {
+        $searchResult.empty();
+        results.forEach(result => {
+          $searchResult.append(`<li><a href=${window.location.origin}/films/${result.id} class="dropdown-item" type="button">${result.name_{{LANGUAGE_CODE}}}</a></li>`
+          )
+        })
+      }
+    })
+  });
 </script>
 {% block script %}
 {% endblock %}

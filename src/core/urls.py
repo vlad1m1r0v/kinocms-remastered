@@ -5,7 +5,7 @@ from django.urls import path, include
 
 from apps.dashboard.views import AdminDashboardView, admin_dashboard_statistics_view
 from apps.films.views import AdminFilmsView, AdminCreateFilmView, AdminUpdateFilmView, AdminDeleteFilmImageView, \
-    AdminDeleteFilmView, BillboardView, SoonView, FilmView
+    AdminDeleteFilmView, BillboardView, SoonView, FilmView, film_search_view
 from apps.users.views import AdminLoginView, AdminLogoutView, AdminUsersView, AdminUsersDatatableView, \
     AdminUpdateUserView, AdminDeleteUserView, LoginView, RegisterView, LogoutView, ProfileView
 from apps.banners.views import AdminBannersView, AdminBackgroundSettingsView, AdminTopBannersView, \
@@ -126,6 +126,7 @@ site = [
     path("schedule/sessions/", schedule_sessions_view, name="site_schedule_sessions"),
     path("billboard/", BillboardView.as_view(), name="site_billboard"),
     path("soon/", SoonView.as_view(), name="site_soon"),
+    path("films/", film_search_view, name="site_films_search"),
     path("films/<int:pk>/", FilmView.as_view(), name="site_films_detail")
 ]
 

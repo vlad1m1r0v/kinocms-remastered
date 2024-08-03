@@ -157,3 +157,11 @@ class FilmView(DetailView):
 
     def get_queryset(self):
         return super().get_queryset().prefetch_related('images')
+
+
+def film_search_view(request: HttpRequest, *args, **kwargs):
+    search = request.GET.get('search')
+    films = (Film.objects
+             .filter(Q(name_en__icontains=search) | Q(name_uk__icontains=search))
+             .values('id', 'name_en', 'name_uk'))
+    return JsonResponse(list(films), safe=False)
