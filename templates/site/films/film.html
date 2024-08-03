@@ -1,0 +1,288 @@
+{% extends "site/base.html" %}
+{% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% block title %}
+  {% if LANGUAGE_CODE == 'en' %}
+    {{ film.name_en }}
+  {% else %}
+    {{ film.name_uk }}
+  {% endif %}
+{% endblock %}
+{% block head %}
+  <!--Select2 Bootstrap5 theme-->
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css"/>
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.rtl.min.css"/>
+{% endblock head %}
+{% block content %}
+  <!--Trailer-->
+  <div class="ratio ratio-16x9">
+    <iframe id="ytplayer" type="text/html" width="100%" height="100%"
+            src="http://www.youtube.com/embed/{{ film.video_id }}?autoplay=1&origin=http://example.com"
+            frameborder="0"></iframe>
+  </div>
+  <div class="container py-2">
+    <div class="row">
+      <div class="col-3 d-none d-lg-block">
+        <!--Logo-->
+        <div class="ratio ratio-9x16 mb-3">
+          <div class="inline-block overflow-hidden rounded">
+            <img class="h-100 object-fit-cover position-absolute top-50 start-50 translate-middle"
+                 src="{{ film.image.url }}" alt="Cinema Logo">
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <!--Sessions Filter-->
+        <h5 class="my-2">
+          {% trans 'Sessions Filter' %}
+        </h5>
+        <div class="row g-2 mb-2" id="filters">
+          <div class="col-md-4">
+            <select style="width: 100%" id="cinema-select" class="form-select">
+            </select>
+          </div>
+          <div class="col-md-4">
+            <select style="width: 100%" id="date-select" class="form-select">
+            </select>
+          </div>
+          <div class="col-md-4">
+            <select style="width: 100%" id="hall-select" class="form-select">
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div id="sessions"></div>
+        </div>
+        <!--Film Name-->
+        <h5 class="text-center my-2">
+          {% if LANGUAGE_CODE == "en" %}
+            {{ film.name_en }}
+          {% else %}
+            {{ film.name_uk }}
+          {% endif %}
+        </h5>
+        <!--Film Type-->
+        <div class="d-flex flex-row">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" disabled {% if not film.is_3d %}checked{% endif %}>
+            <label class="form-check-label" for="flexCheckDisabled">
+              3D
+            </label>
+          </div>
+          &emsp;
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" disabled {% if not film.is_2d %}checked{% endif %}>
+            <label class="form-check-label" for="flexCheckDisabled">
+              2D
+            </label>
+          </div>
+          &emsp;
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" disabled {% if not film.is_imax %}checked{% endif %}>
+            <label class="form-check-label" for="flexCheckDisabled">
+              IMax
+            </label>
+          </div>
+        </div>
+        <!--Film Description-->
+        <div class="fs-6 fw-light text-align-justify">
+          {% if LANGUAGE_CODE == "en" %}
+            {{ film.description_en }}
+          {% else %}
+            {{ film.description_uk }}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Image Gallery-->
+  <div id="FilmImageGalleryCarousel" class="carousel slide"
+       data-bs-ride="carousel"
+       data-bs-interval="3000">
+    <div class="carousel-indicators">
+      {% for image in film.images.all %}
+        <button type="button"
+                data-bs-target="#FilmImageGalleryCarousel"
+                data-bs-slide-to="{{ forloop.counter0 }}"
+                aria-label="Slide {{ forloop.counter0 }}"
+                aria-current="true"
+                {% if forloop.counter0 == 0 %}class="active"{% endif %}></button>
+      {% endfor %}
+    </div>
+    <div class="carousel-inner">
+      {% for image in film.images.all %}
+        <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}">
+          <div class="ratio ratio-4x1">
+            <a>
+              <img class="w-100 object-fit-cover position-absolute top-50 start-50 translate-middle"
+                   src="{{ image.image.url }}" alt="Film Image">
+            </a></div>
+        </div>
+      {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#FilmImageGalleryCarousel"
+            data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#FilmImageGalleryCarousel"
+            data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+{% endblock content %}
+{% block script %}
+  <script>
+    $(document).ready(function () {
+      const $cinemaSelect = $('#cinema-select');
+      const $dateSelect = $('#date-select');
+      const $hallSelect = $('#hall-select');
+
+      renderSessions();
+
+      $cinemaSelect.select2({
+        theme: 'bootstrap-5',
+        width: 'resolve',
+        ajax: {
+          url: "{% url 'site_schedule_cinemas'%}",
+          dataType: "json",
+          processResults: data => ({
+            results: data.map(item => ({
+              id: item.id,
+              text: item.name_{{ LANGUAGE_CODE }}
+            }))
+          })
+        }
+      });
+
+      $dateSelect.select2({
+        theme: 'bootstrap-5',
+        width: 'resolve',
+        ajax: {
+          url: "{% url 'site_schedule_showtime'%}",
+          dataType: "json",
+          processResults: data => ({
+            results: data.map(item => ({
+              id: item,
+              text: item
+            }))
+          })
+        }
+      });
+
+      $hallSelect.select2({
+        theme: 'bootstrap-5',
+        width: 'resolve',
+        ajax: {
+          url: "{% url 'site_schedule_halls'%}",
+          dataType: "json",
+          processResults: data => ({
+            results: data.map(item => ({
+              id: item.id,
+              text: item.name_{{ LANGUAGE_CODE }}
+            }))
+          })
+        }
+      });
+
+      $cinemaSelect.on('select2:select', function () {
+        $hallSelect.empty();
+        $hallSelect.select2({
+          theme: 'bootstrap-5',
+          width: 'resolve',
+          ajax: {
+            url: `{% url 'site_schedule_halls'%}?cinema_id=${$cinemaSelect.val()}`,
+            dataType: "json",
+            processResults: data => ({
+              results: data.map(item => ({
+                id: item.id,
+                text: item.name_{{ LANGUAGE_CODE }}
+              }))
+            })
+          }
+        })
+      })
+
+      $('#filters').on('click select2:select', '#3D,#2D,#IMax,#cinema-select,#date-select,#film-select,#hall-select', function () {
+        renderSessions();
+      })
+
+      function renderSessions() {
+        const filters = {};
+
+        //selectors
+        if ($cinemaSelect.val()) {
+          filters['cinema_id'] = $cinemaSelect.val()
+        }
+
+        if ($dateSelect.val()) {
+          filters['date'] = $dateSelect.val();
+        }
+
+        if ($hallSelect.val()) {
+          filters['hall_id'] = $hallSelect.val()
+        }
+
+        const querystring = Object.entries(filters).map(([key, value]) => `&${key}=${value}`).join('');
+
+
+        $.ajax({
+          url: `{% url 'site_schedule_sessions'%}?film_id={{ film.id }}${querystring}`,
+          method: "GET",
+          beforeSend: function () {
+            $('.loading').show();
+          },
+          success: function (response) {
+            const $sessions = $('#sessions');
+
+            $sessions.empty();
+            $('.loading').fadeOut();
+
+            Object.entries(response).forEach(([key, sessions]) => {
+              $sessions.append(`<h5>${key}</h5>`);
+              const $table = $(
+                  "<table class='table table-striped table-bordered'>" +
+                  "<thead>" +
+                  "<tr>" +
+                  "<th scope='col'>{% trans 'Time' %}</th>" +
+                  "<th scope='col'>{% trans 'Film' %}</th>" +
+                  "<th scope='col'>{% trans 'Hall' %}</th>" +
+                  "<th scope='col'>{% trans 'Price' %}</th>" +
+                  "<th scope='col'>{% trans 'Book a ticket' %}</th>" +
+                  "</tr>" +
+                  "</thead>" +
+                  "<tbody>" +
+                  "</tbody>" +
+                  "</table>"
+                )
+              ;
+              $sessions.append($table);
+              for (const session of sessions) {
+                $table.children('tbody').append(
+                  "<tr>" +
+                  `<td scope='col'>${session.time}</td>` +
+                  `<td scope='col'>{% if LANGUAGE_CODE == "uk" %}${session.film_name_uk}{% else %}
+                  ${session.film_name_en}{% endif %}</td>` +
+                  `<td scope='col'>{% if LANGUAGE_CODE == "uk" %}${session.hall_name_uk}{% else %}
+                  ${session.hall_name_en}{% endif %}</td>` +
+                  `<td scope='col'>${session.price}</td>` +
+                  "<td scope='col'>" +
+                  `<a href='${window.location.origin}/schedule/${session.id}' class='btn btn-success'>` +
+                  "<i class='fas fa-money-bill'></i>" +
+                  " {% trans 'Book a ticket' %}" +
+                  "</a>" +
+                  "</td>" +
+                  "</tr>"
+                )
+              }
+            })
+          }
+        })
+      }
+    })
+  </script>
+{% endblock script %}

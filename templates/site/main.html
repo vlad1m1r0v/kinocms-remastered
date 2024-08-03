@@ -68,13 +68,14 @@
                 </div>
               </div>
               <div class="card-body d-flex flex-column align-items-center">
-                <h5 class="card-title text-truncate">
+                <a href='{% url 'site_films_detail' pk=session.film__id %}'
+                   class="h5 card-title text-truncate text-black text-decoration-none">
                   {% if LANGUAGE_CODE == 'en' %}
                     {{ session.film__name_en }}
                   {% else %}
                     {{ session.film__name_uk }}
                   {% endif %}
-                </h5>
+                </a>
                 <a href="{% url 'site_schedule_detail' pk=session.id %}" class="btn w-100 btn-success">
                   <i class="fas fa-money-bill"></i>
                   {% trans 'Buy a ticket' %}
@@ -99,13 +100,14 @@
                 </div>
               </div>
               <div class="card-body d-flex flex-column align-items-center">
-                <h5 class="card-title text-truncate">
+                <a href='{% url 'site_films_detail' pk=session.film__id %}'
+                   class="h5 card-title text-truncate text-black text-decoration-none">
                   {% if LANGUAGE_CODE == 'en' %}
                     {{ session.film__name_en }}
                   {% else %}
                     {{ session.film__name_uk }}
                   {% endif %}
-                </h5>
+                </a>
                 <h6 class="text-muted">{{ session.time__date|date:'j E' }}</h6>
               </div>
             </div>

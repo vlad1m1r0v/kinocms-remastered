@@ -1,3 +1,5 @@
+import urllib.parse
+
 from django.db import models
 
 from core.utilities.models import SEOModel, get_upload_path
@@ -16,7 +18,12 @@ class Film(SEOModel):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    @property
+    def video_id(self):
+        params = urllib.parse.parse_qs(urllib.parse.urlparse(self.trailer_url).query)
+        return params['v'][0]
+
 
 class FilmImage(models.Model):
     image = models.ImageField(upload_to=get_upload_path)
-    film = models.ForeignKey(Film, on_delete=models.CASCADE)
+    film = models.ForeignKey(Film, on_delete=models.CASCADE, related_name="images")

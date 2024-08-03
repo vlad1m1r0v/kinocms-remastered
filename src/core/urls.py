@@ -5,7 +5,7 @@ from django.urls import path, include
 
 from apps.dashboard.views import AdminDashboardView, admin_dashboard_statistics_view
 from apps.films.views import AdminFilmsView, AdminCreateFilmView, AdminUpdateFilmView, AdminDeleteFilmImageView, \
-    AdminDeleteFilmView, BillboardView, SoonView
+    AdminDeleteFilmView, BillboardView, SoonView, FilmView
 from apps.users.views import AdminLoginView, AdminLogoutView, AdminUsersView, AdminUsersDatatableView, \
     AdminUpdateUserView, AdminDeleteUserView, LoginView, RegisterView, LogoutView, ProfileView
 from apps.banners.views import AdminBannersView, AdminBackgroundSettingsView, AdminTopBannersView, \
@@ -36,7 +36,7 @@ adminlte = [
     path("banners/", AdminBannersView.as_view(), name="adminlte_banners"),
     path("banners/background-settings/", AdminBackgroundSettingsView.as_view(),
          name="adminlte_banners_background_settings"),
-    path("banners/background-settings/background/delete", AdminDeleteBackgroundView.as_view(),
+    path("banners/background-settings/background/delete/", AdminDeleteBackgroundView.as_view(),
          name="adminlte_banners_background_settings_banner_delete"),
     path("banners/top-banners/", AdminTopBannersView.as_view(), name="adminlte_banners_top_banners_settings"),
     path("banners/advertisement-banners/", AdminAdvertisementBannersView.as_view(),
@@ -45,7 +45,7 @@ adminlte = [
     path("films/create/", AdminCreateFilmView.as_view(), name="adminlte_films_create_film"),
     path("films/<int:film_id>/update/", AdminUpdateFilmView.as_view(), name="adminlte_films_update_film"),
     path("films/<int:film_id>/delete/", AdminDeleteFilmView.as_view(), name="adminlte_films_delete_film"),
-    path("films/<int:film_id>/image", AdminDeleteFilmImageView.as_view(), name="adminlte_films_delete_film_image"),
+    path("films/<int:film_id>/image/", AdminDeleteFilmImageView.as_view(), name="adminlte_films_delete_film_image"),
     path("cinemas/", AdminCinemasView.as_view(), name="adminlte_cinemas"),
     path("cinemas/create/", AdminCreateCinemaView.as_view(), name="adminlte_cinemas_create_cinema"),
     path("cinemas/<int:cinema_id>/update/", AdminUpdateCinemaView.as_view(), name="adminlte_cinemas_update_cinema"),
@@ -109,23 +109,24 @@ site = [
     path("contacts/", ContactsPageView.as_view(), name="site_contacts"),
     path("profile/", ProfileView.as_view(), name="site_profile"),
     path("news/", NewsListView.as_view(), name="site_news"),
-    path("news/<int:pk>", NewsDetailView.as_view(), name="site_news_detail"),
+    path("news/<int:pk>/", NewsDetailView.as_view(), name="site_news_detail"),
     path("promotions/", PromotionsListView.as_view(), name="site_promotions"),
-    path("promotions/<int:pk>", PromotionsDetailView.as_view(), name="site_promotions_detail"),
-    path("pages/<int:pk>", PageView.as_view(), name="site_pages_detail"),
+    path("promotions/<int:pk>/", PromotionsDetailView.as_view(), name="site_promotions_detail"),
+    path("pages/<int:pk>/", PageView.as_view(), name="site_pages_detail"),
     path("cinemas/", CinemaListView.as_view(), name="site_cinemas"),
-    path("cinemas/<int:pk>", CinemaDetailView.as_view(), name="site_cinemas_detail"),
-    path("halls/<int:pk>", HallDetailView.as_view(), name="site_halls_detail"),
+    path("cinemas/<int:pk>/", CinemaDetailView.as_view(), name="site_cinemas_detail"),
+    path("halls/<int:pk>/", HallDetailView.as_view(), name="site_halls_detail"),
     path("schedule/", ScheduleView.as_view(), name="site_schedule"),
-    path("schedule/<int:pk>", ScheduleDetailView.as_view(), name="site_schedule_detail"),
-    path("schedule/<int:session_id>/tickets", tickets_view, name="site_schedule_tickets"),
+    path("schedule/<int:pk>/", ScheduleDetailView.as_view(), name="site_schedule_detail"),
+    path("schedule/<int:session_id>/tickets/", tickets_view, name="site_schedule_tickets"),
     path("schedule/cinemas/", schedule_cinemas_view, name="site_schedule_cinemas"),
     path("schedule/dates/", schedule_dates_view, name="site_schedule_showtime"),
     path("schedule/films/", schedule_films_view, name="site_schedule_films"),
     path("schedule/halls/", schedule_halls_view, name="site_schedule_halls"),
     path("schedule/sessions/", schedule_sessions_view, name="site_schedule_sessions"),
     path("billboard/", BillboardView.as_view(), name="site_billboard"),
-    path("soon/", SoonView.as_view(), name="site_soon")
+    path("soon/", SoonView.as_view(), name="site_soon"),
+    path("films/<int:pk>/", FilmView.as_view(), name="site_films_detail")
 ]
 
 urlpatterns = [

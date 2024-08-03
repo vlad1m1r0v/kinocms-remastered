@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import TemplateView, View
+from django.views.generic import TemplateView, View, DetailView
 
 from apps.films.forms import FilmForm, FilmImageFormSet
 from apps.films.models import Film
@@ -127,7 +127,7 @@ class BillboardView(TemplateView):
 
         sessions = Schedule.objects.filter(time__date=today) \
             .select_related('film') \
-            .values('id', 'film__name_en', 'film__name_uk', 'film__image')
+            .values('id', 'film__id', 'film__name_en', 'film__name_uk', 'film__image')
 
         context['sessions'] = sessions
         return context
@@ -143,8 +143,17 @@ class SoonView(TemplateView):
 
         sessions = (Schedule.objects.filter(time__date__gt=today)
                     .select_related('film')
-                    .values('time__date', 'film__name_en', 'film__name_uk', 'film__image')
+                    .values('film__id', 'time__date', 'film__name_en', 'film__name_uk', 'film__image')
                     .order_by('time__date'))
 
         context['sessions'] = sessions
         return context
+
+
+class FilmView(DetailView):
+    template_name = "site/films/film.html"
+    model = Film
+    context_object_name = "film"
+
+    def get_queryset(self):
+        return super().get_queryset().prefetch_related('images')

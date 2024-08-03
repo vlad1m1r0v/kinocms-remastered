@@ -184,11 +184,11 @@ class MainPageView(TemplateView):
 
         today_sessions = Schedule.objects.filter(time__date=today) \
             .select_related('film') \
-            .values('id', 'film__name_en', 'film__name_uk', 'film__image')
+            .values('id', 'film__id', 'film__name_en', 'film__name_uk', 'film__image')
 
         upcoming_sessions = Schedule.objects.filter(time__date__range=[today + timedelta(days=1), three_days_later]) \
             .select_related('film') \
-            .values('time__date', 'film__name_en', 'film__name_uk', 'film__image').order_by('time__date')
+            .values('time__date', 'film__id', 'film__name_en', 'film__name_uk', 'film__image').order_by('time__date')
 
         context['today_sessions'] = today_sessions
         context['upcoming_sessions'] = upcoming_sessions
