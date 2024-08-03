@@ -23,7 +23,8 @@ class AdminLoginView(TemplateView):
             user = authenticate(email=email, password=password, is_superuser=True)
             if user:
                 login(request, user)
-                return redirect("adminlte_banners")
+                messages.success(request, "Logged in successfully")
+                return redirect("adminlte_dashboard")
             else:
                 messages.error(request, "Incorrect email or password")
         context = {"form": form}

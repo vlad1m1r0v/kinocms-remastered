@@ -85,7 +85,7 @@ def schedule_sessions_view(request: HttpRequest, *args, **kwargs):
 
     schedules_list = [{
         'id': schedule.id,
-        'date': _date(schedule.time, "d F, l"),
+        'date': _date(schedule.time, "d E, l"),
         'time': schedule.time.strftime("%H:%M"),
         'hall_id': schedule.hall.id,
         'hall_name_en': schedule.hall.name_en,
