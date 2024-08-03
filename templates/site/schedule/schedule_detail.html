@@ -43,10 +43,11 @@
         </h6>
         <!--Price-->
         <div class="d-flex justify-content-between align-items-center">
-          <h5>Price <span class="badge bg-primary"><span id="price">{{ schedule.price }}</span> {% trans 'UAH' %}</span>
+          <h5>{% trans 'Price' %} <span class="badge bg-primary"><span
+            id="price">{{ schedule.price }}</span> {% trans 'UAH' %}</span>
           </h5>
           <button class="btn btn-success" id="buy">
-            <i class="fas fa-money-bill"></i> Book tickets
+            <i class="fas fa-money-bill"></i> {% trans 'Book tickets' %}
           </button>
         </div>
         <!--Seat Booking-->

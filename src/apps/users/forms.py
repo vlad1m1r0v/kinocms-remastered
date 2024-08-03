@@ -124,6 +124,7 @@ class UserForm(forms.ModelForm):
             "card_number": _('Card Number'),
             "language": _('Language'),
             "sex": _('Sex'),
+            "phone": _('Phone'),
             "city": _('City'),
         }
 
