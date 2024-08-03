@@ -2,6 +2,7 @@ from ajax_datatable import AjaxDatatableView
 from django.contrib import messages
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import redirect
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View, ListView, DetailView
@@ -36,13 +37,16 @@ class AdminNewsDataTableView(AjaxDatatableView):
     ]
 
     def customize_row(self, row, obj):
-        row['update_or_delete'] = """
+        row['update_or_delete'] = f"""
         <div class="d-flex flex-nowrap">
-          <a class="btn btn-primary text-nowrap mr-2 update-news-button">
+          <a
+          href='{reverse('adminlte_news_update_news', kwargs={'news_id': obj.id})}'
+          class="btn btn-primary text-nowrap mr-2">
             <i class="fa fa-pen" aria-hidden="true"></i>
             Update
           </a>
           <a
+            href='{reverse('adminlte_news_delete_news', kwargs={'news_id': obj.id})}'
             class="btn btn-info btn-danger text-nowrap"
             data-toggle="modal"
             data-target="#confirmationModal"

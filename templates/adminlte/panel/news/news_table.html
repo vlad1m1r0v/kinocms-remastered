@@ -69,22 +69,8 @@
       restructureDatatable();
     });
 
-    $(document).on('click', '.update-news-button', function () {
-      const id = this.closest('tr').id.substr(4);
-      const currentHref = window.location.href;
-      const cropped = currentHref
-        .substring(0, currentHref.slice(0, currentHref.length - 1)
-          .lastIndexOf("/"));
-      window.location.href = `${cropped}/news/${id}/update`;
-    });
-
     $(document).on('click', '.btn-danger', function () {
-      const id = this.closest('tr').id.substr(4);
-      const currentHref = window.location.href;
-      const cropped = currentHref
-        .substring(0, currentHref.slice(0, currentHref.length - 1)
-          .lastIndexOf("/"));
-      $('#delete-news-form').attr('action', `${cropped}/news/${id}/delete/`);
+      $('#delete-news-form').attr('action', $(this).attr('href'));
     })
   </script>
 {% endblock script %}

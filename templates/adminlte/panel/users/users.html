@@ -61,13 +61,9 @@
     $datatable.on('initComplete', function () {
       restructureDatatable();
     });
-    $(document).on('click', '.update-user-button', function () {
-      window.location.href = `${this.closest('tr').id.substr(4)}/update/`
-    });
 
     $(document).on('click', '.btn-danger', function () {
-        $('#delete-user-form').attr('action', `${this.closest('tr').id.substr(4)}/delete/`
-        )
+        $('#delete-user-form').attr('action', $(this).attr('href'));
       }
     )
   </script>

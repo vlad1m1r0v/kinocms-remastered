@@ -4,6 +4,7 @@ from django.db.models import Value
 from django.db.models.functions import Concat
 from django.http import HttpRequest
 from django.shortcuts import redirect
+from django.urls import reverse
 from django.views.generic import View, TemplateView
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
 from django.utils.translation import gettext as _, activate
@@ -77,13 +78,16 @@ class AdminUsersDatatableView(AjaxDatatableView):
         )
 
     def customize_row(self, row, obj):
-        row['update_or_delete'] = """
+        row['update_or_delete'] = f"""
         <div class="d-flex flex-nowrap">
-          <a class="btn btn-primary text-nowrap mr-2 update-user-button">
+          <a
+          href='{reverse('adminlte_users_update_user', kwargs={'user_id': obj.id})}'
+          class="btn btn-primary text-nowrap mr-2">
             <i class="fa fa-pen" aria-hidden="true"></i>
             Update
           </a>
           <a
+            href='{reverse('adminlte_users_delete_user', kwargs={'user_id': obj.id})}'
             class="btn btn-info btn-danger text-nowrap"
             data-toggle="modal"
             data-target="#confirmationModal"

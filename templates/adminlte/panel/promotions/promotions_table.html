@@ -68,23 +68,9 @@
     $datatable.on('initComplete', function () {
       restructureDatatable();
     });
-
-    $(document).on('click', '.update-promotion-button', function () {
-      const id = this.closest('tr').id.substr(4);
-      const currentHref = window.location.href;
-      const cropped = currentHref
-        .substring(0, currentHref.slice(0, currentHref.length - 1)
-          .lastIndexOf("/"));
-      window.location.href = `${cropped}/promotions/${id}/update`;
-    });
-
+    
     $(document).on('click', '.btn-danger', function () {
-      const id = this.closest('tr').id.substr(4);
-      const currentHref = window.location.href;
-      const cropped = currentHref
-        .substring(0, currentHref.slice(0, currentHref.length - 1)
-          .lastIndexOf("/"));
-      $('#delete-promotion-form').attr('action', `${cropped}/promotions/${id}/delete/`);
+      $('#delete-promotion-form').attr('action', $(this).attr('href'));
     })
   </script>
 {% endblock script %}
