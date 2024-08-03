@@ -4,12 +4,14 @@ from django.contrib import messages
 from django.db.models import Q
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import redirect
+from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View
 
 from apps.films.forms import FilmForm, FilmImageFormSet
 from apps.films.models import Film
+from apps.schedule.models import Schedule
 from core.utilities.guards import admin_only
 
 
@@ -23,12 +25,12 @@ class AdminFilmsView(TemplateView):
         today = date.today()
 
         current_films = Film.objects.filter(
-            Q(created_at__lte=today-timedelta(7)),
+            Q(created_at__lte=today - timedelta(7)),
         )
         context['current_films'] = current_films
 
         upcoming_films = Film.objects.filter(
-            Q(created_at__gt=today-timedelta(7))
+            Q(created_at__gt=today - timedelta(7))
         )
         context['upcoming_films'] = upcoming_films
 
@@ -113,3 +115,36 @@ class AdminDeleteFilmView(View):
         Film.objects.get(pk=film_id).delete()
         messages.success(request, "Film was deleted successfully")
         return redirect('adminlte_films')
+
+
+class BillboardView(TemplateView):
+    template_name = "site/films/billboard.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        today = timezone.now().date()
+
+        sessions = Schedule.objects.filter(time__date=today) \
+            .select_related('film') \
+            .values('id', 'film__name_en', 'film__name_uk', 'film__image')
+
+        context['sessions'] = sessions
+        return context
+
+
+class SoonView(TemplateView):
+    template_name = "site/films/soon.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        today = timezone.now().date()
+
+        sessions = (Schedule.objects.filter(time__date__gt=today)
+                    .select_related('film')
+                    .values('time__date', 'film__name_en', 'film__name_uk', 'film__image')
+                    .order_by('time__date'))
+
+        context['sessions'] = sessions
+        return context

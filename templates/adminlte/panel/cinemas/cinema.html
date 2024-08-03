@@ -435,22 +435,8 @@
         restructureDatatable()
       });
 
-      $(document).on('click', '.update-hall-button', function () {
-        const id = this.closest('tr').id.substr(4);
-        const currentHref = window.location.href;
-        const cropped = currentHref
-          .substring(0, currentHref.slice(0, currentHref.length - 1)
-            .lastIndexOf("/"));
-        window.location.href = `${cropped}/halls/${id}/update`;
-      });
-
       $(document).on('click', '.btn-danger', function () {
-        const id = this.closest('tr').id.substr(4);
-        const currentHref = window.location.href;
-        const cropped = currentHref
-          .substring(0, currentHref.slice(0, currentHref.length - 1)
-            .lastIndexOf("/"));
-        $('#delete-hall-form').attr('action', `${cropped}/halls/${id}/delete/`);
+        $('#delete-hall-form').attr('action', $(this).attr('href'));
       })
     {% endif %}
   </script>

@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.db.models import Prefetch
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import redirect
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -40,14 +41,15 @@ class AdminHallsDataTableView(AjaxDatatableView):
         return queryset
 
     def customize_row(self, row, obj):
-        row['update_or_delete'] = """
+        row['update_or_delete'] = f"""
         <div class="d-flex flex-nowrap">
-          <a class="btn btn-primary text-nowrap mr-2 update-hall-button">
+          <a href='{reverse('adminlte_halls_update_hall', kwargs={"hall_id": obj.id})}' class="btn btn-primary text-nowrap mr-2">
             <i class="fa fa-pen" aria-hidden="true"></i>
             Update
           </a>
           <a
             class="btn btn-info btn-danger text-nowrap"
+            href='{reverse('adminlte_halls_delete_hall', kwargs={"hall_id": obj.id})}'
             data-toggle="modal"
             data-target="#confirmationModal"
           >
@@ -103,9 +105,10 @@ class AdminUpdateHallView(TemplateView):
         return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
     def post(self, request: HttpRequest, *args, **kwargs):
-        cinema_id: int = kwargs.get('cinema_id')
         hall_id: int = kwargs.get('hall_id')
         hall = Hall.objects.get(pk=hall_id)
+        cinema_id = hall.cinema_id
+
         form = HallForm(request.POST, request.FILES, instance=hall)
         formset = HallImageFormSet(request.POST, request.FILES, instance=hall)
 
@@ -144,9 +147,10 @@ class AdminDeleteHallSchemeView(View):
 class AdminDeleteHallView(View):
     @staticmethod
     def post(request: HttpRequest, *args, **kwargs):
-        cinema_id: int = kwargs.get('cinema_id')
         hall_id: int = kwargs.get('hall_id')
-        Hall.objects.get(pk=hall_id).delete()
+        hall = Hall.objects.get(pk=hall_id)
+        cinema_id = hall.cinema_id
+        hall.delete()
         messages.success(request, "Hall was deleted successfully")
         return redirect("adminlte_cinemas_update_cinema", cinema_id=cinema_id)
 

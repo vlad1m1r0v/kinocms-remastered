@@ -5,7 +5,7 @@ from django.urls import path, include
 
 from apps.dashboard.views import AdminDashboardView, admin_dashboard_statistics_view
 from apps.films.views import AdminFilmsView, AdminCreateFilmView, AdminUpdateFilmView, AdminDeleteFilmImageView, \
-    AdminDeleteFilmView
+    AdminDeleteFilmView, BillboardView, SoonView
 from apps.users.views import AdminLoginView, AdminLogoutView, AdminUsersView, AdminUsersDatatableView, \
     AdminUpdateUserView, AdminDeleteUserView, LoginView, RegisterView, LogoutView, ProfileView
 from apps.banners.views import AdminBannersView, AdminBackgroundSettingsView, AdminTopBannersView, \
@@ -55,9 +55,9 @@ adminlte = [
     path("cinemas/<int:cinema_id>/logo/", AdminDeleteCinemaLogoView.as_view(),
          name="adminlte_cinema_delete_cinema_logo"),
     path("cinemas/<int:cinema_id>/halls/create/", AdminCreateHallView.as_view(), name="adminlte_halls_create_hall"),
-    path("cinemas/<int:cinema_id>/halls/<int:hall_id>/update/", AdminUpdateHallView.as_view(),
+    path("halls/<int:hall_id>/update/", AdminUpdateHallView.as_view(),
          name="adminlte_halls_update_hall"),
-    path("cinemas/<int:cinema_id>/halls/<int:hall_id>/delete/", AdminDeleteHallView.as_view(),
+    path("halls/<int:hall_id>/delete/", AdminDeleteHallView.as_view(),
          name="adminlte_halls_delete_hall"),
     path("halls/datatable/", AdminHallsDataTableView.as_view(), name="adminlte_halls_datatable"),
     path("halls/<int:hall_id>/banner/", AdminDeleteHallBannerView.as_view(), name="adminlte_halls_delete_hall_banner"),
@@ -123,7 +123,9 @@ site = [
     path("schedule/dates/", schedule_dates_view, name="site_schedule_showtime"),
     path("schedule/films/", schedule_films_view, name="site_schedule_films"),
     path("schedule/halls/", schedule_halls_view, name="site_schedule_halls"),
-    path("schedule/sessions/", schedule_sessions_view, name="site_schedule_sessions")
+    path("schedule/sessions/", schedule_sessions_view, name="site_schedule_sessions"),
+    path("billboard/", BillboardView.as_view(), name="site_billboard"),
+    path("soon/", SoonView.as_view(), name="site_soon")
 ]
 
 urlpatterns = [
