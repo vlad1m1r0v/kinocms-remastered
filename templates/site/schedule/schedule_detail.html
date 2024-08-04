@@ -46,7 +46,7 @@
           <h5>{% trans 'Price' %} <span class="badge bg-primary"><span
             id="price">{{ schedule.price }}</span> {% trans 'UAH' %}</span>
           </h5>
-          <button class="btn btn-success" id="buy">
+          <button class="btn btn-success" id="buy" {% if not request.user.is_authenticated %}disabled{% endif %}>
             <i class="fas fa-money-bill"></i> {% trans 'Book tickets' %}
           </button>
         </div>
