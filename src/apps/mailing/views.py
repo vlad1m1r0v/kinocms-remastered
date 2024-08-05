@@ -8,12 +8,14 @@ from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View
 
+from core.utilities.guards import admin_only
 from .forms import SendingOptionForm, UploadTemplateForm
 from .models import Template
 from .tasks import send_email_task
 from ..users.models import CustomUser
 
 
+@admin_only
 class AdminMailingView(TemplateView):
     template_name = 'adminlte/panel/mailing.html'
 

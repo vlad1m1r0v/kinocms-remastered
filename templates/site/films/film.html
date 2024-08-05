@@ -67,21 +67,21 @@
         <!--Film Type-->
         <div class="d-flex flex-row">
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" disabled {% if not film.is_3d %}checked{% endif %}>
+            <input class="form-check-input" type="checkbox" disabled {% if film.is_3d %}checked{% endif %}>
             <label class="form-check-label" for="flexCheckDisabled">
               3D
             </label>
           </div>
           &emsp;
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" disabled {% if not film.is_2d %}checked{% endif %}>
+            <input class="form-check-input" type="checkbox" disabled {% if film.is_2d %}checked{% endif %}>
             <label class="form-check-label" for="flexCheckDisabled">
               2D
             </label>
           </div>
           &emsp;
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" disabled {% if not film.is_imax %}checked{% endif %}>
+            <input class="form-check-input" type="checkbox" disabled {% if film.is_imax %}checked{% endif %}>
             <label class="form-check-label" for="flexCheckDisabled">
               IMax
             </label>

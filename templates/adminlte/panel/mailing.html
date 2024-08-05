@@ -225,7 +225,7 @@
         method: 'post',
         data,
         success: function (data) {
-          const socket = new WebSocket(`ws://localhost:8000/ws/${data.task_id}/`);
+          const socket = new WebSocket(`ws://${window.location.hostname}/ws/${data.task_id}/`);
           socket.onmessage = function (event) {
             const data = JSON.parse(event.data);
             if (data.status === 'start') {

@@ -17,6 +17,8 @@ ALLOWED_HOSTS = ['*']
 
 INTERNAL_IPS = []
 
+CSRF_TRUSTED_ORIGINS = ['https://bright-earwig-ideal.ngrok-free.app']
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
