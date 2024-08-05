@@ -7,20 +7,15 @@ env = environ.Env()
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-ENVIRONMENT = os.environ.get("ENVIRONMENT")
-
-if ENVIRONMENT == "production":
-    environ.Env.read_env(os.path.join(BASE_DIR, "envs", ".env.production"))
-else:
-    environ.Env.read_env(os.path.join(BASE_DIR, "envs", ".env.local"))
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 SECRET_KEY = env("SECRET_KEY")
 
 DEBUG = env("DEBUG")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
-INTERNAL_IPS = ["127.0.0.1"]
+INTERNAL_IPS = []
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -98,7 +93,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("localhost", 6379)],
+            "hosts": [(env("REDIS_HOST"), env("REDIS_PORT"))],
         },
     },
 }

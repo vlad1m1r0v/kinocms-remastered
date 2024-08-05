@@ -2,6 +2,7 @@ seed:
 	python src/manage.py createusers
 	python src/manage.py createbanners
 	python src/manage.py createcinemas
+	python src/manage.py createfilms
 	python src/manage.py createhalls
 	python src/manage.py createnews
 	python src/manage.py createpromotions
