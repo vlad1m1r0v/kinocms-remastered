@@ -17,7 +17,7 @@ ALLOWED_HOSTS = ['*']
 
 INTERNAL_IPS = []
 
-CSRF_TRUSTED_ORIGINS = ['https://bright-earwig-ideal.ngrok-free.app']
+CSRF_TRUSTED_ORIGINS = ['https://bright-earwig-ideal.ngrok-free.app', "https://kinocms.serveo.net"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
